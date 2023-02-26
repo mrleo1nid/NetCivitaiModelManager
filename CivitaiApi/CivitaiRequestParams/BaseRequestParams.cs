@@ -6,7 +6,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetCivitaiModelManager.Models.CivitaiRequestParams
+namespace CivitaiApi.CivitaiRequestParams
 {
     public class BaseRequestParams
     {

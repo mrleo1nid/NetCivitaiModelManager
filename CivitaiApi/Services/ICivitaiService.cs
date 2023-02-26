@@ -1,6 +1,6 @@
-﻿using NetCivitaiModelManager.Models.CivitaiDataContracts;
-using NetCivitaiModelManager.Models.CivitaiDataContracts.GetCreators;
-using NetCivitaiModelManager.Models.CivitaiRequestParams;
+﻿
+using CivitaiApi.CivitaiDataContracts;
+using CivitaiApi.CivitaiRequestParams;
 using Refit;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetCivitaiModelManager.Services
+namespace CivitaiApi.Services
 {
     public interface ICivitaiService
     {

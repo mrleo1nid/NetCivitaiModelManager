@@ -1,7 +1,11 @@
-﻿using NetCivitaiModelManager.Services;
+﻿using CivitaiApi.CivitaiRequestParams;
+using CivitaiApi.Services;
+using NetCivitaiModelManager.Services;
+using Refit;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,9 +29,16 @@ namespace NetCivitaiModelManager.ViewModels
         {
             try
             {
-                var autors = _service.GetCreators(new Models.CivitaiRequestParams.BaseRequestParams()).Result;
+                var autors = _service.GetCreators(new BaseRequestParams()).Result;
             }
-            catch(Exception ex) { Log.Error(ex, "Api error"); }
+            catch (ValidationApiException validationException)
+            {
+                Log.Error(validationException, "ValidationExeption");
+            }
+            catch (ApiException exception)
+            {
+                Log.Error(exception, "ApiException");
+            }
         }
         private void LoadModel()
         {
@@ -35,15 +46,29 @@ namespace NetCivitaiModelManager.ViewModels
             {
                 var autors = _service.GetModel(4823).Result;
             }
-            catch (Exception ex) { Log.Error(ex, "Api error"); }
+            catch (ValidationApiException validationException)
+            {
+                Log.Error(validationException, "ValidationExeption");
+            }
+            catch (ApiException exception)
+            {
+                Log.Error(exception, "ApiException");
+            }
         }
         private void LoadModels()
         {
             try
             {
-                var autors = _service.GetModels(new Models.CivitaiRequestParams.GetModelsParams()).Result;
+                var autors = _service.GetModels(new GetModelsParams()).Result;
             }
-            catch (Exception ex) { Log.Error(ex, "Api error"); }
+            catch (ValidationApiException validationException)
+            {
+                Log.Error(validationException, "ValidationExeption");
+            }
+            catch (ApiException exception)
+            {
+                Log.Error(exception, "ApiException");
+            }
         }
         private void LoadVersion()
         {
@@ -51,7 +76,14 @@ namespace NetCivitaiModelManager.ViewModels
             {
                 var autors = _service.GetModelVersion(1318).Result;
             }
-            catch (Exception ex) { Log.Error(ex, "Api error"); }
+            catch (ValidationApiException validationException)
+            {
+                Log.Error(validationException, "ValidationExeption");
+            }
+            catch (ApiException exception)
+            {
+                Log.Error(exception, "ApiException");
+            }
         }
         private void LoadVersionHash()
         {
@@ -59,15 +91,29 @@ namespace NetCivitaiModelManager.ViewModels
             {
                 var autors = _service.GetModelVersion("9ABA26ABDF").Result;
             }
-            catch (Exception ex) { Log.Error(ex, "Api error"); }
+            catch (ValidationApiException validationException)
+            {
+                Log.Error(validationException, "ValidationExeption");
+            }
+            catch (ApiException exception)
+            {
+                Log.Error(exception, "ApiException");
+            }
         }
         private void LoadTags()
         {
             try
             {
-                var autors = _service.GetTags(new Models.CivitaiRequestParams.BaseRequestParams()).Result;
+                var autors = _service.GetTags(new BaseRequestParams()).Result;
             }
-            catch (Exception ex) { Log.Error(ex, "Api error"); }
+            catch (ValidationApiException validationException)
+            {
+                Log.Error(validationException, "ValidationExeption");
+            }
+            catch (ApiException exception)
+            {
+                Log.Error(exception, "ApiException");
+            }
         }
     }
 }

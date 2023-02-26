@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace NetCivitaiModelManager.Models.CivitaiDataContracts.GetCreators
+namespace CivitaiApi.CivitaiDataContracts
 {
     public class ResponceItem
     {

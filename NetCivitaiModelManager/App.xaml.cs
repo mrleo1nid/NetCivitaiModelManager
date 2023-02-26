@@ -10,6 +10,7 @@ using Serilog.Exceptions.Core;
 using Serilog.Exceptions.Refit.Destructurers;
 using Refit;
 using System;
+using CivitaiApi.Services;
 
 namespace NetCivitaiModelManager
 {

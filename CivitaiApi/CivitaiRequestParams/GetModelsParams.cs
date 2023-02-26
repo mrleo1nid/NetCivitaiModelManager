@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetCivitaiModelManager.Models.CivitaiRequestParams
+namespace CivitaiApi.CivitaiRequestParams
 {
     public class GetModelsParams : BaseRequestParams
     {

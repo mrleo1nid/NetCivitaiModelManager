@@ -5,9 +5,11 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Icon.ico" />
     <None Remove="Icons\icon-downoload.png" />
     <None Remove="Icons\icon-external.png" />
     <None Remove="Icons\icon-instaled.png" />
@@ -15,13 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Icon.ico" />
     <Content Include="Icons\icon-downoload.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\icon-external.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Icons\icon-instaled.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icons\icon-settings.png">
@@ -41,6 +41,10 @@
     <PackageReference Include="Serilog.Exceptions.Refit" Version="8.4.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CivitaiApi\CivitaiApi.csproj" />
   </ItemGroup>
 
 </Project>
