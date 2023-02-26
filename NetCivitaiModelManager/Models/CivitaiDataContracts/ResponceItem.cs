@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NetCivitaiModelManager.Models.CivitaiDataContracts.GetCreators
 {
-    public class CreatorsItem
+    public class ResponceItem
     {
         [JsonPropertyName("username")]
         public string Username { get; set; }

@@ -33,13 +33,10 @@ namespace NetCivitaiModelManager
                     .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
                     .WithDefaultDestructurers()
                     .WithDestructurers(new[] { new ApiExceptionDestructurer() }))
-                    .WriteTo.File(new JsonFormatter(renderMessage: true),$"logs\\log-{DateTime.Now.ToString("dd-MM-yyyy")}.txt")
+                    .WriteTo.File(new JsonFormatter(renderMessage: true),$"logs\\log-{DateTime.Now.ToString("dd-MM-yyyy")}.txt", Serilog.Events.LogEventLevel.Debug)
                     .CreateLogger();
                 Ioc.Default.ConfigureServices(
                     new ServiceCollection()
-                    //Logging
-                    .AddLogging(loggingBuilder =>
-                     loggingBuilder.AddSerilog(dispose: true))
                     //Services
                     .AddSingleton<ConfigService>(configsevice)
                     .AddSingleton(RestService.For<ICivitaiService>(configsevice.Config.CivitaiBaseUrl))
@@ -49,6 +46,9 @@ namespace NetCivitaiModelManager
                     .AddTransient<DownoloadControlVM>()
                     .AddTransient<ExternalModelsControlVM>()
                     .AddTransient<LocalModelsControlVM>()
+                    //Logging
+                    .AddLogging(loggingBuilder =>
+                     loggingBuilder.AddSerilog(Log.Logger, dispose: true))
                     .BuildServiceProvider());
             }
 

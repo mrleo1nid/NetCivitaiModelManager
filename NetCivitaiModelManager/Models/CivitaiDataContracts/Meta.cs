@@ -13,7 +13,7 @@ namespace NetCivitaiModelManager.Models.CivitaiDataContracts
         public string Size { get; set; }
 
         [JsonPropertyName("seed")]
-        public object Seed { get; set; }
+        public Int64 Seed { get; set; }
 
         [JsonPropertyName("steps")]
         public int Steps { get; set; }
@@ -25,7 +25,7 @@ namespace NetCivitaiModelManager.Models.CivitaiDataContracts
         public string Sampler { get; set; }
 
         [JsonPropertyName("cfgScale")]
-        public int CfgScale { get; set; }
+        public double CfgScale { get; set; }
 
         [JsonPropertyName("Model hash")]
         public string ModelHash { get; set; }
