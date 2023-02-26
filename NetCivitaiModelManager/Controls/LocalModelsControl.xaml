@@ -17,27 +17,38 @@
             <RowDefinition Height="41*"/>
             <RowDefinition Height="409*"/>
         </Grid.RowDefinitions>
-        <ListBox Margin="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0"
+        <StackPanel Grid.Row="0" Margin="5" Orientation="Horizontal">
+            <ListBox Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0"
                  ItemsSource="{Binding Types}" Background="AliceBlue" SelectionMode="Multiple">
-            <b:Interaction.Triggers>
-                <b:EventTrigger EventName="SelectionChanged" SourceObject="{Binding ElementName=listBox}">
-                    <b:CallMethodAction TargetObject="{Binding}" MethodName="RefreshList"/>
-                </b:EventTrigger>
-            </b:Interaction.Triggers>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <local:OutlinedTextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Name}" 
-                                                     FontFamily="Verdana" FontSize="14pt" Fill="Black" TextWrapping="Wrap" StrokeThickness="2" Stroke="Black" 
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="SelectionChanged">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="FilterSelectionChanged"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#FF444242" OpacityMask="#FF939393" BorderThickness="1,1,1,1">
+                            <local:OutlinedTextBlock MinHeight="20"
+                            HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Name}" Margin="2" 
+                                                     FontFamily="Verdana" FontSize="14pt" Fill="Black" TextWrapping="Wrap" Stroke="Black" 
                                                      MaxWidth="256"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ListBox>
-        <ListBox Margin="5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="1"
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListBox>
+            <Button Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding LoadModelsCommand}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Source="/Icons/icon-refresh.png" Width="16" Height="16" Margin="5"/>
+                    <Label VerticalAlignment="Center" HorizontalAlignment="Center">Обновить</Label>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <ListBox Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"
                  ItemsSource="{Binding FilteredModels}" Background="AliceBlue">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -46,8 +57,8 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border  BorderBrush="#FF444242" OpacityMask="#FF939393" BorderThickness="1,1,1,1">
-                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" MinHeight="256" Orientation="Vertical">
+                    <Border BorderBrush="#FF444242" OpacityMask="#FF939393" BorderThickness="1,1,1,1">
+                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" MinHeight="256" MaxHeight="256" MinWidth="256" MaxWidth="256" Orientation="Vertical">
                             <StackPanel.Background>
                                 <ImageBrush ImageSource="{Binding DisplayImage,Converter={StaticResource UrlToBitmapConverter}}"/>
                             </StackPanel.Background>

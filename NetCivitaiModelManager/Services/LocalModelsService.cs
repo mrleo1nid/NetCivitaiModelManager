@@ -17,10 +17,12 @@ namespace NetCivitaiModelManager.Services
         private string[] fileFormats = new string[] { ".pt", ".ckpt", ".safetensors", ".bin" };
         private readonly ILogger<LocalModelsService> _logger;
         private readonly ConfigService _configService;
+        private Dictionary<string, string> _calculatedHash;
         public LocalModelsService(ILogger<LocalModelsService> logger, ConfigService configService)
         {
             _logger = logger;
             _configService = configService; 
+            _calculatedHash = new Dictionary<string, string>();
         }
 
         public async Task<List<LocalModel>> GetLocalModelsAsync()
@@ -38,10 +40,20 @@ namespace NetCivitaiModelManager.Services
         {
             foreach(var localModel in localModels)
             {
-                var algo = SHA256.Create();
-                using (var stream = File.OpenRead(localModel.LocalFile.FullName))
-                    localModel.LocalFile.Hash = await stream.GetHashAsync(algo);
-
+                if (!string.IsNullOrEmpty(localModel.LocalFile?.Hash))
+                    continue;
+               
+                var hash = string.Empty;
+                if(!string.IsNullOrEmpty(_calculatedHash[localModel.LocalFile.FullName]))
+                    hash = _calculatedHash[localModel.LocalFile.FullName];
+                else
+                {
+                    var algo = SHA256.Create();
+                    using (var stream = File.OpenRead(localModel.LocalFile.FullName))
+                        hash = await stream.GetHashAsync(algo);
+                    _calculatedHash[localModel.LocalFile.FullName] = hash;  
+                }
+                localModel.LocalFile.Hash = hash;   
             }
         }
         private async Task<List<LocalModel>> GetModelsAsync(string path, TypesEnum types)
@@ -98,6 +110,10 @@ namespace NetCivitaiModelManager.Services
             }
             return Path.Combine(basepath,result);
         }
-       
+
+        internal Action CalculateHash(object alllocalModels)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
