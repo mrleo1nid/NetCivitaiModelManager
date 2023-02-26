@@ -1,0 +1,62 @@
+﻿<Window x:Class="NetCivitaiModelManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:NetCivitaiModelManager.Controls" 
+        mc:Ignorable="d"
+        Title="Главное окно" Height="800" Width="1200">
+    <Window.Background>
+        <SolidColorBrush Color="AliceBlue"/>
+    </Window.Background>
+    <Grid>
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/icon-instaled.png" Width="16" Height="16" Margin="5"/>
+                        <TextBlock Margin="5">Установленные модели</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <controls:LocalModelsControl/>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/icon-external.png" Width="16" Height="16" Margin="5"/>
+                        <TextBlock Margin="5">Модели в интернете</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <controls:ExternalModelsControl/>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/icon-downoload.png" Width="16" Height="16" Margin="5"/>
+                        <TextBlock Margin="5">Загрузки</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <controls:DownoloadControl/>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Template>
+                    <ControlTemplate>
+                        <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="OpenSettingsButton_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="/Icons/icon-settings.png" Width="16" Height="16" Margin="5"/>
+                                <Label Content="Настройки"/>
+                            </StackPanel>
+                        </Button>
+                    </ControlTemplate>
+                </TabItem.Template>
+            </TabItem>
+            
+        </TabControl>
+    </Grid>
+</Window>
