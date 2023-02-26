@@ -38,19 +38,21 @@ namespace NetCivitaiModelManager
                     .CreateLogger();
                 Ioc.Default.ConfigureServices(
                     new ServiceCollection()
+                    //Logging
+                    .AddLogging(loggingBuilder =>
+                     loggingBuilder.AddSerilog(Log.Logger, dispose: true))
                     //Services
                     .AddSingleton<ConfigService>(configsevice)
                     .AddSingleton(RestService.For<ICivitaiService>(configsevice.Config.CivitaiBaseUrl))
+                    .AddSingleton<CivitaiService>()
+                    .AddSingleton<LocalModelsService>()
                     //ViewModels
                     .AddTransient<MainVM>()
                     .AddTransient<ConfigVM>()
                     .AddTransient<DownoloadControlVM>()
                     .AddTransient<ExternalModelsControlVM>()
                     .AddTransient<LocalModelsControlVM>()
-                    //Logging
-                    .AddLogging(loggingBuilder =>
-                     loggingBuilder.AddSerilog(Log.Logger, dispose: true))
-                    .BuildServiceProvider());
+                    .BuildServiceProvider()) ;
             }
 
             

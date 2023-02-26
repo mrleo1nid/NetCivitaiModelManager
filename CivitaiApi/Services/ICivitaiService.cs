@@ -13,7 +13,7 @@ namespace CivitaiApi.Services
     public interface ICivitaiService
     {
         [Get("/api/v1/creators")]
-        Task<GetCreatorsResponce> GetCreators(BaseRequestParams @params);
+        Task<BaseResponce> GetCreators(BaseRequestParams @params);
 
         [Get("/api/v1/models")]
         Task<GetModelsResponce> GetModels(GetModelsParams @params);
@@ -27,6 +27,6 @@ namespace CivitaiApi.Services
         [Get("/api/v1/model-versions/by-hash/{hash}")]
         Task<ModelVersion> GetModelVersion(string hash);
         [Get("/api/v1/tags")]
-        Task<ModelVersion> GetTags(BaseRequestParams @params);
+        Task<BaseResponce> GetTags(BaseRequestParams @params);
     }
 }

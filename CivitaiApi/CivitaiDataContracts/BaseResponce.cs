@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CivitaiApi.CivitaiDataContracts
 {
-    public class GetCreatorsResponce
+    public class BaseResponce
     {
         [JsonPropertyName("items")]
         public List<ResponceItem> Items { get; set; }

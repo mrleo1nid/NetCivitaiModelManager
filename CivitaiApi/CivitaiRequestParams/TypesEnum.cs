@@ -7,6 +7,7 @@ namespace CivitaiApi.CivitaiRequestParams
         Checkpoint,
         TextualInversion,
         Hypernetwork,
-        AestheticGradient
+        AestheticGradient,
+        LORA
     }
 }

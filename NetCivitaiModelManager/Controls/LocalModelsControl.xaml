@@ -3,13 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls"
+             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls" xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:converters="clr-namespace:NetCivitaiModelManager.Converters" xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Background>
         <SolidColorBrush Color="AliceBlue"/>
     </UserControl.Background>
+    <UserControl.Resources>
+        <converters:UrlToBitmapConverter  x:Key="UrlToBitmapConverter"/>
+    </UserControl.Resources>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="41*"/>
+            <RowDefinition Height="409*"/>
+        </Grid.RowDefinitions>
+        <ListBox Margin="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0"
+                 ItemsSource="{Binding Types}" Background="AliceBlue" SelectionMode="Multiple">
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="SelectionChanged" SourceObject="{Binding ElementName=listBox}">
+                    <b:CallMethodAction TargetObject="{Binding}" MethodName="RefreshList"/>
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:OutlinedTextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Name}" 
+                                                     FontFamily="Verdana" FontSize="14pt" Fill="Black" TextWrapping="Wrap" StrokeThickness="2" Stroke="Black" 
+                                                     MaxWidth="256"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListBox>
+        <ListBox Margin="5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="1"
+                 ItemsSource="{Binding FilteredModels}" Background="AliceBlue">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="4"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border  BorderBrush="#FF444242" OpacityMask="#FF939393" BorderThickness="1,1,1,1">
+                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" MinHeight="256" Orientation="Vertical">
+                            <StackPanel.Background>
+                                <ImageBrush ImageSource="{Binding DisplayImage,Converter={StaticResource UrlToBitmapConverter}}"/>
+                            </StackPanel.Background>
+                            <local:OutlinedTextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding DisplayName}" 
+                                                     FontFamily="Verdana" FontSize="14pt" Fill="White" TextWrapping="Wrap" StrokeThickness="2" Stroke="Black" 
+                                                     MaxWidth="256"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>
