@@ -22,6 +22,7 @@ namespace NetCivitaiModelManager.ViewModels
     {
         private CivitaiService _service;
         private LocalModelsService _localModelsService;
+        private HashService _hashService;
 
         [ObservableProperty]
         private List<LocalModel> alllocalModels = new List<LocalModel>();
@@ -29,12 +30,14 @@ namespace NetCivitaiModelManager.ViewModels
         private List<LocalModel> filteredModels = new List<LocalModel>();
        
         private List<TypesEnum> currentfilter = new List<TypesEnum>();
-        public LocalModelsControlVM(CivitaiService civitaiService, LocalModelsService localModelsService)
+        public LocalModelsControlVM(CivitaiService civitaiService, LocalModelsService localModelsService, HashService hashservvice)
         {
             _service = civitaiService;
             _localModelsService = localModelsService;
+            _hashService = hashservvice;
             Task.Factory.StartNew(LoadModels);
         }
+
         [RelayCommand]
         private async Task LoadModels()
         {
@@ -46,7 +49,9 @@ namespace NetCivitaiModelManager.ViewModels
         }
         private async Task CalculateHash()
         {
-            await _localModelsService.CalculateHash(AlllocalModels);
+            foreach (var model in AlllocalModels)
+                _hashService.AddToQuque(model);
+            _hashService.Start();
         }
         private void RefreshList()
         {

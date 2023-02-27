@@ -51,6 +51,7 @@ namespace NetCivitaiModelManager
                     .AddSingleton(RestService.For<ICivitaiService>(httpClient))
                     .AddSingleton<CivitaiService>()
                     .AddSingleton<LocalModelsService>()
+                    .AddSingleton<HashService>()
                     //ViewModels
                     .AddTransient<MainVM>()
                     .AddTransient<ConfigVM>()

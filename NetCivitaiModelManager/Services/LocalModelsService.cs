@@ -15,15 +15,15 @@ namespace NetCivitaiModelManager.Services
 {
     public class LocalModelsService
     {
-        private string[] fileFormats = new string[] { ".pt", ".ckpt", ".safetensors", ".bin" };
+       
+        private string[] fileFormats = new string[] { ".pt", ".ckpt", ".safetensors", ".bin", ".pth" };
         private readonly ILogger<LocalModelsService> _logger;
         private readonly ConfigService _configService;
-        private Dictionary<string, string> _calculatedHash;
+       
         public LocalModelsService(ILogger<LocalModelsService> logger, ConfigService configService)
         {
             _logger = logger;
             _configService = configService; 
-            _calculatedHash = new Dictionary<string, string>();
         }
 
         public async Task<List<LocalModel>> GetLocalModelsAsync()
@@ -35,32 +35,18 @@ namespace NetCivitaiModelManager.Services
             models.AddRange(await GetModelsAsync(folder, TypesEnum.AestheticGradient));
             models.AddRange(await GetModelsAsync(folder, TypesEnum.Hypernetwork));
             models.AddRange(await GetModelsAsync(folder, TypesEnum.TextualInversion));
+            models.AddRange(await GetModelsAsync(folder, TypesEnum.Controlnet));
+            models.AddRange(await GetModelsAsync(folder, TypesEnum.Poses));
             return models;
         }
-        public async Task CalculateHash(List<LocalModel> localModels)
-        {
-            foreach(var localModel in localModels)
-            {
-                if (!string.IsNullOrEmpty(localModel.LocalFile?.Hash))
-                    continue;
-               
-                var hash = string.Empty;
-                if(!string.IsNullOrEmpty(_calculatedHash[localModel.LocalFile.FullName]))
-                    hash = _calculatedHash[localModel.LocalFile.FullName];
-                else
-                {
-                    var algo = SHA256.Create();
-                    using (var stream = File.OpenRead(localModel.LocalFile.FullName))
-                        hash = await stream.GetHashAsync(algo);
-                    _calculatedHash[localModel.LocalFile.FullName] = hash;  
-                }
-                localModel.LocalFile.Hash = hash;   
-            }
-        }
+
+        
         private async Task<List<LocalModel>> GetModelsAsync(string path, TypesEnum types)
         {
             var models = new List<LocalModel>();
             var folder = GetFolderByType(path,types);
+            if(!Directory.Exists(folder)) return models;
+
             var files = Directory.GetFiles(folder).Where(x=> fileFormats.Contains(Path.GetExtension(x)));
             
             foreach (var file in files)
@@ -81,6 +67,7 @@ namespace NetCivitaiModelManager.Services
             }
             return models;
         }
+       
         private string GetImage(string filepath, string filename)
         {
             var folder = Path.GetDirectoryName(filepath);
@@ -108,13 +95,14 @@ namespace NetCivitaiModelManager.Services
                 case TypesEnum.AestheticGradient:
                     result = "extensions\\stable-diffusion-webui-aesthetic-gradients\\aesthetic_embeddings";
                     break;
+                case TypesEnum.Controlnet:
+                    result = "extensions\\sd-webui-controlnet\\models";
+                    break;
+                case TypesEnum.Poses:
+                    result = "poses";
+                    break;
             }
             return Path.Combine(basepath,result);
-        }
-
-        internal Action CalculateHash(object alllocalModels)
-        {
-            throw new NotImplementedException();
         }
     }
 }

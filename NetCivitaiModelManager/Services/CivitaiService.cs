@@ -2,6 +2,7 @@
 using CivitaiApi.CivitaiRequestParams;
 using CivitaiApi.Services;
 using Microsoft.Extensions.Logging;
+using NetCivitaiModelManager.Models;
 using Refit;
 using Serilog;
 using System.Threading.Tasks;
@@ -17,6 +18,11 @@ namespace NetCivitaiModelManager.Services
         {
             _service = service;
             _logger = logger;
+        }
+        public async Task LoadModelToLocal(LocalModel localModel)
+        {
+            if(string.IsNullOrEmpty(localModel.LocalFile.Hash)) return;
+            localModel.ExternalModel = await GetVersionAsync(localModel.LocalFile.Hash);
         }
         public async Task<BaseResponce?> GetCreatorsAsync(BaseRequestParams requestParams)
         {

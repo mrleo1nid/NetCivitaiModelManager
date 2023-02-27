@@ -14,7 +14,7 @@ namespace NetCivitaiModelManager.Models
         public string? DisplayName { get; set; }
         public string? DisplayImage { get; set; }
         public LocalFile? LocalFile { get; set; }
-        public Model? ExternalModel { get; set; }
+        public ModelVersion? ExternalModel { get; set; }
         public string? TypeDisplay { get { return ((TypesEnum)Type).AsString(EnumFormat.Description); } }
         public TypesEnum Type { get; set; }
 
