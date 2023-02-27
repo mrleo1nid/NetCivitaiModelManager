@@ -11,6 +11,8 @@ using Serilog.Exceptions.Refit.Destructurers;
 using Refit;
 using System;
 using CivitaiApi.Services;
+using NetCivitaiModelManager.Extensions;
+using System.Net.Http;
 
 namespace NetCivitaiModelManager
 {
@@ -24,18 +26,21 @@ namespace NetCivitaiModelManager
         public App()
         {
             InitializeComponent();
-
+            Application.Current.Exit += Current_Exit;
             // Register services
             if (!_initialized)
             {
                 _initialized = true;
                 var configsevice = new ConfigService("config.json");
+             
                 Log.Logger = new LoggerConfiguration()
+                    .MinimumLevel.Is(configsevice.Config.LogLevel)
                     .Enrich.WithExceptionDetails(new DestructuringOptionsBuilder()
                     .WithDefaultDestructurers()
                     .WithDestructurers(new[] { new ApiExceptionDestructurer() }))
-                    .WriteTo.File(new JsonFormatter(renderMessage: true),$"logs\\log-{DateTime.Now.ToString("dd-MM-yyyy")}.txt", Serilog.Events.LogEventLevel.Debug)
+                    .WriteTo.File(new JsonFormatter(renderMessage: true),$"logs\\log-{DateTime.Now.ToString("dd-MM-yyyy")}.txt", configsevice.Config.LogLevel)
                     .CreateLogger();
+                var httpClient = new HttpClient(new HttpLoggingHandler(Log.Logger)) { BaseAddress = new Uri(configsevice.Config.CivitaiBaseUrl) };
                 Ioc.Default.ConfigureServices(
                     new ServiceCollection()
                     //Logging
@@ -43,7 +48,7 @@ namespace NetCivitaiModelManager
                      loggingBuilder.AddSerilog(Log.Logger, dispose: true))
                     //Services
                     .AddSingleton<ConfigService>(configsevice)
-                    .AddSingleton(RestService.For<ICivitaiService>(configsevice.Config.CivitaiBaseUrl))
+                    .AddSingleton(RestService.For<ICivitaiService>(httpClient))
                     .AddSingleton<CivitaiService>()
                     .AddSingleton<LocalModelsService>()
                     //ViewModels
@@ -54,8 +59,11 @@ namespace NetCivitaiModelManager
                     .AddTransient<LocalModelsControlVM>()
                     .BuildServiceProvider()) ;
             }
+        }
 
-            
+        private void Current_Exit(object sender, ExitEventArgs e)
+        {
+            Log.CloseAndFlush();
         }
     }
 }

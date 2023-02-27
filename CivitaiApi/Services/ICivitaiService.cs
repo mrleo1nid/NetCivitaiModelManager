@@ -16,6 +16,7 @@ namespace CivitaiApi.Services
         Task<BaseResponce> GetCreators(BaseRequestParams @params);
 
         [Get("/api/v1/models")]
+        [QueryUriFormat(UriFormat.Unescaped)]
         Task<GetModelsResponce> GetModels(GetModelsParams @params);
 
         [Get("/api/v1/models/{id}")]

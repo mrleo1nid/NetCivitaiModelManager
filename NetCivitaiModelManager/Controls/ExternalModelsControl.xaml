@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Margin="5" Orientation="Horizontal">
             <ListBox Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0"
-                 ItemsSource="{Binding Types}" Background="AliceBlue" SelectionMode="Single">
+                 ItemsSource="{Binding Types}" Background="AliceBlue" SelectionMode="Multiple">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="SelectionChanged">
                         <b:CallMethodAction TargetObject="{Binding}" MethodName="FilterSelectionChanged"/>

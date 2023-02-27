@@ -1,5 +1,6 @@
 ﻿using CivitaiApi.CivitaiRequestParams;
 using Microsoft.Extensions.Logging;
+using NetCivitaiModelManager.Extension;
 using NetCivitaiModelManager.Models;
 using System;
 using System.Collections.Generic;

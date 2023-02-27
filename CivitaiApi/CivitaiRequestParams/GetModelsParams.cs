@@ -14,11 +14,11 @@ namespace CivitaiApi.CivitaiRequestParams
         [AliasAs("username  ")]
         public string? Username { get; set; }
         [AliasAs("types")]
-        public List<string>? Types { get; set; }
+        public string? Types { get; set; }
         [AliasAs("sort")]
-        public SortEnum? Sort { get; set; }
+        public string? Sort { get; set; }
         [AliasAs("period")]
-        public PeriodEnum? Period { get; set; }
+        public string? Period { get; set; }
         [AliasAs("rating")]
         public int? Raiting { get; set; }
         [AliasAs("favorites")]

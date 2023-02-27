@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using NetCivitaiModelManager.Extension;
 
 namespace NetCivitaiModelManager.ViewModels
 {
@@ -35,9 +36,7 @@ namespace NetCivitaiModelManager.ViewModels
         [RelayCommand]
         private async Task LoadModels()
         {
-            var types = currentfilter.Select(x => x.Name.Replace(" ", "")).ToList();
-            if (!types.Any()) types = null;
-            var responce = await _service.GetModelsAsync(new GetModelsParams() { Page = Page, Limit = 24, Types = types });
+            var responce = await _service.GetModelsAsync(new GetModelsParams() { Page = Page, Limit = 24, Types = currentfilter.GetRowToRequest() });
             AllModels = responce?.Items;
             MaxPages = responce?.Metadata.TotalPages ?? 999;
         }
