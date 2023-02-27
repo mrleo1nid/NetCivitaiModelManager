@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls" xmlns:syncfusion="http://schemas.syncfusion.com/wpf" xmlns:converters="clr-namespace:NetCivitaiModelManager.Converters" xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls" 
+             xmlns:converters="clr-namespace:NetCivitaiModelManager.Converters" 
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Background>
@@ -58,14 +60,36 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="#FF444242" OpacityMask="#FF939393" BorderThickness="1,1,1,1">
-                        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch" MinHeight="256" MaxHeight="256" MinWidth="256" MaxWidth="256" Orientation="Vertical">
-                            <StackPanel.Background>
+                        <Grid MinHeight="256" MaxHeight="256" MinWidth="256" MaxWidth="256">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.Background>
                                 <ImageBrush ImageSource="{Binding DisplayImage,Converter={StaticResource UrlToBitmapConverter}}"/>
-                            </StackPanel.Background>
-                            <local:OutlinedTextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding DisplayName}" 
-                                                     FontFamily="Verdana" FontSize="14pt" Fill="White" TextWrapping="Wrap" StrokeThickness="2" Stroke="Black" 
+                            </Grid.Background>
+                            <StackPanel Grid.ColumnSpan="1" Grid.Row="0"  HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <StackPanel.Background>
+                                    <SolidColorBrush Color="Blue" Opacity="0.6" />
+                                </StackPanel.Background>
+                                <local:OutlinedTextBlock  Text="{Binding TypeDisplay}" 
+                                                     FontFamily="Verdana" FontSize="10pt" Fill="White" TextWrapping="NoWrap" StrokeThickness="2" Stroke="Black" 
                                                      MaxWidth="256"/>
-                        </StackPanel>
+                            </StackPanel>
+                            <StackPanel Grid.ColumnSpan="2" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                                <StackPanel.Background>
+                                    <SolidColorBrush Color="LightGray" Opacity="0.6" />
+                                </StackPanel.Background>
+                                <local:OutlinedTextBlock Margin="5"  Text="{Binding DisplayName}" 
+                                                     FontFamily="Verdana" FontSize="12pt" Fill="White" TextWrapping="NoWrap" StrokeThickness="2" Stroke="Black" 
+                                                     MaxWidth="256"/>
+                            </StackPanel>
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

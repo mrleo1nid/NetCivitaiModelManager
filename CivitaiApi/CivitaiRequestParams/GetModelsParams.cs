@@ -14,7 +14,7 @@ namespace CivitaiApi.CivitaiRequestParams
         [AliasAs("username  ")]
         public string? Username { get; set; }
         [AliasAs("types")]
-        public TypesEnum? Types { get; set; }
+        public List<string>? Types { get; set; }
         [AliasAs("sort")]
         public SortEnum? Sort { get; set; }
         [AliasAs("period")]

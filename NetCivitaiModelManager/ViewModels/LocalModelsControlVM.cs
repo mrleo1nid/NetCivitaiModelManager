@@ -27,13 +27,7 @@ namespace NetCivitaiModelManager.ViewModels
         private List<LocalModel> alllocalModels = new List<LocalModel>();
         [ObservableProperty]
         private List<LocalModel> filteredModels = new List<LocalModel>();
-        [ObservableProperty]
-        private List<TypeToSelect> types = new List<TypeToSelect>() { 
-             new TypeToSelect(TypesEnum.Checkpoint)
-            ,new TypeToSelect(TypesEnum.TextualInversion)
-            ,new TypeToSelect(TypesEnum.LORA)
-            ,new TypeToSelect(TypesEnum.AestheticGradient)
-            ,new TypeToSelect(TypesEnum.Hypernetwork)};
+       
         private List<TypesEnum> currentfilter = new List<TypesEnum>();
         public LocalModelsControlVM(CivitaiService civitaiService, LocalModelsService localModelsService)
         {

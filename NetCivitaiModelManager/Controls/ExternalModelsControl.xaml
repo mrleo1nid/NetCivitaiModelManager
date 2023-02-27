@@ -3,13 +3,99 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls"
+             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls" xmlns:b="http://schemas.microsoft.com/xaml/behaviors" xmlns:converters="clr-namespace:NetCivitaiModelManager.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Background>
         <SolidColorBrush Color="AliceBlue"/>
     </UserControl.Background>
+    <UserControl.Resources>
+        <converters:UrlToBitmapConverter  x:Key="UrlToBitmapConverter"/>
+    </UserControl.Resources>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="41*"/>
+            <RowDefinition Height="409*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Margin="5" Orientation="Horizontal">
+            <ListBox Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0"
+                 ItemsSource="{Binding Types}" Background="AliceBlue" SelectionMode="Multiple">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="SelectionChanged">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="FilterSelectionChanged"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#FF444242" OpacityMask="#FF939393" BorderThickness="1,1,1,1">
+                            <local:OutlinedTextBlock MinHeight="20"
+                            HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Name}" Margin="2" 
+                                                     FontFamily="Verdana" FontSize="14pt" Fill="Black" TextWrapping="Wrap" Stroke="Black" 
+                                                     MaxWidth="256"/>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListBox>
+            <Button Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding LoadModelsCommand}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Source="/Icons/icon-refresh.png" Width="16" Height="16" Margin="5"/>
+                    <Label VerticalAlignment="Center" HorizontalAlignment="Center">Обновить</Label>
+                </StackPanel>
+            </Button>
+            <Button Margin="5" MinWidth="20" Content="-" Command="{Binding PrevPageCommand}"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Margin="1" Content="{Binding Page}"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Margin="1" Content="из"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Label Margin="1" Content="{Binding MaxPages}"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Button Margin="5" MinWidth="20" Content="+" Command="{Binding NextPageCommand}"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </StackPanel>
+        <ListBox Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"
+                 ItemsSource="{Binding AllModels}" Background="AliceBlue">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="4"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderBrush="#FF444242" OpacityMask="#FF939393" BorderThickness="1,1,1,1">
+                        <Grid MinHeight="256" MaxHeight="256" MinWidth="256" MaxWidth="256">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.Background>
+                                <ImageBrush ImageSource="{Binding DisplayImage,Converter={StaticResource UrlToBitmapConverter}}"/>
+                            </Grid.Background>
+                            <StackPanel Grid.ColumnSpan="1" Grid.Row="0"  HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <StackPanel.Background>
+                                    <SolidColorBrush Color="Blue" Opacity="0.6" />
+                                </StackPanel.Background>
+                                <local:OutlinedTextBlock  Text="{Binding Type}" 
+                                                     FontFamily="Verdana" FontSize="10pt" Fill="White" TextWrapping="NoWrap" StrokeThickness="2" Stroke="Black" 
+                                                     MaxWidth="256"/>
+                            </StackPanel>
+                            <StackPanel Grid.ColumnSpan="2" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                                <StackPanel.Background>
+                                    <SolidColorBrush Color="LightGray" Opacity="0.6" />
+                                </StackPanel.Background>
+                                <local:OutlinedTextBlock Margin="5"  Text="{Binding Name}" 
+                                                     FontFamily="Verdana" FontSize="12pt" Fill="White" TextWrapping="NoWrap" StrokeThickness="2" Stroke="Black" 
+                                                     MaxWidth="256"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using CivitaiApi.CivitaiDataContracts;
 using CivitaiApi.CivitaiRequestParams;
+using EnumsNET;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace NetCivitaiModelManager.Models
         public string? DisplayImage { get; set; }
         public LocalFile? LocalFile { get; set; }
         public Model? ExternalModel { get; set; }
-        
+        public string? TypeDisplay { get { return ((TypesEnum)Type).AsString(EnumFormat.Description); } }
         public TypesEnum Type { get; set; }
 
     }
