@@ -40,7 +40,7 @@ namespace NetCivitaiModelManager
                     .WithDestructurers(new[] { new ApiExceptionDestructurer() }))
                     .WriteTo.File(new JsonFormatter(renderMessage: true),$"logs\\log-{DateTime.Now.ToString("dd-MM-yyyy")}.txt", configsevice.Config.LogLevel)
                     .CreateLogger();
-                var httpClient = new HttpClient(new HttpLoggingHandler(Log.Logger)) { BaseAddress = new Uri(configsevice.Config.CivitaiBaseUrl) };
+                var httpClient = new HttpClient(new HttpLoggingHandler(Log.Logger)) { BaseAddress = new Uri(configsevice.Config.CivitaiBaseUrl), Timeout = TimeSpan.FromSeconds(60) };
                 Ioc.Default.ConfigureServices(
                     new ServiceCollection()
                     //Logging

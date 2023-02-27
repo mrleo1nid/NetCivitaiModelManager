@@ -37,7 +37,7 @@
                         <Border BorderBrush="#FF444242" OpacityMask="#FF939393" BorderThickness="1,1,1,1">
                             <local:OutlinedTextBlock MinHeight="20"
                             HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Name}" Margin="2" 
-                                                     FontFamily="Verdana" FontSize="14pt" Fill="Black" TextWrapping="Wrap" Stroke="Black" 
+                                                     FontFamily="Verdana" FontSize="10pt" Fill="Black" TextWrapping="Wrap" Stroke="Black" 
                                                      MaxWidth="256"/>
                         </Border>
                     </DataTemplate>

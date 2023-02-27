@@ -15,6 +15,10 @@ namespace CivitaiApi.CivitaiRequestParams
         [Description("Aesthetic Gradient")]
         AestheticGradient,
         [Description("LORA")]
-        LORA
+        LORA,
+        [Description("Controlnet")]
+        Controlnet,
+        [Description("Poses")]
+        Poses
     }
 }

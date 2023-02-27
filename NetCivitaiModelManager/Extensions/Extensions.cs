@@ -1,4 +1,6 @@
-﻿using NetCivitaiModelManager.Models;
+﻿using CivitaiApi.CivitaiRequestParams;
+using EnumsNET;
+using NetCivitaiModelManager.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -38,6 +40,18 @@ namespace NetCivitaiModelManager.Extension
             var type = String.Join("&types=", types);
             if (string.IsNullOrEmpty(type)) type = null;
             return type;
+        }
+        public static string GetEnumDescription(this TypesEnum Enum)
+        {
+            return ((TypesEnum)Enum).AsString(EnumFormat.Description);
+        }
+        public static string GetEnumDescription(this SortEnum Enum)
+        {
+            return ((SortEnum)Enum).AsString(EnumFormat.Description);
+        }
+        public static string GetEnumDescription(this PeriodEnum Enum)
+        {
+            return ((PeriodEnum)Enum).AsString(EnumFormat.Description);
         }
     }
 }

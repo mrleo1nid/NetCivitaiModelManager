@@ -20,23 +20,36 @@ namespace NetCivitaiModelManager.ViewModels
         private readonly CivitaiService _service;
         [ObservableProperty]
         private List<Model> allModels = new List<Model>();
-        private List<TypeToSelect> currentfilter = new List<TypeToSelect>();
         [ObservableProperty]
         private int page;
         [ObservableProperty]
         private int maxPages;
+        [ObservableProperty]
+        private string? selectedPeriod;
+        [ObservableProperty]
+        private string? selectedSort;
+
+        private List<TypeToSelect> currentfilter = new List<TypeToSelect>();
         public ExternalModelsControlVM(CivitaiService service)
         {
             _service = service;
-            page = 1;
-            maxPages = 999;
+            Page = 1;
+            MaxPages = 999;
+            SelectedPeriod = Periods.FirstOrDefault();
+            SelectedSort = Sort.FirstOrDefault();
             Task.Factory.StartNew(LoadModels);
         }
 
         [RelayCommand]
         private async Task LoadModels()
         {
-            var responce = await _service.GetModelsAsync(new GetModelsParams() { Page = Page, Limit = 24, Types = currentfilter.GetRowToRequest() });
+            var responce = await _service.GetModelsAsync(new GetModelsParams() 
+            {
+                Page = Page, Limit = 24, 
+                Types = currentfilter.GetRowToRequest(),
+                Period = SelectedPeriod.Replace(" ", "") == "AllTime" ? null : SelectedPeriod.Replace(" ", ""),
+                Sort = SelectedSort== "Highest Rated" ? null : SelectedSort
+            });
             AllModels = responce?.Items;
             MaxPages = responce?.Metadata.TotalPages ?? 999;
         }
@@ -79,6 +92,9 @@ namespace NetCivitaiModelManager.ViewModels
                 Task.Factory.StartNew(LoadModels);
             }
         }
-        
+        public void SelectionChanged(object sender, RoutedEventArgs e)
+        {
+           Task.Factory.StartNew(LoadModels);
+        }
     }
 }

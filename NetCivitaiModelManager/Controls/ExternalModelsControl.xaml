@@ -35,7 +35,7 @@
                         <Border BorderBrush="#FF444242" OpacityMask="#FF939393" BorderThickness="1,1,1,1">
                             <local:OutlinedTextBlock MinHeight="20"
                             HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Name}" Margin="2" 
-                                                     FontFamily="Verdana" FontSize="14pt" Fill="Black" TextWrapping="Wrap" Stroke="Black" 
+                                                     FontFamily="Verdana" FontSize="10pt" Fill="Black" TextWrapping="Wrap" Stroke="Black" 
                                                      MaxWidth="256"/>
                         </Border>
                     </DataTemplate>
@@ -47,6 +47,20 @@
                     <Label VerticalAlignment="Center" HorizontalAlignment="Center">Обновить</Label>
                 </StackPanel>
             </Button>
+            <ComboBox Margin="5" MinWidth="80" ItemsSource="{Binding Sort}" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedIndex="0" SelectedItem="{Binding SelectedSort}">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="SelectionChanged">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="SelectionChanged"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </ComboBox>
+            <ComboBox Margin="5" MinWidth="80" ItemsSource="{Binding Periods}" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedIndex="0" SelectedItem="{Binding SelectedPeriod}">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="SelectionChanged">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="SelectionChanged"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </ComboBox>
             <Button Margin="5" MinWidth="20" Content="-" Command="{Binding PrevPageCommand}"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <Label Margin="1" Content="{Binding Page}"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <Label Margin="1" Content="из"  VerticalAlignment="Center" HorizontalAlignment="Center"/>

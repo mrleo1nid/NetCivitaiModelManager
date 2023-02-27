@@ -1,5 +1,6 @@
 ﻿using CivitaiApi.CivitaiRequestParams;
 using EnumsNET;
+using NetCivitaiModelManager.Extension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace NetCivitaiModelManager.Models
         public TypeToSelect(TypesEnum type)
         {
             Type = type;
-            Name = ((TypesEnum)type).AsString(EnumFormat.Description);
+            Name = type.GetEnumDescription();
         }
     }
 }

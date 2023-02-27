@@ -19,10 +19,10 @@ namespace CivitaiApi.CivitaiDataContracts
         public string Name { get; set; }
 
         [JsonPropertyName("createdAt")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         [JsonPropertyName("updatedAt")]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         [JsonPropertyName("trainedWords")]
         public List<string> TrainedWords { get; set; }

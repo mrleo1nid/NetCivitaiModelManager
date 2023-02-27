@@ -11,6 +11,10 @@ namespace CivitaiApi.CivitaiRequestParams
         [Description("Most Downloaded")]
         MostDownloaded,
         [Description("Newest")]
-        Newest
+        Newest,
+        [Description("Most Liked")]
+        MostLiked,
+        [Description("Most Discussed")]
+        MostDiscussed
     }
 }
