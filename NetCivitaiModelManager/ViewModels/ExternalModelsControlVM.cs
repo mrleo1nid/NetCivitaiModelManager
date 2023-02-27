@@ -56,19 +56,19 @@ namespace NetCivitaiModelManager.ViewModels
         [RelayCommand]
         private async Task NextPage()
         {
-            if(page < maxPages)
+            if(Page < MaxPages)
             {
                 Page++;
-                await Task.Factory.StartNew(LoadModels);
+                await LoadModels();
             }
         }
         [RelayCommand]
         private async Task PrevPage()
         {
-            if (page >= 2)
+            if (Page >= 2)
             {
                 Page--;
-                await Task.Factory.StartNew(LoadModels);
+                await LoadModels();
             }
         }
         public void FilterSelectionChanged(object sender, RoutedEventArgs e)

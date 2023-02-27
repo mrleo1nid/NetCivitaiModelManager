@@ -81,12 +81,12 @@
                                                      FontFamily="Verdana" FontSize="10pt" Fill="White" TextWrapping="NoWrap" StrokeThickness="2" Stroke="Black" 
                                                      MaxWidth="256"/>
                             </StackPanel>
-                            <StackPanel Grid.ColumnSpan="2" Grid.Row="2"  HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                            <StackPanel Grid.ColumnSpan="2" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
                                 <StackPanel.Background>
                                     <SolidColorBrush Color="LightGray" Opacity="0.6" />
                                 </StackPanel.Background>
-                                <local:OutlinedTextBlock Margin="5"  Text="{Binding DisplayName}" 
-                                                     FontFamily="Verdana" FontSize="12pt" Fill="White" TextWrapping="NoWrap" StrokeThickness="2" Stroke="Black" 
+                                <local:OutlinedTextBlock HorizontalAlignment="Center" Margin="5"  Text="{Binding DisplayName}" 
+                                                     FontFamily="Verdana" FontSize="12pt" Fill="Black" TextWrapping="NoWrap" StrokeThickness="1" Stroke="Black" 
                                                      MaxWidth="256"/>
                             </StackPanel>
                         </Grid>
