@@ -2,7 +2,7 @@
 using NetCivitaiModelManager.ViewModels;
 using System.Windows.Controls;
 
-namespace NetCivitaiModelManager.Controls
+namespace NetCivitaiModelManager.Controls.Downoload
 {
     /// <summary>
     /// Логика взаимодействия для DownoloadControl.xaml
