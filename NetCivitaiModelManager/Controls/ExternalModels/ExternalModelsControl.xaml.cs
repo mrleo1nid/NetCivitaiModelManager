@@ -2,7 +2,7 @@
 using NetCivitaiModelManager.ViewModels;
 using System.Windows.Controls;
 
-namespace NetCivitaiModelManager.Controls
+namespace NetCivitaiModelManager.Controls.ExternalModels
 {
     /// <summary>
     /// Логика взаимодействия для ExternalModelsControl.xaml

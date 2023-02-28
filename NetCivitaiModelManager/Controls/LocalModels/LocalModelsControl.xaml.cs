@@ -2,7 +2,7 @@
 using NetCivitaiModelManager.ViewModels;
 using System.Windows.Controls;
 
-namespace NetCivitaiModelManager.Controls
+namespace NetCivitaiModelManager.Controls.LocalModels
 {
     /// <summary>
     /// Логика взаимодействия для LocalModelsControl.xaml
