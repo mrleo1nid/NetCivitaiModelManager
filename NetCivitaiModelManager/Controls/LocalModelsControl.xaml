@@ -13,13 +13,15 @@
     </UserControl.Background>
     <UserControl.Resources>
         <converters:UrlToBitmapConverter  x:Key="UrlToBitmapConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="41*"/>
-            <RowDefinition Height="409*"/>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="198*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Margin="5" Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Margin="5,5,5,5" Orientation="Horizontal">
             <ListBox Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="0"
                  ItemsSource="{Binding Types}" Background="AliceBlue" SelectionMode="Multiple">
                 <b:Interaction.Triggers>
@@ -50,7 +52,7 @@
                 </StackPanel>
             </Button>
         </StackPanel>
-        <ListBox Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"
+        <ListBox Margin="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"
                  ItemsSource="{Binding FilteredModels}" Background="AliceBlue">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -81,6 +83,22 @@
                                                      FontFamily="Verdana" FontSize="10pt" Fill="White" TextWrapping="NoWrap" StrokeThickness="2" Stroke="Black" 
                                                      MaxWidth="256"/>
                             </StackPanel>
+                            <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Vertical">
+                                <StackPanel >
+                                    <StackPanel.ToolTip>
+                                        <TextBlock>Хэш расчитан</TextBlock>
+                                    </StackPanel.ToolTip>
+                                    <Ellipse Fill="Green" VerticalAlignment="Top" HorizontalAlignment="Right" Width="15" Height="15" 
+                                     Visibility="{Binding LocalFile.HashRedy,Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                </StackPanel>
+                                <StackPanel >
+                                    <StackPanel.ToolTip>
+                                        <TextBlock>Модель найдена</TextBlock>
+                                    </StackPanel.ToolTip>
+                                    <Ellipse Fill="BlueViolet" VerticalAlignment="Top" HorizontalAlignment="Right" Width="15" Height="15" 
+                                     Visibility="{Binding ModelFound,Converter={StaticResource BoolToVisibilityConverter}}"/>
+                                </StackPanel>
+                            </StackPanel>
                             <StackPanel Grid.ColumnSpan="2" Grid.Row="2"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
                                 <StackPanel.Background>
                                     <SolidColorBrush Color="LightGray" Opacity="0.6" />
@@ -94,5 +112,23 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
+        <StackPanel Orientation="Horizontal"  Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="2" HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Visibility="{Binding HashService.IsStarted,Converter={StaticResource BoolToVisibilityConverter}}">
+                <Label Content="Расчёт хэша для :" Margin="1" VerticalAlignment="Center"/>
+                <Label Content="{Binding HashService.CurrentName}" Margin="1" VerticalAlignment="Center"/>
+                <ProgressBar Margin="2" MinHeight="10" MaxWidth="120" MinWidth="100" VerticalAlignment="Center" 
+                         Maximum="{Binding HashService.CurrentFullSize}" Value="{Binding HashService.CurrentProgress}"/>
+                <Label Content="Элементов в очереди :" Margin="1" VerticalAlignment="Center"/>
+                <Label Content="{Binding HashService.QuqueCount}" Margin="1" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="2"  HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Visibility="{Binding ModelLoadService.IsStarted,Converter={StaticResource BoolToVisibilityConverter}}">
+                <Label Content="Поиск версии для :" Margin="1" VerticalAlignment="Center"/>
+                <Label Content="{Binding HashService.CurrentName}" Margin="1" VerticalAlignment="Center"/>
+                <Label Content="Элементов в очереди :" Margin="1" VerticalAlignment="Center"/>
+                <Label Content="{Binding HashService.QuqueCount}" Margin="1" VerticalAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </UserControl>

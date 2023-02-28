@@ -1,15 +1,11 @@
 ﻿using CivitaiApi.CivitaiRequestParams;
 using Microsoft.Extensions.Logging;
-using NetCivitaiModelManager.Extension;
 using NetCivitaiModelManager.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace NetCivitaiModelManager.Services
 {
@@ -30,18 +26,18 @@ namespace NetCivitaiModelManager.Services
         {
             var models = new List<LocalModel>();
             var folder = _configService.Config.WebUiFolderPath;
-            models.AddRange(await GetModelsAsync(folder, TypesEnum.Checkpoint));
-            models.AddRange(await GetModelsAsync(folder, TypesEnum.LORA));
-            models.AddRange(await GetModelsAsync(folder, TypesEnum.AestheticGradient));
-            models.AddRange(await GetModelsAsync(folder, TypesEnum.Hypernetwork));
-            models.AddRange(await GetModelsAsync(folder, TypesEnum.TextualInversion));
-            models.AddRange(await GetModelsAsync(folder, TypesEnum.Controlnet));
-            models.AddRange(await GetModelsAsync(folder, TypesEnum.Poses));
+            models.AddRange(GetModelsAsync(folder, TypesEnum.Checkpoint));
+            models.AddRange(GetModelsAsync(folder, TypesEnum.LORA));
+            models.AddRange(GetModelsAsync(folder, TypesEnum.AestheticGradient));
+            models.AddRange(GetModelsAsync(folder, TypesEnum.Hypernetwork));
+            models.AddRange(GetModelsAsync(folder, TypesEnum.TextualInversion));
+            models.AddRange(GetModelsAsync(folder, TypesEnum.Controlnet));
+            models.AddRange(GetModelsAsync(folder, TypesEnum.Poses));
             return models;
         }
 
         
-        private async Task<List<LocalModel>> GetModelsAsync(string path, TypesEnum types)
+        private List<LocalModel> GetModelsAsync(string path, TypesEnum types)
         {
             var models = new List<LocalModel>();
             var folder = GetFolderByType(path,types);
@@ -73,7 +69,7 @@ namespace NetCivitaiModelManager.Services
             var folder = Path.GetDirectoryName(filepath);
             var imagepath = Path.Combine(folder, filename)+ ".preview.png";
             if(File.Exists(imagepath)) return imagepath;
-            else return Path.Combine(Environment.CurrentDirectory, "Icons\\icon-notfound.png");
+            else return Path.Combine(Environment.CurrentDirectory, "Icons\\card-no-preview.png");
         }
         private string GetFolderByType(string basepath,TypesEnum typesEnum)
         {

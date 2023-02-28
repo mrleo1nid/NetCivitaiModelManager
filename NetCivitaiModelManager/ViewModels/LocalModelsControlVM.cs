@@ -22,20 +22,36 @@ namespace NetCivitaiModelManager.ViewModels
     {
         private CivitaiService _service;
         private LocalModelsService _localModelsService;
-        private HashService _hashService;
-
+        public  HashService HashService { get; }
+        public ModelLoadService ModelLoadService { get; }
         [ObservableProperty]
         private List<LocalModel> alllocalModels = new List<LocalModel>();
         [ObservableProperty]
         private List<LocalModel> filteredModels = new List<LocalModel>();
        
         private List<TypesEnum> currentfilter = new List<TypesEnum>();
-        public LocalModelsControlVM(CivitaiService civitaiService, LocalModelsService localModelsService, HashService hashservvice)
+        public LocalModelsControlVM(CivitaiService civitaiService, LocalModelsService localModelsService,
+            HashService hashservvice, ModelLoadService modelLoadService)
         {
             _service = civitaiService;
             _localModelsService = localModelsService;
-            _hashService = hashservvice;
+            HashService = hashservvice;
+            ModelLoadService = modelLoadService;
+            HashService.NotifyHashComplete += HashService_NotifyHashComplete;
             Task.Factory.StartNew(LoadModels);
+        }
+
+        private void HashService_NotifyHashComplete(LocalFile file)
+        {
+            var models = AlllocalModels.Where(x => x.LocalFile == file);
+            if(models.Any())
+            {
+                foreach(var model in models)
+                {
+                    ModelLoadService.AddToQuque(model);
+                }
+                ModelLoadService.Start();
+            }
         }
 
         [RelayCommand]
@@ -45,13 +61,15 @@ namespace NetCivitaiModelManager.ViewModels
             FilteredModels = new List<LocalModel>();
             AlllocalModels = await _localModelsService.GetLocalModelsAsync();
             RefreshList();
-            await Task.Factory.StartNew(CalculateHash);
+            CalculateHash();
         }
-        private async Task CalculateHash()
+        private void CalculateHash()
         {
             foreach (var model in AlllocalModels)
-                _hashService.AddToQuque(model);
-            _hashService.Start();
+            {
+                HashService.AddToQuque(model.LocalFile);
+            }
+            HashService.Start();
         }
         private void RefreshList()
         {

@@ -9,9 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows;
-using NetCivitaiModelManager.Extension;
+using NetCivitaiModelManager.Extensions;
 
 namespace NetCivitaiModelManager.ViewModels
 {
@@ -37,6 +36,7 @@ namespace NetCivitaiModelManager.ViewModels
             MaxPages = 999;
             SelectedPeriod = Periods.FirstOrDefault();
             SelectedSort = Sort.FirstOrDefault();
+
             Task.Factory.StartNew(LoadModels);
         }
 
@@ -73,7 +73,7 @@ namespace NetCivitaiModelManager.ViewModels
         }
         public void FilterSelectionChanged(object sender, RoutedEventArgs e)
         {
-            var elem = sender as ListBox;
+            var elem = sender as System.Windows.Controls.ListBox;
             if (elem != null)
             {
                 if (elem.SelectedItems.Count == 0)

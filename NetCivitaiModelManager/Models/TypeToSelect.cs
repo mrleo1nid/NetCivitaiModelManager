@@ -1,12 +1,5 @@
 ﻿using CivitaiApi.CivitaiRequestParams;
-using EnumsNET;
-using NetCivitaiModelManager.Extension;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+using NetCivitaiModelManager.Extensions;
 
 namespace NetCivitaiModelManager.Models
 {

@@ -1,73 +1,108 @@
-﻿using Microsoft.Extensions.Logging;
-using NetCivitaiModelManager.Extension;
+﻿using Blake3Core;
+using Microsoft.Extensions.Logging;
 using NetCivitaiModelManager.Models;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NetCivitaiModelManager.Services
 {
-    public class HashService
+    public partial class HashService : BaseQuequeService
     {
-        public delegate void HashCompleteHandler(LocalModel model);
+        public delegate void HashCompleteHandler(LocalFile file);
         public event HashCompleteHandler? NotifyHashComplete;
-        private Dictionary<string, string> _calculatedHash;
 
-        public List<LocalModel> Quque { get; private set; } = new List<LocalModel>();
-        public LocalModel? CurrentModel { get; private set; }
-        public bool IsStarted { get; private set; }
+        public List<LocalFile> Quque { get; private set; } = new List<LocalFile>();
+
+        private LocalFile? currentFile;
         private ILogger<HashService> _logger;
-        public HashService(ILogger<HashService> logger)
+        private BlobCasheService _blobCasheService;
+        public HashService(ILogger<HashService> logger, BlobCasheService blobCasheService)
         {
             _logger = logger;
+            _blobCasheService = blobCasheService;
             IsStarted = false;
-            _calculatedHash = new Dictionary<string, string>();
         }
-        public void AddToQuque(LocalModel localModel)
+        public void AddToQuque(LocalFile localFile)
         {
-            if(!Quque.Contains(localModel))
-                Quque.Add(localModel);
+            if(!Quque.Contains(localFile))
+                Quque.Add(localFile);
         }
         public void Start()
         {
             if(!IsStarted)
             {
                 IsStarted = true;
-                RefreshModel();
+                QuqueCount = Quque.Count;
+                Task.Factory.StartNew(RefreshModel);
             }
         }
-        private void RefreshModel()
+        private async Task RefreshModel()
         {
-            if (CurrentModel == null)
+            if (currentFile == null)
             {
                 if (Quque.Any())
                 {
-                    CurrentModel = Quque.FirstOrDefault();
-                    ProcessCurentModel();
+                    currentFile = Quque.FirstOrDefault();
+                    CurrentName = currentFile.Name;
+                    await CalculateModelHash();
+                }
+                else
+                {
+                    if (IsStarted)
+                        IsStarted = false;
                 }
             }
         }
-        private void ProcessCurentModel()
-        {
-            Task.Factory.StartNew(CalculateModelHash);
-        }
+       
         public async Task CalculateModelHash()
         {
-            if (!string.IsNullOrEmpty(CurrentModel.LocalFile?.Hash))
+            if (!string.IsNullOrEmpty(currentFile?.Hash))
                 return;
 
-            var hash = string.Empty;
-            var identifier = GetFileIdentifier(CurrentModel.LocalFile.FullName);
-                var algo = SHA256.Create();
-                using (var stream = File.OpenRead(CurrentModel.LocalFile.FullName))
-                    hash = await stream.GetHashAsync(algo);
-            CurrentModel.LocalFile.Hash = hash;
-            NotifyHashComplete?.Invoke(CurrentModel);
-            RefreshModel();
+            var identifier = GetFileIdentifier(currentFile.FullName);
+            var hash = await _blobCasheService.GetHash(identifier);
+            if(string.IsNullOrEmpty(hash))
+            {
+                using (var stream = File.OpenRead(currentFile.FullName))
+                    hash = await GetHashAsync(stream);
+                await _blobCasheService.InsertHash(identifier, hash);
+            }
+            currentFile.Hash = hash;
+            currentFile.HashRedy = true;
+            NotifyHashComplete?.Invoke(currentFile);
+            Quque.Remove(currentFile);
+            currentFile = null;
+            QuqueCount = Quque.Count;
+            await RefreshModel();
+        }
+       
+        private async Task<string> GetHashAsync(Stream stream)
+        {
+            CurrentFullSize = stream.Length;
+            CurrentProgress = 0;
+            StringBuilder sb;
+            using (var algo = new Blake3())
+            {
+                var buffer = new byte[8192];
+                int bytesRead;
+                // compute the hash on 8KiB blocks
+                while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+                {
+                    algo.TransformBlock(buffer, 0, bytesRead, buffer, 0);
+                    CurrentProgress += bytesRead;
+                }
+                algo.TransformFinalBlock(buffer, 0, bytesRead);
+
+                // build the hash string
+                sb = new StringBuilder(algo.HashSize / 4);
+                for(int i = 0; i < 32; i++)
+                    sb.AppendFormat("{0:x2}", algo.Hash[i]);
+            }
+            return sb.ToString().ToUpper();
         }
         private string GetFileIdentifier(string filepath)
         {

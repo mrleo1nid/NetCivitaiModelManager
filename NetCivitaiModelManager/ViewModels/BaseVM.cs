@@ -1,7 +1,7 @@
 ﻿using CivitaiApi.CivitaiRequestParams;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using NetCivitaiModelManager.Extension;
+using NetCivitaiModelManager.Extensions;
 using NetCivitaiModelManager.Models;
 using NetCivitaiModelManager.Services;
 using System.Collections.Generic;
