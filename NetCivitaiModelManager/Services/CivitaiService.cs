@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using NetCivitaiModelManager.Models;
 using Refit;
 using Serilog;
+using System;
+using System.Security.Policy;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -21,8 +23,15 @@ namespace NetCivitaiModelManager.Services
         }
         public async Task LoadModelToLocal(LocalModel localModel)
         {
-            if(string.IsNullOrEmpty(localModel.LocalFile.Hash)) return;
-            localModel.ExternalModel = await GetVersionAsync(localModel.LocalFile.Hash);
+            try
+            {
+                if (string.IsNullOrEmpty(localModel.LocalFile.Hash)) return;
+                localModel.ExternalModel = await _service.GetModelVersion(localModel.LocalFile.Hash);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogDebug(ex.Message);
+            }
         }
         public async Task<BaseResponce?> GetCreatorsAsync(BaseRequestParams requestParams)
         {

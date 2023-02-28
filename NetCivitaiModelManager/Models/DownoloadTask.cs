@@ -13,25 +13,31 @@ namespace NetCivitaiModelManager.Models
 {
     public partial class DownoloadTask : ObservableObject
     {
+        [ObservableProperty]
+        private int number;
         private HttpClient _httpClient;
         public string Url { get; private set; }
-        public string Path { get; private set; }
+        public string FilePath { get; private set; }
 
         [ObservableProperty]
-        private IProgress<float> downoloadProgress;
+        private float downoloadProgress;
         [ObservableProperty]
         private DownoloadStates downoloadState;
+        [ObservableProperty]
+        private string name;
         public bool IsStarted { get; set; }
-
+        
         private CancellationToken cancellationToken;
-        public DownoloadTask(string url, string path)
+        public DownoloadTask(string url, string path, int number)
         {
             Url = url;
-            Path = path;
+            FilePath = path;
             _httpClient = new HttpClient() { BaseAddress = new Uri(url) };
             cancellationToken = new CancellationToken();
             DownoloadState = DownoloadStates.Created;
             IsStarted = false;
+            Number = number;
+            Name = Path.GetFileName(FilePath);
         }
         public async Task StartAsync()
         {
@@ -39,13 +45,14 @@ namespace NetCivitaiModelManager.Models
             {
                 IsStarted = true;
                 DownoloadState = DownoloadStates.Downoloading;
+                IProgress<float> progress = new Progress<float>(e => DownoloadProgress = e);
                 // Create a file stream to store the downloaded data.
                 // This really can be any type of writeable stream.
-                using (var file = new FileStream(Path, FileMode.Create, FileAccess.Write, FileShare.None))
+                using (var file = new FileStream(FilePath, FileMode.Create, FileAccess.Write, FileShare.None))
                 {
                     // Use the custom extension method below to download the data.
                     // The passed progress-instance will receive the download status updates.
-                    await _httpClient.DownloadAsync(Url, file, DownoloadProgress, cancellationToken);
+                    await _httpClient.DownloadAsync(Url, file, progress, cancellationToken);
                 }
                 DownoloadComplete();
             }

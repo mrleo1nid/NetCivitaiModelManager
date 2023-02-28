@@ -15,21 +15,21 @@ namespace NetCivitaiModelManager.Services
         private ILogger<FileDownoloadService> _logger;
 
         [ObservableProperty]
-        public List<DownoloadTask> downoloads = new List<DownoloadTask>();
+        private List<DownoloadTask> downoloads = new List<DownoloadTask>();
         public FileDownoloadService(ILogger<FileDownoloadService> logger)
         {
             _logger = logger;
         }
         public async Task AddAndStart(string url, string path)
         {
-            if(Downoloads.Where(x => x.Url == url && x.Path==path).Any())
+            if(Downoloads.Where(x => x.Url == url && x.FilePath == path).Any())
             {
                 MessageBox.Show("Данная загрузка уже существует");
                 return;
             }
             else
             {
-                var task = new DownoloadTask(url, path);
+                var task = new DownoloadTask(url, path, Downoloads.Count+1);
                 Downoloads.Add(task);
                 Task.Factory.StartNew(task.StartAsync);
             }
