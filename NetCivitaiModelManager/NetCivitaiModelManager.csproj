@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
+	<LangVersion>10.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -47,6 +48,7 @@
   <ItemGroup>
     <PackageReference Include="Blake3Core" Version="0.1.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
+    <PackageReference Include="Downloader" Version="3.0.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
@@ -58,6 +60,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CivitaiApi\CivitaiApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controls\LocalModels\" />
   </ItemGroup>
 
 </Project>
