@@ -3,27 +3,126 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls.Downoload"
+             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls.Downoload" xmlns:converters="clr-namespace:NetCivitaiModelManager.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Background>
         <SolidColorBrush Color="AliceBlue"/>
     </UserControl.Background>
+    <UserControl.Resources>
+        <converters:DownoloadStateToStringConverter  x:Key="DownoloadStateToStringConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="11*"/>
-            <RowDefinition Height="8*"/>
             <RowDefinition Height="139*"/>
         </Grid.RowDefinitions>
-        <local:DownoloadPanel Grid.Row="0" DataContext="{Binding}"/>
-        <local:DownoloadHeader Grid.Row="1"/>
-        <ListBox Margin="5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="2"
+        <local:DownoloadPanel DataContext="{Binding}" Grid.Row="0"/>
+        <ListView HorizontalContentAlignment="Stretch" Grid.Row="1"
                  ItemsSource="{Binding FileDownoloadService.Downoloads}" Background="AliceBlue" SelectionMode="Single">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <local:DownoloadItem HorizontalAlignment="Stretch" DataContext="{Binding}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ListBox>
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Number}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="№"></TextBlock>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Имя файла"></TextBlock>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding State, Converter={StaticResource DownoloadStateToStringConverter}}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Статус"></TextBlock>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel  Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                        <ProgressBar  Margin="1" MinWidth="160" MinHeight="10"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Maximum="100" Value="{Binding DownoloadProgress}"/>
+                                        <TextBlock MinWidth="40" Margin="1" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding TextProgress}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Прогресс"></TextBlock>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Speed}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Скорость"></TextBlock>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" >
+                                        <TextBlock  MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5" Text="{Binding BytesReceived}"/>
+                                        <TextBlock  MinWidth="30" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text=" из "/>
+                                        <TextBlock  MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="{Binding TotalBytesToReceive}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Скачанно"></TextBlock>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Time}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Оставшееся время"></TextBlock>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding FilePath}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Путь"></TextBlock>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Url}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Исходная ссылка"></TextBlock>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>

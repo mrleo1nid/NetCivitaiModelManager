@@ -13,7 +13,11 @@
         <SolidColorBrush Color="AliceBlue"/>
     </Window.Background>
     <Grid>
-        <TabControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="375*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="0">
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
@@ -59,7 +63,7 @@
                     </ControlTemplate>
                 </TabItem.Template>
             </TabItem>
-            
         </TabControl>
+        <controls:BottomInfoPanel Grid.Row="1"/>
     </Grid>
 </Window>

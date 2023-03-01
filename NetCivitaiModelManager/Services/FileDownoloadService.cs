@@ -14,15 +14,24 @@ namespace NetCivitaiModelManager.Services
 {
     public partial class FileDownoloadService : ObservableObject
     {
+        private readonly string _keytocash = "FileDownoloadService_LastSavedDownoloadTasks";
         private ILogger<FileDownoloadService> _logger;
         private ConfigService _configService;
-
+        private BlobCasheService _blobcash;
         [ObservableProperty]
         private List<DownoloadTask> downoloads = new List<DownoloadTask>();
-        public FileDownoloadService(ILogger<FileDownoloadService> logger, ConfigService configService)
+
+        [ObservableProperty]
+        private int allDownoloadsCount = 0;
+        [ObservableProperty]
+        private double allProgress = 0;
+        [ObservableProperty]
+        private bool workedExist = false;
+        public FileDownoloadService(ILogger<FileDownoloadService> logger, ConfigService configService, BlobCasheService blobCasheService)
         {
             _logger = logger;
             _configService = configService;
+            _blobcash = blobCasheService;
         }
 
         public async Task AddAndStart(string url, string path)
@@ -44,6 +53,14 @@ namespace NetCivitaiModelManager.Services
                 return task;
             }    
         }
+        public async Task SaveDownoloadsToCash()
+        {
+            await _blobcash.InsertDownoloadTask(_keytocash, Downoloads);
+        }
+        public async Task LoadDownoloadsFromCash()
+        {
+            Downoloads = await _blobcash.GetDownoloadTask(_keytocash);
+        }
         private DownloadService CreateDownloadService(DownloadConfiguration config)
         {
             var downloadService = new DownloadService(config);
@@ -62,11 +79,11 @@ namespace NetCivitaiModelManager.Services
             var downoloader = sender as DownloadService;
 
             var task = GetTaskByService(downoloader);
-            var identifier = string.Empty;
+            var identifier = "indefined";
             if(task != null)
             {
                 identifier = task.GetIdenty();
-                task.State = DownoloadStates.Completed;
+                task.Complete();
             }
             if (e.Cancelled)
             {
@@ -80,6 +97,7 @@ namespace NetCivitaiModelManager.Services
             {
                 _logger.LogDebug(identifier + "DONE :");
             }
+            UpdateInfo();
         }
 
         private void DownloadService_DownloadProgressChanged(object? sender, DownloadProgressChangedEventArgs e)
@@ -91,6 +109,7 @@ namespace NetCivitaiModelManager.Services
             {
                 task.UpdateProgress(e);
             }
+            UpdateInfo();
         }
 
         private void DownloadService_ChunkDownloadProgressChanged(object? sender, DownloadProgressChangedEventArgs e)
@@ -114,6 +133,16 @@ namespace NetCivitaiModelManager.Services
                 task.State = DownoloadStates.Downoloading;
             }
             
+        }
+        private void UpdateInfo()
+        {
+            var curdownloads = downoloads.Where(x => x.State == DownoloadStates.Downoloading);
+            double currprogress = 0;
+            foreach (var downoload in curdownloads)
+                currprogress += downoload.DownoloadProgress;
+            AllDownoloadsCount = curdownloads.Count();
+            AllProgress = currprogress / (100d * AllDownoloadsCount);
+            if(AllDownoloadsCount > 0) WorkedExist =true; else WorkedExist = false;
         }
     }
 }

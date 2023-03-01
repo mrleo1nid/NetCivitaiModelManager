@@ -19,7 +19,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="19*"/>
             <RowDefinition Height="198*"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <local:ModelFilter Grid.Row="0" DataContext="{Binding}"/>
         <ListBox MinHeight="200" Margin="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"
@@ -35,6 +34,5 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListBox>
-        <local:BottomPanel Grid.Row="2" DataContext="{Binding}"/>
     </Grid>
 </UserControl>

@@ -29,21 +29,22 @@ namespace NetCivitaiModelManager.Models
         [ObservableProperty]
         private string textProgress;
         [ObservableProperty]
-        private string speed;
+        private string? speed;
         [ObservableProperty]
-        private string bytesReceived;
+        private string? bytesReceived;
         [ObservableProperty]
-        private string totalBytesToReceive;
+        private string? totalBytesToReceive;
         [ObservableProperty]
-        private string time;
-
-        private string _url;
-        private string _filePath;
+        private string? time;
+        [ObservableProperty]
+        private string url;
+        [ObservableProperty]
+        private string filePath;
         public DownloadService DownloadService { get; private set; }
         public DownoloadTask(string url, string path, int number, DownloadService service)
         {
-            _url = url;
-            _filePath = path;
+            Url = url;
+            FilePath = path;
             Number = number;
             Name = Path.GetFileName(path);
             Created = DateTime.Now;
@@ -53,7 +54,7 @@ namespace NetCivitaiModelManager.Models
         
         public DownoloadTask Start()
         {
-            DownloadService.DownloadFileTaskAsync(_url, _filePath).ConfigureAwait(false);
+            DownloadService.DownloadFileTaskAsync(Url, FilePath).ConfigureAwait(false);
             return this;
         }
         public void Cancel()
@@ -73,12 +74,20 @@ namespace NetCivitaiModelManager.Models
         }
         public string GetIdenty()
         { 
-            return  $"({_filePath} : {_url})";
+            return  $"({FilePath} : {Url})";
         }
         public bool Equal(string url, string path)
         {
-            if(_url == url && _filePath == path) return true;
+            if(Url == url && FilePath == path) return true;
             return false;
+        }
+        public void Complete()
+        {
+            State = DownoloadStates.Completed;
+            Time = "Готово";
+            Speed = null;
+            TotalBytesToReceive = null;
+            BytesReceived = null;
         }
         public void UpdateProgress(DownloadProgressChangedEventArgs e)
         {

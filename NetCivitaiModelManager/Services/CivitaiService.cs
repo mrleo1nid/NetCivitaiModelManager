@@ -71,7 +71,7 @@ namespace NetCivitaiModelManager.Services
         {
             try
             {
-                return await _service.GetModels(getModelsParams);
+                return  await _service.GetModels(getModelsParams);
             }
             catch (ValidationApiException validationException)
             {
@@ -84,6 +84,7 @@ namespace NetCivitaiModelManager.Services
                 return null;
             }
         }
+       
         public async Task<ModelVersion?> GetVersionAsync(int id)
         {
             try

@@ -1,4 +1,5 @@
 ﻿using Blake3Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
 using NetCivitaiModelManager.Models;
 using System.Collections.Generic;
@@ -20,6 +21,9 @@ namespace NetCivitaiModelManager.Services
         private LocalFile? currentFile;
         private ILogger<HashService> _logger;
         private BlobCasheService _blobCasheService;
+
+        [ObservableProperty]
+        private string allProgress = string.Empty;
         public HashService(ILogger<HashService> logger, BlobCasheService blobCasheService)
         {
             _logger = logger;

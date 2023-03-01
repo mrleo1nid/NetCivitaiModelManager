@@ -1,19 +1,19 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using NetCivitaiModelManager.Services;
 using System.Windows.Input;
 
 namespace NetCivitaiModelManager.ViewModels
 {
     public partial class MainVM : BaseVM
     {
-        public MainVM() 
+        public FileDownoloadService FileDownoloadService { get; private set; }
+        public HashService HashService { get; private set; }
+        public ModelLoadService ModelLoadService { get; private set; }
+        public MainVM(FileDownoloadService fileDownoloadService, HashService hashService, ModelLoadService modelLoad) 
         {
-            OpenConfigWindowCommand = new RelayCommand(OpenConfigWindow);
-        }
-
-        public ICommand OpenConfigWindowCommand { get; }
-        private void OpenConfigWindow()
-        {
-           
+            FileDownoloadService = fileDownoloadService;
+            HashService = hashService;
+            ModelLoadService = modelLoad;
         }
     }
 }

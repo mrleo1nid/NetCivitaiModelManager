@@ -9,6 +9,7 @@ namespace CivitaiApi.CivitaiDataContracts
 {
     public class Model
     {
+        [JsonIgnore]
         public string? DisplayImage { get { return ModelVersions.OrderByDescending(x => x.UpdatedAt).FirstOrDefault()?.Images.FirstOrDefault()?.Url; } }
 
         [JsonPropertyName("id")]

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NetCivitaiModelManager.Controls.Downoload
+namespace NetCivitaiModelManager.Controls
 {
     /// <summary>
-    /// Логика взаимодействия для DownoloadHeader.xaml
+    /// Логика взаимодействия для BottomInfoPanel.xaml
     /// </summary>
-    public partial class DownoloadHeader : UserControl
+    public partial class BottomInfoPanel : UserControl
     {
-        public DownoloadHeader()
+        public BottomInfoPanel()
         {
             InitializeComponent();
         }

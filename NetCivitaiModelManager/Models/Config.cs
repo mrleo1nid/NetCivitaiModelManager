@@ -17,7 +17,7 @@ namespace NetCivitaiModelManager.Models
         public string ApiKey { get; set; } = "";
 
         [JsonPropertyName("LogLevel")]
-        public LogEventLevel LogLevel { get; set; } = LogEventLevel.Debug;
+        public LogEventLevel LogLevel { get; set; } = LogEventLevel.Warning;
         [JsonPropertyName("CashFolder")]
         public string CashPath { get; set; } = "cash";
         [JsonPropertyName("CashFileName")]

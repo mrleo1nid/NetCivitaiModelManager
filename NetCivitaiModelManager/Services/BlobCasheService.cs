@@ -1,10 +1,12 @@
 ﻿using Akavache;
 using Akavache.Sqlite3;
 using Microsoft.Extensions.Logging;
+using NetCivitaiModelManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
@@ -29,19 +31,22 @@ namespace NetCivitaiModelManager.Services
         {
             await _blob.InsertObject(key, hash);
         }
-        public BitmapImage GetImage(string key)
+
+        public async Task InsertDownoloadTask(string key, List<DownoloadTask> tasks)
         {
-            BitmapImage  bitmapImage = null;
             try
             {
-                bitmapImage = _blob.GetObject<BitmapImage>(key).Wait();
+                await _blob.InsertObject(key, tasks);
             }
-            catch
+            catch (Exception ex)
             {
-                bitmapImage = new BitmapImage(new Uri(key));
-                _blob.InsertObject(key, bitmapImage);
+                _logger.LogError(ex.Message);
             }
-            return bitmapImage;
+        }
+        public async Task<List<DownoloadTask>> GetDownoloadTask(string key)
+        {
+            return await _blob.GetObject<List<DownoloadTask>>(key)
+               .Catch(Observable.Return(new List<DownoloadTask>()));
         }
     }
 }

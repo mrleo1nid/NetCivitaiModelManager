@@ -27,8 +27,6 @@ namespace NetCivitaiModelManager
     public partial class App : Application
     {
         private bool _initialized;
-        private readonly ConfigService configsevice;
-        private SQLiteEncryptedBlobCache sQLiteEncryptedBlobCache;
         public App()
         {
             InitializeComponent();
@@ -37,10 +35,8 @@ namespace NetCivitaiModelManager
             if (!_initialized)
             {
                 _initialized = true;
-                configsevice = new ConfigService("config.json");
-                CreateBlob();
-                CreateLogger();
-                var httpClient = new HttpClient(new HttpLoggingHandler(Log.Logger)) { BaseAddress = new Uri(configsevice.Config.CivitaiBaseUrl), Timeout = TimeSpan.FromSeconds(90) };
+                var configsevice = new ConfigService("config.json");
+                CreateLogger(configsevice);
                 Ioc.Default.ConfigureServices(
                     new ServiceCollection()
                     //Logging
@@ -49,8 +45,8 @@ namespace NetCivitaiModelManager
                     //Services
 
                     .AddSingleton<ConfigService>(configsevice)
-                    .AddSingleton<SQLiteEncryptedBlobCache>(sQLiteEncryptedBlobCache)
-                    .AddSingleton(RestService.For<ICivitaiService>(httpClient))
+                    .AddSingleton<SQLiteEncryptedBlobCache>(CreateBlob(configsevice))
+                    .AddSingleton(RestService.For<ICivitaiService>(CreateHttpClient(configsevice)))
                     .AddSingleton<CivitaiService>()
                     .AddSingleton<LocalModelsService>()
                     .AddSingleton<HashService>()
@@ -66,7 +62,7 @@ namespace NetCivitaiModelManager
                     .BuildServiceProvider());
             }
         }
-        private void CreateBlob()
+        private SQLiteEncryptedBlobCache CreateBlob(ConfigService configsevice)
         {
             string path = string.Empty;
             if (Uri.IsWellFormedUriString(configsevice.Config.CashPath, UriKind.Absolute)) 
@@ -74,9 +70,9 @@ namespace NetCivitaiModelManager
             else 
                 path = Path.Combine(Environment.CurrentDirectory, configsevice.Config.CashPath);
             if(!Directory.Exists(path)) Directory.CreateDirectory(path);
-            sQLiteEncryptedBlobCache = new SQLiteEncryptedBlobCache(Path.Combine(path, configsevice.Config.CashFileName));
+            return new SQLiteEncryptedBlobCache(Path.Combine(path, configsevice.Config.CashFileName));
         }
-        private void CreateLogger()
+        private void CreateLogger(ConfigService configsevice)
         {
             Log.Logger = new LoggerConfiguration()
                   .MinimumLevel.Is(configsevice.Config.LogLevel)
@@ -86,9 +82,20 @@ namespace NetCivitaiModelManager
                   .WriteTo.File(new JsonFormatter(renderMessage: true), $"logs\\log-{DateTime.Now.ToString("dd-MM-yyyy")}.txt", configsevice.Config.LogLevel)
                   .CreateLogger();
         }
+        private HttpClient CreateHttpClient(ConfigService configsevice)
+        {
+            return new HttpClient(new HttpLoggingHandler(Log.Logger))
+            {
+                BaseAddress = new Uri(configsevice.Config.CivitaiBaseUrl),
+                Timeout = TimeSpan.FromSeconds(90)
+            };
+        }
         private async void Current_Exit(object sender, ExitEventArgs e)
         {
+            var downoloadService = Ioc.Default.GetRequiredService<FileDownoloadService>();
+            await downoloadService.SaveDownoloadsToCash();
             Log.CloseAndFlush();
+            var sQLiteEncryptedBlobCache = Ioc.Default.GetRequiredService<SQLiteEncryptedBlobCache>();
             await sQLiteEncryptedBlobCache.Flush();
             await sQLiteEncryptedBlobCache.Shutdown;
         }
