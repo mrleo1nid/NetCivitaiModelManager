@@ -93,7 +93,7 @@ namespace NetCivitaiModelManager
         private async void Current_Exit(object sender, ExitEventArgs e)
         {
             var downoloadService = Ioc.Default.GetRequiredService<FileDownoloadService>();
-            await downoloadService.SaveDownoloadsToCash();
+            downoloadService.SaveDownoloadsToCash();
             Log.CloseAndFlush();
             var sQLiteEncryptedBlobCache = Ioc.Default.GetRequiredService<SQLiteEncryptedBlobCache>();
             await sQLiteEncryptedBlobCache.Flush();

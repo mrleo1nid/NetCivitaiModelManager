@@ -18,6 +18,8 @@ namespace NetCivitaiModelManager.Models
         [Description("Отменен")]
         Cancel,
         [Description("Пауза")]
-        Paused
+        Paused,
+        [Description("Ошибка")]
+        Error
     }
 }

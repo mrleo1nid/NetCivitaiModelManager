@@ -53,13 +53,28 @@ namespace NetCivitaiModelManager.Services
                 return task;
             }    
         }
-        public async Task SaveDownoloadsToCash()
+        public void SaveDownoloadsToCash()
         {
-            await _blobcash.InsertDownoloadTask(_keytocash, Downoloads);
+             foreach(var task in Downoloads) { task.DownloadService.CancelAsync(); }
+             _blobcash.InsertDownoloadTask(_keytocash, Downoloads);
         }
         public async Task LoadDownoloadsFromCash()
         {
             Downoloads = await _blobcash.GetDownoloadTask(_keytocash);
+            foreach (var d in Downoloads) 
+            {
+                
+                d.DownloadService = CreateDownloadService(_configService.DownloadConfiguration);
+                var pack = await _blobcash.GetDownoloadPack(d.Id.ToString());
+                if (pack != null && d.State == DownoloadStates.Downoloading)
+                    d.StartFromPack(pack);
+                else if (pack != null && d.State == DownoloadStates.Completed)
+                {
+                    d.DownloadService.Package = pack;
+                    d.DownoloadProgress = 100;
+                }
+                d.ClearFields();
+            }
         }
         private DownloadService CreateDownloadService(DownloadConfiguration config)
         {
@@ -83,20 +98,24 @@ namespace NetCivitaiModelManager.Services
             if(task != null)
             {
                 identifier = task.GetIdenty();
-                task.Complete();
+                if (e.Cancelled)
+                {
+                    _logger.LogDebug(identifier + "CANCELED");
+                    task.State = DownoloadStates.Cancel;
+                }
+                else if (e.Error != null)
+                {
+                    task.State = DownoloadStates.Error;
+                    _logger.LogDebug(identifier + "ERROR :" + e.Error.Message);
+                }
+                else
+                {
+                    _logger.LogDebug(identifier + "DONE :");
+                    task.Complete();
+                }
             }
-            if (e.Cancelled)
-            {
-                _logger.LogDebug(identifier + "CANCELED");
-            }
-            else if (e.Error != null)
-            {
-                _logger.LogDebug(identifier + "ERROR :" + e.Error.Message);
-            }
-            else
-            {
-                _logger.LogDebug(identifier + "DONE :");
-            }
+            else _logger.LogDebug(e.ToString());
+
             UpdateInfo();
         }
 

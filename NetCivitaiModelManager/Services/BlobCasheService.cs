@@ -1,5 +1,6 @@
 ﻿using Akavache;
 using Akavache.Sqlite3;
+using Downloader;
 using Microsoft.Extensions.Logging;
 using NetCivitaiModelManager.Models;
 using System;
@@ -32,11 +33,14 @@ namespace NetCivitaiModelManager.Services
             await _blob.InsertObject(key, hash);
         }
 
-        public async Task InsertDownoloadTask(string key, List<DownoloadTask> tasks)
+        public void InsertDownoloadTask(string key, List<DownoloadTask> tasks)
         {
             try
             {
-                await _blob.InsertObject(key, tasks);
+                _blob.InsertObject(key, tasks).Wait();
+                foreach (DownoloadTask task in tasks)
+                    if(task.DownloadService.Package != null)
+                     _blob.InsertObject(task.Id.ToString(), task.DownloadService.Package).Wait();
             }
             catch (Exception ex)
             {
@@ -47,6 +51,14 @@ namespace NetCivitaiModelManager.Services
         {
             return await _blob.GetObject<List<DownoloadTask>>(key)
                .Catch(Observable.Return(new List<DownoloadTask>()));
+        }
+        public async Task<DownloadPackage?> GetDownoloadPack(string key)
+        {
+            try
+            {
+                return await _blob.GetObject<DownloadPackage>(key);
+            }
+            catch { return null; }
         }
     }
 }

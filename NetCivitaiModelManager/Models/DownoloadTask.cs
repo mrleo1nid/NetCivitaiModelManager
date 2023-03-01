@@ -16,6 +16,7 @@ namespace NetCivitaiModelManager.Models
 {
     public partial class DownoloadTask : ObservableObject
     {
+        public Guid Id { get; set; }
         [ObservableProperty]
         private int number;
         [ObservableProperty]
@@ -40,10 +41,11 @@ namespace NetCivitaiModelManager.Models
         private string url;
         [ObservableProperty]
         private string filePath;
-        public DownloadService DownloadService { get; private set; }
+        public DownloadService DownloadService { get;  set; }
         private Action<DownoloadTask>? _completeAction;
         public DownoloadTask(string url, string path, int number, DownloadService service, Action<DownoloadTask>? completeaction = null)
         {
+            Id = Guid.NewGuid();
             _completeAction = completeaction;
             Url = url;
             FilePath = path;
@@ -56,8 +58,12 @@ namespace NetCivitaiModelManager.Models
         
         public DownoloadTask Start()
         {
-            DownloadService.DownloadFileTaskAsync(Url, FilePath).ConfigureAwait(false);
+            DownloadService.DownloadFileTaskAsync(Url, FilePath);
             return this;
+        }
+        public void StartFromPack(DownloadPackage pack)
+        {
+            DownloadService.DownloadFileTaskAsync(pack);
         }
         public void Cancel()
         {
@@ -86,11 +92,16 @@ namespace NetCivitaiModelManager.Models
         public void Complete()
         {
             State = DownoloadStates.Completed;
+            ClearFields();
             Time = "Готово";
+            _completeAction?.Invoke(this);
+        }
+        public void ClearFields() 
+        {
+            Time = null; 
             Speed = null;
             TotalBytesToReceive = null;
             BytesReceived = null;
-            _completeAction?.Invoke(this);
         }
         public void UpdateProgress(DownloadProgressChangedEventArgs e)
         {

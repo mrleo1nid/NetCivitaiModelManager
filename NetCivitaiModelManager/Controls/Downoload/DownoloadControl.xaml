@@ -79,15 +79,21 @@
                         <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch" >
-                                        <TextBlock  MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5" Text="{Binding BytesReceived}"/>
-                                        <TextBlock  MinWidth="30" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text=" из "/>
-                                        <TextBlock  MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="{Binding TotalBytesToReceive}"/>
-                                    </StackPanel>
+                                    <TextBlock  MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5" Text="{Binding BytesReceived}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                             <GridViewColumn.Header>
                                 <TextBlock Text="Скачанно"></TextBlock>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock  MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Text="{Binding TotalBytesToReceive}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Размер"></TextBlock>
                             </GridViewColumn.Header>
                         </GridViewColumn>
                         <GridViewColumn>

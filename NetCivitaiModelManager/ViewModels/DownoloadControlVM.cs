@@ -13,16 +13,11 @@ namespace NetCivitaiModelManager.ViewModels
         public DownoloadControlVM(FileDownoloadService fileDownoloadService)
         {
             FileDownoloadService = fileDownoloadService;
-            Task.Factory.StartNew(Test);
+            Task.Factory.StartNew(LoadFromCash);
         }
-        public async void Test()
+        public async void LoadFromCash()
         {
-          await FileDownoloadService
-                .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_1.safetensors");
-            await FileDownoloadService
-               .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_2.safetensors");
-            await FileDownoloadService
-               .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_3.safetensors");
+            await FileDownoloadService.LoadDownoloadsFromCash();
         }
     }
 }
