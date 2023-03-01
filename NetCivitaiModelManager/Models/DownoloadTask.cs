@@ -41,9 +41,11 @@ namespace NetCivitaiModelManager.Models
         private string url;
         [ObservableProperty]
         private string filePath;
+        [ObservableProperty]
+        private DownoloadType type;
         public DownloadService DownloadService { get;  set; }
         private Action<DownoloadTask>? _completeAction;
-        public DownoloadTask(string url, string path, int number, DownloadService service, Action<DownoloadTask>? completeaction = null)
+        public DownoloadTask(string url, string path, int number, DownoloadType type, DownloadService service, Action<DownoloadTask>? completeaction = null)
         {
             Id = Guid.NewGuid();
             _completeAction = completeaction;
@@ -54,6 +56,7 @@ namespace NetCivitaiModelManager.Models
             Created = DateTime.Now;
             State = DownoloadStates.Created;
             DownloadService = service;
+            Type = type;
         }
         
         public DownoloadTask Start()

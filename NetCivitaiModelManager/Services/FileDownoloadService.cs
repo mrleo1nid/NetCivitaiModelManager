@@ -34,21 +34,21 @@ namespace NetCivitaiModelManager.Services
             _blobcash = blobCasheService;
         }
 
-        public async Task AddAndStart(string url, string path, Action<DownoloadTask>? completeaction = null)
+        public async Task AddAndStart(string url, string path, DownoloadType type = DownoloadType.Custom, Action<DownoloadTask>? completeaction = null)
         {
             var number = Downoloads.Count+1;
             var service = CreateDownloadService(_configService.DownloadConfiguration);
             if(Downoloads.Where(x=>x.Equal(url, path)).Any()) { return; }
-            else Downoloads.Add(new DownoloadTask(url, path, number, service,completeaction).Start());
+            else Downoloads.Add(new DownoloadTask(url, path, number, type, service,completeaction).Start());
         }
-        public async Task<DownoloadTask?> Add(string url, string path, Action<DownoloadTask>? completeaction = null)
+        public async Task<DownoloadTask?> Add(string url, string path, DownoloadType type = DownoloadType.Custom, Action<DownoloadTask>? completeaction = null)
         {
             var number = Downoloads.Count + 1;
             var service = CreateDownloadService(_configService.DownloadConfiguration);
             if (Downoloads.Where(x => x.Equal(url, path)).Any()) { return null; }
             else
             {
-                var task = new DownoloadTask(url, path, number, service, completeaction);
+                var task = new DownoloadTask(url, path, number, type, service, completeaction);
                 Downoloads.Add(task);
                 return task;
             }    
