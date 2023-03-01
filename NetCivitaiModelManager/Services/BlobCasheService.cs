@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using NetCivitaiModelManager.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Security.Policy;
@@ -33,7 +34,7 @@ namespace NetCivitaiModelManager.Services
             await _blob.InsertObject(key, hash);
         }
 
-        public void InsertDownoloadTask(string key, List<DownoloadTask> tasks)
+        public void InsertDownoloadTask(string key, ObservableCollection<DownoloadTask> tasks)
         {
             try
             {
@@ -47,10 +48,10 @@ namespace NetCivitaiModelManager.Services
                 _logger.LogError(ex.Message);
             }
         }
-        public async Task<List<DownoloadTask>> GetDownoloadTask(string key)
+        public async Task<ObservableCollection<DownoloadTask>> GetDownoloadTask(string key)
         {
-            return await _blob.GetObject<List<DownoloadTask>>(key)
-               .Catch(Observable.Return(new List<DownoloadTask>()));
+            return await _blob.GetObject<ObservableCollection<DownoloadTask>>(key)
+               .Catch(Observable.Return(new ObservableCollection<DownoloadTask>()));
         }
         public async Task<DownloadPackage?> GetDownoloadPack(string key)
         {

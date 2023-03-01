@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <local:DownoloadPanel DataContext="{Binding}" Grid.Row="0"/>
         <ListView HorizontalContentAlignment="Stretch" Grid.Row="1"
-                 ItemsSource="{Binding FileDownoloadService.Downoloads}" Background="AliceBlue" SelectionMode="Single">
+                 ItemsSource="{Binding FilteredDownoload}" Background="AliceBlue" SelectionMode="Single">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>

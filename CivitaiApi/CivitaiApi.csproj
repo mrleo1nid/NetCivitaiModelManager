@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Enums.NET" Version="4.0.1" />
     <PackageReference Include="Refit" Version="6.3.2" />
     <PackageReference Include="Refit.Insane.PowerPack" Version="6.3.2.3" />
   </ItemGroup>

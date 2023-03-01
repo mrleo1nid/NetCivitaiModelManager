@@ -1,12 +1,8 @@
 ﻿using CivitaiApi.CivitaiDataContracts;
 using CivitaiApi.CivitaiRequestParams;
 using CommunityToolkit.Mvvm.ComponentModel;
-using EnumsNET;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NetCivitaiModelManager.Extensions;
+
 
 namespace NetCivitaiModelManager.Models
 {
@@ -16,7 +12,7 @@ namespace NetCivitaiModelManager.Models
         public string? DisplayImage { get; set; }
         public LocalFile? LocalFile { get; set; }
         public ModelVersion? ExternalModel { get; set; }
-        public string? TypeDisplay { get { return ((TypesEnum)Type).AsString(EnumFormat.Description); } }
+        public string? TypeDisplay { get { return Type.GetEnumDescription(); ; } }
         public TypesEnum Type { get; set; }
 
         [ObservableProperty]

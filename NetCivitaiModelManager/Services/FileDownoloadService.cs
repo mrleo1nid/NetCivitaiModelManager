@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using NetCivitaiModelManager.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace NetCivitaiModelManager.Services
         private ConfigService _configService;
         private BlobCasheService _blobcash;
         [ObservableProperty]
-        private List<DownoloadTask> downoloads = new List<DownoloadTask>();
+        private ObservableCollection<DownoloadTask> downoloads = new ObservableCollection<DownoloadTask>();
 
         [ObservableProperty]
         private int allDownoloadsCount = 0;
