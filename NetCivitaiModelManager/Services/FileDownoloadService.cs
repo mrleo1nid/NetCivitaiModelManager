@@ -34,21 +34,21 @@ namespace NetCivitaiModelManager.Services
             _blobcash = blobCasheService;
         }
 
-        public async Task AddAndStart(string url, string path)
+        public async Task AddAndStart(string url, string path, Action<DownoloadTask>? completeaction = null)
         {
             var number = Downoloads.Count+1;
             var service = CreateDownloadService(_configService.DownloadConfiguration);
             if(Downoloads.Where(x=>x.Equal(url, path)).Any()) { return; }
-            else Downoloads.Add(new DownoloadTask(url, path, number, service).Start());
+            else Downoloads.Add(new DownoloadTask(url, path, number, service,completeaction).Start());
         }
-        public async Task<DownoloadTask?> Add(string url, string path)
+        public async Task<DownoloadTask?> Add(string url, string path, Action<DownoloadTask>? completeaction = null)
         {
             var number = Downoloads.Count + 1;
             var service = CreateDownloadService(_configService.DownloadConfiguration);
             if (Downoloads.Where(x => x.Equal(url, path)).Any()) { return null; }
             else
             {
-                var task = new DownoloadTask(url, path, number, service);
+                var task = new DownoloadTask(url, path, number, service, completeaction);
                 Downoloads.Add(task);
                 return task;
             }    
@@ -141,7 +141,7 @@ namespace NetCivitaiModelManager.Services
             foreach (var downoload in curdownloads)
                 currprogress += downoload.DownoloadProgress;
             AllDownoloadsCount = curdownloads.Count();
-            AllProgress = currprogress / (100d * AllDownoloadsCount);
+            AllProgress = currprogress / AllDownoloadsCount;
             if(AllDownoloadsCount > 0) WorkedExist =true; else WorkedExist = false;
         }
     }

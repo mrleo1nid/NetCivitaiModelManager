@@ -41,8 +41,10 @@ namespace NetCivitaiModelManager.Models
         [ObservableProperty]
         private string filePath;
         public DownloadService DownloadService { get; private set; }
-        public DownoloadTask(string url, string path, int number, DownloadService service)
+        private Action<DownoloadTask>? _completeAction;
+        public DownoloadTask(string url, string path, int number, DownloadService service, Action<DownoloadTask>? completeaction = null)
         {
+            _completeAction = completeaction;
             Url = url;
             FilePath = path;
             Number = number;
@@ -88,6 +90,7 @@ namespace NetCivitaiModelManager.Models
             Speed = null;
             TotalBytesToReceive = null;
             BytesReceived = null;
+            _completeAction?.Invoke(this);
         }
         public void UpdateProgress(DownloadProgressChangedEventArgs e)
         {
