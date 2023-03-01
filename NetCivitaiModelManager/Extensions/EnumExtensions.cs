@@ -21,7 +21,7 @@ namespace NetCivitaiModelManager.Extensions
             }
             return value.ToString();
         }
-        public static T GetValueFromDescription<T>(string description) where T : Enum
+        public static T ToEnum<T>(this string description) where T : Enum
         {
             foreach (var field in typeof(T).GetFields())
             {

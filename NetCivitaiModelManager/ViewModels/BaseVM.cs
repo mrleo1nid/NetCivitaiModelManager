@@ -10,6 +10,7 @@ namespace NetCivitaiModelManager.ViewModels
 {
     public partial class BaseVM : ObservableObject
     {
+        public const string BaseSelect = "Все";
         public ConfigService ConfigService { get; private set; }
         [ObservableProperty]
         private List<TypeToSelect> types = new List<TypeToSelect>() {
@@ -34,6 +35,20 @@ namespace NetCivitaiModelManager.ViewModels
             ,SortEnum.MostDownloaded.GetEnumDescription()
             ,SortEnum.MostLiked.GetEnumDescription()
             ,SortEnum.MostDiscussed.GetEnumDescription()};
+        [ObservableProperty]
+        private List<string> states = new List<string>() {
+             BaseSelect
+            ,DownoloadStates.Downoloading.GetEnumDescription()
+            ,DownoloadStates.Created.GetEnumDescription()
+            ,DownoloadStates.Cancel.GetEnumDescription()
+            ,DownoloadStates.Completed.GetEnumDescription()
+            ,DownoloadStates.Error.GetEnumDescription()};
+        [ObservableProperty]
+        private List<string> downoloadTypes = new List<string>() {
+             BaseSelect
+            ,DownoloadType.Image.GetEnumDescription()
+            ,DownoloadType.Model.GetEnumDescription()
+            ,DownoloadType.Custom.GetEnumDescription() };
         public BaseVM()
         {
             ConfigService = Ioc.Default.GetRequiredService<ConfigService>();
