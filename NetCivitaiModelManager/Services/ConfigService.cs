@@ -1,4 +1,5 @@
-﻿using NetCivitaiModelManager.Models;
+﻿using Downloader;
+using NetCivitaiModelManager.Models;
 using System.IO;
 using System.Text.Json;
 
@@ -6,8 +7,9 @@ namespace NetCivitaiModelManager.Services
 {
     public sealed class ConfigService
     {
-        
+
         public Config Config { get; set; }
+        public DownloadConfiguration DownloadConfiguration { get;set;} = new DownloadConfiguration();
 
         private string _filename;
 

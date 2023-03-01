@@ -11,6 +11,7 @@ namespace NetCivitaiModelManager.Models
         Created,
         Completed,
         Downoloading,
-        Stoped
+        Cancel,
+        Paused
     }
 }

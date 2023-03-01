@@ -1,7 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Downloader;
+using NetCivitaiModelManager.Controls.Downoload;
 using NetCivitaiModelManager.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -15,59 +18,58 @@ namespace NetCivitaiModelManager.Models
     {
         [ObservableProperty]
         private int number;
-        private HttpClient _httpClient;
-        public string Url { get; private set; }
-        public string FilePath { get; private set; }
-
-        [ObservableProperty]
-        private float downoloadProgress;
-        [ObservableProperty]
-        private DownoloadStates downoloadState;
         [ObservableProperty]
         private string name;
-        public bool IsStarted { get; set; }
-        
-        private CancellationToken cancellationToken;
-        public DownoloadTask(string url, string path, int number)
+        [ObservableProperty]
+        private DateTime created;
+        [ObservableProperty]
+        private DownoloadStates state;
+        [ObservableProperty]
+        private double downoloadProgress;
+
+        private string _url;
+        private string _filePath;
+        public DownloadService DownloadService { get; private set; }
+        public DownoloadTask(string url, string path, int number, DownloadService service)
         {
-            Url = url;
-            FilePath = path;
-            _httpClient = new HttpClient() { BaseAddress = new Uri(url) };
-            cancellationToken = new CancellationToken();
-            DownoloadState = DownoloadStates.Created;
-            IsStarted = false;
+            _url = url;
+            _filePath = path;
             Number = number;
-            Name = Path.GetFileName(FilePath);
+            Name = Path.GetFileName(path);
+            Created = DateTime.Now;
+            State = DownoloadStates.Created;
+            DownloadService = service;
+            DownoloadProgress = 0;
         }
-        public async Task StartAsync()
+        
+        public async Task<DownoloadTask> Start()
         {
-            if(!IsStarted)
-            {
-                IsStarted = true;
-                DownoloadState = DownoloadStates.Downoloading;
-                IProgress<float> progress = new Progress<float>(e => DownoloadProgress = e);
-                // Create a file stream to store the downloaded data.
-                // This really can be any type of writeable stream.
-                using (var file = new FileStream(FilePath, FileMode.Create, FileAccess.Write, FileShare.None))
-                {
-                    // Use the custom extension method below to download the data.
-                    // The passed progress-instance will receive the download status updates.
-                    await _httpClient.DownloadAsync(Url, file, progress, cancellationToken);
-                }
-                DownoloadComplete();
-            }
-           
+            await DownloadService.DownloadFileTaskAsync(_url, _filePath).ConfigureAwait(false);
+            return this;
         }
-        private void DownoloadComplete()
+        public void Cancel()
         {
-            DownoloadState = DownoloadStates.Completed;
-            _httpClient.Dispose();
+            DownloadService.CancelAsync();
+            State = DownoloadStates.Cancel;
         }
-        public void StopAsync()
+        public void Pause()
         {
-            DownoloadState = DownoloadStates.Stoped;
-            cancellationToken.ThrowIfCancellationRequested();
-            IsStarted = false;
+            DownloadService.Pause();
+            State = DownoloadStates.Paused;
+        }
+        public void Resume()
+        {
+            DownloadService.Resume();
+            State = DownoloadStates.Downoloading;
+        }
+        public string GetIdenty()
+        { 
+            return  $"({_filePath} : {_url})";
+        }
+        public bool Equal(string url, string path)
+        {
+            if(_url == url && _filePath == path) return true;
+            return false;
         }
     }
 }
