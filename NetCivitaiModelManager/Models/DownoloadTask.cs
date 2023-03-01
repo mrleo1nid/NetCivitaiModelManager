@@ -26,6 +26,16 @@ namespace NetCivitaiModelManager.Models
         private DownoloadStates state;
         [ObservableProperty]
         private double downoloadProgress;
+        [ObservableProperty]
+        private string textProgress;
+        [ObservableProperty]
+        private string speed;
+        [ObservableProperty]
+        private string bytesReceived;
+        [ObservableProperty]
+        private string totalBytesToReceive;
+        [ObservableProperty]
+        private string time;
 
         private string _url;
         private string _filePath;
@@ -39,12 +49,11 @@ namespace NetCivitaiModelManager.Models
             Created = DateTime.Now;
             State = DownoloadStates.Created;
             DownloadService = service;
-            DownoloadProgress = 0;
         }
         
-        public async Task<DownoloadTask> Start()
+        public DownoloadTask Start()
         {
-            await DownloadService.DownloadFileTaskAsync(_url, _filePath).ConfigureAwait(false);
+            DownloadService.DownloadFileTaskAsync(_url, _filePath).ConfigureAwait(false);
             return this;
         }
         public void Cancel()
@@ -70,6 +79,31 @@ namespace NetCivitaiModelManager.Models
         {
             if(_url == url && _filePath == path) return true;
             return false;
+        }
+        public void UpdateProgress(DownloadProgressChangedEventArgs e)
+        {
+            double nonZeroSpeed = e.BytesPerSecondSpeed + 0.0001;
+            int estimateTime = (int)((e.TotalBytesToReceive - e.ReceivedBytesSize) / nonZeroSpeed);
+            bool isMinutes = estimateTime >= 60;
+            string timeLeftUnit = "секунд";
+
+            if (isMinutes)
+            {
+                timeLeftUnit = "минут";
+                estimateTime /= 60;
+            }
+
+            if (estimateTime < 0)
+            {
+                estimateTime = 0;
+                timeLeftUnit = "неизвестно";
+            }
+            Time = $"{estimateTime} {timeLeftUnit} осталось";
+            Speed = e.BytesPerSecondSpeed.CalcMemoryMensurableUnit();
+            BytesReceived = e.ReceivedBytesSize.CalcMemoryMensurableUnit();
+            TotalBytesToReceive = e.TotalBytesToReceive.CalcMemoryMensurableUnit();
+            TextProgress = $"{e.ProgressPercentage:F2}".Replace("/", ".") + " %";
+            DownoloadProgress = e.ProgressPercentage;
         }
     }
 }

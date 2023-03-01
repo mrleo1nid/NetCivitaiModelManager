@@ -3,22 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls"
+             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls" xmlns:converters="clr-namespace:NetCivitaiModelManager.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="800">
     <UserControl.Background>
         <SolidColorBrush Color="Transparent"/>
     </UserControl.Background>
+    <UserControl.Resources>
+        <converters:DownoloadStateToStringConverter  x:Key="DownoloadStateToStringConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="40*"/>
             <ColumnDefinition Width="225*"/>
+            <ColumnDefinition Width="73*"/>
             <ColumnDefinition Width="240*"/>
-            <ColumnDefinition Width="143*"/>
-            <ColumnDefinition Width="132*"/>
+            <ColumnDefinition Width="73*"/>
+            <ColumnDefinition Width="73*"/>
+            <ColumnDefinition Width="202*"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Content="{Binding Number}" />
-        <Label Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Content="{Binding Name}"  />
-        <ProgressBar Grid.Column="2" Margin="5" MinWidth="120"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Maximum="1" Value="{Binding DownoloadProgress}"/>
+        <Label Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Number}"/>
+        <Label Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Name}"/>
+        <Label Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding State, Converter={StaticResource DownoloadStateToStringConverter}}"/>
+        <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <ProgressBar  Margin="1" MinWidth="160" MinHeight="10"  VerticalAlignment="Center" HorizontalAlignment="Stretch" Maximum="100" Value="{Binding DownoloadProgress}"/>
+            <Label Margin="1" VerticalAlignment="Center" HorizontalAlignment="Right" Content="{Binding TextProgress}"/>
+        </StackPanel>
+        <Label MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="4" Margin="5" Content="{Binding Speed}"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="5">
+            <Label  MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5" Content="{Binding BytesReceived}"/>
+            <Label  MinWidth="30" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Content=" из "/>
+            <Label  MinWidth="60" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" Content="{Binding TotalBytesToReceive}"/>
+        </StackPanel>
+        <Label  MinWidth="80" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="6" Margin="5" Content="{Binding Time}"/>
     </Grid>
 </UserControl>

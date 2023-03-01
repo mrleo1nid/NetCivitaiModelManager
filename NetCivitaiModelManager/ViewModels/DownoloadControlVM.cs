@@ -15,9 +15,14 @@ namespace NetCivitaiModelManager.ViewModels
             FileDownoloadService = fileDownoloadService;
             Task.Factory.StartNew(Test);
         }
-        public void Test()
+        public async void Test()
         {
-
+          await FileDownoloadService
+                .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_1.safetensors");
+            await FileDownoloadService
+               .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_2.safetensors");
+            await FileDownoloadService
+               .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_3.safetensors");
         }
     }
 }

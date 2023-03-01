@@ -12,10 +12,12 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="11*"/>
+            <RowDefinition Height="8*"/>
             <RowDefinition Height="139*"/>
         </Grid.RowDefinitions>
         <local:DownoloadPanel Grid.Row="0" DataContext="{Binding}"/>
-        <ListBox Margin="5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="1"
+        <local:DownoloadHeader Grid.Row="1"/>
+        <ListBox Margin="5" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Center" Grid.Row="2"
                  ItemsSource="{Binding FileDownoloadService.Downoloads}" Background="AliceBlue" SelectionMode="Single">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>

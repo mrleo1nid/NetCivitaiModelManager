@@ -27,5 +27,9 @@ namespace NetCivitaiModelManager.Extensions
         {
             return ((PeriodEnum)Enum).AsString(EnumFormat.Description);
         }
+        public static string GetEnumDescription(this DownoloadStates Enum)
+        {
+            return ((DownoloadStates)Enum).AsString(EnumFormat.Description);
+        }
     }
 }

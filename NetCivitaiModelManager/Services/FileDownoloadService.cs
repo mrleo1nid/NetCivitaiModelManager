@@ -30,7 +30,7 @@ namespace NetCivitaiModelManager.Services
             var number = Downoloads.Count+1;
             var service = CreateDownloadService(_configService.DownloadConfiguration);
             if(Downoloads.Where(x=>x.Equal(url, path)).Any()) { return; }
-            else Downoloads.Add(await new DownoloadTask(url, path, number, service).Start());
+            else Downoloads.Add(new DownoloadTask(url, path, number, service).Start());
         }
         public async Task<DownoloadTask?> Add(string url, string path)
         {
@@ -89,7 +89,7 @@ namespace NetCivitaiModelManager.Services
             var task = GetTaskByService(downoloader);
             if (task != null)
             {
-                task.DownoloadProgress = e.ProgressPercentage;
+                task.UpdateProgress(e);
             }
         }
 
