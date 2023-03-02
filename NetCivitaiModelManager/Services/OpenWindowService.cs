@@ -14,6 +14,7 @@ namespace NetCivitaiModelManager.Services
         public MainWindow? MainWindow { get; set; }
         public ConfigWindow? ConfigWindow { get; set; }
         public SelectFileWindow? SelectFileWindow { get; set; }
+        public ModelCardWindow? ModelCardWindow { get; set; }
 
         public void OpenConfigWindow()
         {

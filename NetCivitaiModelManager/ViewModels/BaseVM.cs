@@ -12,6 +12,9 @@ namespace NetCivitaiModelManager.ViewModels
     public partial class BaseVM : ObservableObject
     {
         public ConfigService ConfigService { get; private set; }
+
+        [ObservableProperty]
+        private string title;
         [ObservableProperty]
         private List<TypeToSelect> types = new List<TypeToSelect>() {
              new TypeToSelect(TypesEnum.Checkpoint)

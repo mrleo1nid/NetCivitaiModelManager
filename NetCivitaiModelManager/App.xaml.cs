@@ -62,6 +62,7 @@ namespace NetCivitaiModelManager
                     .AddTransient<DownoloadControlVM>()
                     .AddTransient<ExternalModelsControlVM>()
                     .AddTransient<LocalModelsControlVM>()
+                    .AddTransient<ModelCardVM>()
                     .BuildServiceProvider());
             }
         }
