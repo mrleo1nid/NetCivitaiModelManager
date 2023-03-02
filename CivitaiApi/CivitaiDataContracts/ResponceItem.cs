@@ -9,8 +9,10 @@ namespace CivitaiApi.CivitaiDataContracts
 {
     public class ResponceItem
     {
+        [JsonPropertyName("name")]
+        public string? Name { get; set; }
         [JsonPropertyName("username")]
-        public string Username { get; set; }
+        public string? Username { get; set; }
 
         [JsonPropertyName("modelCount")]
         public int ModelCount { get; set; }

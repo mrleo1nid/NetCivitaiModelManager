@@ -47,7 +47,6 @@ namespace NetCivitaiModelManager.ViewModels
             _filedownoloadService = filedownoloadService;
             HashService.NotifyHashComplete += HashService_NotifyHashComplete;
             Task.Factory.StartNew(LoadModels);
-         
         }
 
         private void HashService_NotifyHashComplete(LocalFile file)
@@ -62,7 +61,12 @@ namespace NetCivitaiModelManager.ViewModels
                 ModelLoadService.Start();
             }
         }
-        
+
+        [RelayCommand]
+        private async Task SearchClick()
+        {
+            RefreshList();
+        }
         [RelayCommand]
         private async Task UpdateImage()
         {
@@ -133,6 +137,24 @@ namespace NetCivitaiModelManager.ViewModels
             else
             {
                 FilteredModels = AlllocalModels.Where(x => currentfilter.Contains(x.Type)).ToList();
+            }
+            if(!string.IsNullOrEmpty(SearchString))
+            {
+                var res = new List<LocalModel>();
+                foreach(var model in FilteredModels)
+                {
+                    if(model.LocalFile != null && model.ExternalModel!=null)
+                    {
+                        if(model.LocalFile.Name.Contains(SearchString) || model.ExternalModel.Name.Contains(SearchString))
+                            res.Add(model);
+                    }
+                    else if(model.LocalFile != null)
+                    {
+                        if (model.LocalFile.Name.Contains(SearchString))
+                            res.Add(model);
+                    }
+                }
+                FilteredModels = res;
             }
         }
         public void FilterSelectionChanged(object sender, RoutedEventArgs e)

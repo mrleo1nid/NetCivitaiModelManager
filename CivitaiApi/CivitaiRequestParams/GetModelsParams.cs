@@ -9,12 +9,13 @@ namespace CivitaiApi.CivitaiRequestParams
 {
     public class GetModelsParams : BaseRequestParams
     {
-        [AliasAs("tag  ")]
+        [AliasAs("tag")]
         public string? Tag { get; set; }
-        [AliasAs("username  ")]
+        [AliasAs("username")]
         public string? Username { get; set; }
+        [QueryAttribute(CollectionFormat.Multi)]
         [AliasAs("types")]
-        public string? Types { get; set; }
+        public List<string>? Types { get; set; }
         [AliasAs("sort")]
         public string? Sort { get; set; }
         [AliasAs("period")]

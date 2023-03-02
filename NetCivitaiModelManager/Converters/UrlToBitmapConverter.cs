@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Cache;
 using System.Reactive.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -23,7 +24,7 @@ namespace NetCivitaiModelManager.Converters
             {
                 try
                 {
-                    return new BitmapImage(new Uri(str));
+                    return new BitmapImage(new Uri(str), new System.Net.Cache.RequestCachePolicy(RequestCacheLevel.CacheIfAvailable));
                 }catch { return null; }
                
             }

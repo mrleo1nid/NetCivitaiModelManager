@@ -16,9 +16,10 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="41*"/>
+            <RowDefinition Height="58*"/>
             <RowDefinition Height="409*"/>
         </Grid.RowDefinitions>
+        
         <local:ModelsFilter Grid.Row="0" DataContext="{Binding}"/>
         <ListBox MinHeight="200" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"
                  ItemsSource="{Binding AllModels}" Background="AliceBlue" SelectedItem="{Binding SelectedModel}">

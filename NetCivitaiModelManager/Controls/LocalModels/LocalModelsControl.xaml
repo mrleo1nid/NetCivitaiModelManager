@@ -17,7 +17,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="19*"/>
+            <RowDefinition Height="23*"/>
             <RowDefinition Height="198*"/>
         </Grid.RowDefinitions>
         <local:ModelFilter Grid.Row="0" DataContext="{Binding}"/>

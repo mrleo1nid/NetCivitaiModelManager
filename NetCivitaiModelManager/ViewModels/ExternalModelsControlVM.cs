@@ -13,6 +13,7 @@ using System.Windows;
 using NetCivitaiModelManager.Extensions;
 using System.Diagnostics;
 using NetCivitaiModelManager.Views;
+using System.Threading;
 
 namespace NetCivitaiModelManager.ViewModels
 {
@@ -47,7 +48,15 @@ namespace NetCivitaiModelManager.ViewModels
             SelectedSort = Sort.FirstOrDefault();
             _openWindowService = openWindowService;
             _fileDownoloadService = fileDownoloadService;
-            Task.Factory.StartNew(LoadModels);
+            VisibleTagSelect = true;
+            Tags = new List<string>() {"All"};
+            SelectedTag = Tags.FirstOrDefault();
+            Task.Factory.StartNew(async () => {
+                await Task.Delay(1000);
+                var tags = await _service.GetTagsAsync(new BaseRequestParams() { Limit = 19});
+                Tags.AddRange(tags.Items.Select(x=>x.Name).ToList());
+                await LoadModels();
+            });
         }
 
         [RelayCommand]
@@ -83,7 +92,7 @@ namespace NetCivitaiModelManager.ViewModels
                 var imagepath = System.IO.Path.Combine(folder, shortname) + ".preview.png";
                 _fileDownoloadService.AddAndStart(SelectedFile.DownloadUrl, fullpath, DownoloadType.Model,
                                        () => {
-                                           _fileDownoloadService.AddAndStart(imageurl, imagepath);
+                                           _fileDownoloadService.AddAndStart(imageurl, imagepath, DownoloadType.Image);
                                        });
                 SelectedModel = null; 
                 SelectedVersion = null;
@@ -109,17 +118,20 @@ namespace NetCivitaiModelManager.ViewModels
                  Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
             }
         }
-
+       
         [RelayCommand]
         private async Task LoadModels()
         {
-            var responce = await _service.GetModelsAsync(new GetModelsParams() 
+            var responce = await _service.GetModelsAsync(new GetModelsParams()
             {
-                Page = Page, Limit = 24, 
-                Types = currentfilter.GetRowToRequest(),
+                Page = Page,
+                Limit = 32,
+                Types = currentfilter.Select(x => x.Name).ToList(),
                 Period = SelectedPeriod.Replace(" ", "") == "AllTime" ? null : SelectedPeriod.Replace(" ", ""),
-                Sort = SelectedSort== "Highest Rated" ? null : SelectedSort
-            });
+                Sort = SelectedSort == "Highest Rated" ? null : SelectedSort,
+                Tag = SelectedTag == "All" ? null : SelectedTag,
+                Query = string.IsNullOrEmpty(SearchString) ? null : SearchString
+            }) ;
             AllModels = responce?.Items;
             MaxPages = responce?.Metadata.TotalPages ?? 999;
         }
@@ -140,6 +152,10 @@ namespace NetCivitaiModelManager.ViewModels
                 Page--;
                 await LoadModels();
             }
+        }
+        public void TagSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            Task.Factory.StartNew(LoadModels);
         }
         public void FilterSelectionChanged(object sender, RoutedEventArgs e)
         {
@@ -165,6 +181,11 @@ namespace NetCivitaiModelManager.ViewModels
         public void SelectionChanged(object sender, RoutedEventArgs e)
         {
            Task.Factory.StartNew(LoadModels);
+        }
+        [RelayCommand]
+        private async Task SearchClick()
+        {
+            Task.Factory.StartNew(LoadModels);
         }
     }
 }

@@ -18,6 +18,7 @@ using Akavache.Sqlite3;
 using System.Reactive.Linq;
 using System.IO;
 using System.Threading.Tasks;
+using CivitaiApi.Extensions;
 
 namespace NetCivitaiModelManager
 {
@@ -37,6 +38,7 @@ namespace NetCivitaiModelManager
                 _initialized = true;
                 var configsevice = new ConfigService("config.json");
                 CreateLogger(configsevice);
+                var refitSettings = new RefitSettings() { };
                 Ioc.Default.ConfigureServices(
                     new ServiceCollection()
                     //Logging
@@ -46,7 +48,7 @@ namespace NetCivitaiModelManager
 
                     .AddSingleton<ConfigService>(configsevice)
                     .AddSingleton<SQLiteEncryptedBlobCache>(CreateBlob(configsevice))
-                    .AddSingleton(RestService.For<ICivitaiService>(CreateHttpClient(configsevice)))
+                    .AddSingleton(RestService.For<ICivitaiService>(CreateHttpClient(configsevice), refitSettings))
                     .AddSingleton<CivitaiService>()
                     .AddSingleton<LocalModelsService>()
                     .AddSingleton<HashService>()

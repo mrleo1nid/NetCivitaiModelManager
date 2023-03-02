@@ -51,9 +51,16 @@ namespace NetCivitaiModelManager.ViewModels
             ,DownoloadType.Model.GetEnumDescription()
             ,DownoloadType.Custom.GetEnumDescription() };
         [ObservableProperty]
-        private List<string> prioritiModelList = new List<string>() { " ", " ", " " };
+        private string? searchString;
+        [ObservableProperty]
+        private bool visibleTagSelect;
+        [ObservableProperty]
+        private List<string> tags;
+        [ObservableProperty]
+        private string? selectedTag;
         public BaseVM()
         {
+            visibleTagSelect = false;
             ConfigService = Ioc.Default.GetRequiredService<ConfigService>();
         }
 

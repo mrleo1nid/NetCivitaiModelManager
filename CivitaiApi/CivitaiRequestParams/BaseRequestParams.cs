@@ -10,7 +10,7 @@ namespace CivitaiApi.CivitaiRequestParams
 {
     public class BaseRequestParams
     {
-        [AliasAs("limit ")]
+        [AliasAs("limit")]
         public int? Limit { get; set; }
         [AliasAs("page")]
         public int? Page { get; set; }
