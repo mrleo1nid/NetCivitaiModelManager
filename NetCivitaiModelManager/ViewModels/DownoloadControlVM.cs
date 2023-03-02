@@ -1,15 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using NetCivitaiModelManager.Extensions;
 using NetCivitaiModelManager.Models;
 using NetCivitaiModelManager.Services;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace NetCivitaiModelManager.ViewModels
 {
@@ -17,46 +13,28 @@ namespace NetCivitaiModelManager.ViewModels
     {
         [ObservableProperty]
         private List<DownoloadTask> filteredDownoload;
-        [ObservableProperty]
-        private string selectedtype;
-        [ObservableProperty]
-        private string selectedstate;
 
-        public FileDownoloadService _fileDownoloadService { get; set; }
+        public FileDownoloadService FileDownoloadService { get; set; }
         public DownoloadControlVM(FileDownoloadService fileDownoloadService)
         {
-            _fileDownoloadService = fileDownoloadService;
-            Task.Factory.StartNew(LoadFromCash);
-            FilteredDownoload = new List<DownoloadTask>();
-            _fileDownoloadService.Downoloads.CollectionChanged += Downoloads_CollectionChanged;
-            _fileDownoloadService.AddAndStart("https://imagecache.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/2d37f24e-f9fd-4900-29b7-e9d9548ce100/width=450", "protogenX34Photorealism_1.safetensors", Models.DownoloadType.Custom);
+            FileDownoloadService = fileDownoloadService;
+            FileDownoloadService.Downoloads.CollectionChanged += Downoloads_CollectionChanged;
+            Task.Factory.StartNew(Test);
         }
 
-        private void Downoloads_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs? e)
+        private void Downoloads_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            FilteredDownoload = FilterCollection(_fileDownoloadService.Downoloads);
+           FilteredDownoload = FileDownoloadService.Downoloads.ToList();
         }
 
-        public async void LoadFromCash()
+        public void Test()
         {
-            await _fileDownoloadService.LoadDownoloadsFromCash();
-        }
-        private List<DownoloadTask> FilterCollection(ObservableCollection<DownoloadTask> tasks)
-        {
-            List<DownoloadTask> res = tasks.ToList();
-            if(!string.IsNullOrEmpty(selectedtype) && selectedtype!=BaseSelect)
-            {
-                res = res.Where(x => x.Type == selectedtype.ToEnum<DownoloadType>()).ToList();
-            }
-            if (!string.IsNullOrEmpty(selectedstate) && selectedstate != BaseSelect)
-            {
-                res = res.Where(x => x.State == selectedstate.ToEnum<DownoloadStates>()).ToList();
-            }
-            return res;
-        }
-        public void SelectionChanged(object sender, RoutedEventArgs e)
-        {
-            FilteredDownoload = FilterCollection(_fileDownoloadService.Downoloads);
+           FileDownoloadService
+                .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_1.safetensors");
+             FileDownoloadService
+               .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_2.safetensors");
+             FileDownoloadService
+               .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_3.safetensors");
         }
     }
 }

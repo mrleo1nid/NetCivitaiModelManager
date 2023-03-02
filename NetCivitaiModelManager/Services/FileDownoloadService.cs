@@ -35,12 +35,12 @@ namespace NetCivitaiModelManager.Services
             _blobcash = blobCasheService;
         }
 
-        public async Task AddAndStart(string url, string path, DownoloadType type = DownoloadType.Custom, Action<DownoloadTask>? completeaction = null)
+        public void AddAndStart(string url, string path, DownoloadType type = DownoloadType.Custom, Action<DownoloadTask>? completeaction = null)
         {
             var number = Downoloads.Count+1;
             var service = CreateDownloadService(_configService.DownloadConfiguration);
             if(Downoloads.Where(x=>x.Equal(url, path)).Any()) { return; }
-            else Downoloads.Add(new DownoloadTask(url, path, number, type, service,completeaction).Start());
+            else Downoloads.Add(new DownoloadTask(url, path, number, service, type, completeaction).Start());
         }
         public async Task<DownoloadTask?> Add(string url, string path, DownoloadType type = DownoloadType.Custom, Action<DownoloadTask>? completeaction = null)
         {
@@ -49,33 +49,18 @@ namespace NetCivitaiModelManager.Services
             if (Downoloads.Where(x => x.Equal(url, path)).Any()) { return null; }
             else
             {
-                var task = new DownoloadTask(url, path, number, type, service, completeaction);
+                var task = new DownoloadTask(url, path, number, service, type, completeaction);
                 Downoloads.Add(task);
                 return task;
             }    
         }
         public void SaveDownoloadsToCash()
         {
-             foreach(var task in Downoloads) { task.DownloadService.CancelAsync(); }
-             _blobcash.InsertDownoloadTask(_keytocash, Downoloads);
+             _blobcash.InsertDownoloadTask(_keytocash, Downoloads.ToList());
         }
         public async Task LoadDownoloadsFromCash()
         {
-            Downoloads = await _blobcash.GetDownoloadTask(_keytocash);
-            foreach (var d in Downoloads) 
-            {
-                
-                d.DownloadService = CreateDownloadService(_configService.DownloadConfiguration);
-                var pack = await _blobcash.GetDownoloadPack(d.Id.ToString());
-                if (pack != null && d.State == DownoloadStates.Downoloading)
-                    d.StartFromPack(pack);
-                else if (pack != null && d.State == DownoloadStates.Completed)
-                {
-                    d.DownloadService.Package = pack;
-                    d.DownoloadProgress = 100;
-                }
-                d.ClearFields();
-            }
+            Downoloads = new ObservableCollection<DownoloadTask>(await _blobcash.GetDownoloadTask(_keytocash));
         }
         private DownloadService CreateDownloadService(DownloadConfiguration config)
         {
@@ -99,24 +84,20 @@ namespace NetCivitaiModelManager.Services
             if(task != null)
             {
                 identifier = task.GetIdenty();
-                if (e.Cancelled)
-                {
-                    _logger.LogDebug(identifier + "CANCELED");
-                    task.State = DownoloadStates.Cancel;
-                }
-                else if (e.Error != null)
-                {
-                    task.State = DownoloadStates.Error;
-                    _logger.LogDebug(identifier + "ERROR :" + e.Error.Message);
-                }
-                else
-                {
-                    _logger.LogDebug(identifier + "DONE :");
-                    task.Complete();
-                }
+                task.Complete();
             }
-            else _logger.LogDebug(e.ToString());
-
+            if (e.Cancelled)
+            {
+                _logger.LogDebug(identifier + "CANCELED");
+            }
+            else if (e.Error != null)
+            {
+                _logger.LogDebug(identifier + "ERROR :" + e.Error.Message);
+            }
+            else
+            {
+                _logger.LogDebug(identifier + "DONE :");
+            }
             UpdateInfo();
         }
 
