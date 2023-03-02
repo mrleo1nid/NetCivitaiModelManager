@@ -11,7 +11,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -78,6 +81,32 @@ namespace NetCivitaiModelManager.ViewModels
                             SelectedModel.DisplayImage = urlandpath.Path;
                         });
                 }
+            }
+        }
+        [RelayCommand]
+        private async Task OpenFolder()
+        {
+            if (SelectedModel != null)
+            {
+                if (!File.Exists(SelectedModel.LocalFile.FullName))
+                {
+                    return;
+                }
+                string argument = "/select, \"" + SelectedModel.LocalFile.FullName + "\"";
+
+                Process.Start("explorer.exe", argument);
+            }
+        }
+        [RelayCommand]
+        private async Task OpenBrowser()
+        {
+            if (SelectedModel != null)
+            {
+                if(SelectedModel.ExternalModel!=null)
+                {
+                    string url = $"{ConfigService.Config.CivitaiBaseUrl}models/{SelectedModel.ExternalModel.ModelId}";
+                    Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+                } 
             }
         }
         [RelayCommand]

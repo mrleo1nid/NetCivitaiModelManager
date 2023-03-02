@@ -32,6 +32,11 @@
                     <local:ExternalTile DataContext="{Binding}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Скачать" Command="{Binding DownoloadModelCommand}" ></MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
     </Grid>
 </UserControl>

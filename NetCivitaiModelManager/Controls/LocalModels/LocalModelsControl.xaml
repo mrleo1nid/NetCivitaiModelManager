@@ -36,6 +36,8 @@
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Обновить изображение" Command="{Binding UpdateImageCommand}" IsEnabled="{Binding SelectedModel.ModelFound}"></MenuItem>
+                    <MenuItem Header="Открыть в браузере" Command="{Binding OpenBrowserCommand}" IsEnabled="{Binding SelectedModel.ModelFound}"></MenuItem>
+                    <MenuItem Header="Открыть содержащую папку" Command="{Binding OpenFolderCommand}"></MenuItem>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
