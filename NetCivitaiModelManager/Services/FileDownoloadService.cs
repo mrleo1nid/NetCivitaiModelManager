@@ -45,7 +45,6 @@ namespace NetCivitaiModelManager.Services
             {
                 var task = new DownoloadTask(url, path, number, service, type, completeaction);
                 Downoloads.Add(task);
-                SaveDownoloadsToCash();
                 task.Start();
                 return task;
             }
@@ -60,7 +59,6 @@ namespace NetCivitaiModelManager.Services
             {
                 var task = new DownoloadTask(url, path, number, service, type, completeaction);
                 Downoloads.Add(task);
-                SaveDownoloadsToCash();
                 return task;
             }    
         }
@@ -156,7 +154,6 @@ namespace NetCivitaiModelManager.Services
             }
             else { _logger.LogDebug(identifier + e.ToString()); }
             UpdateInfo();
-            SaveDownoloadsToCash();
         }
 
         private void DownloadService_DownloadProgressChanged(object? sender, DownloadProgressChangedEventArgs e)
