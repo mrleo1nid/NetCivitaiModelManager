@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using NetCivitaiModelManager.Extensions;
+using System.Diagnostics;
 
 namespace NetCivitaiModelManager.ViewModels
 {
@@ -48,6 +49,16 @@ namespace NetCivitaiModelManager.ViewModels
 
             }
         }
+        [RelayCommand]
+        private async Task OpenBrowser()
+        {
+            if (SelectedModel != null)
+            {
+                 string url = $"{ConfigService.Config.CivitaiBaseUrl}models/{SelectedModel.Id}";
+                 Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+            }
+        }
+
         [RelayCommand]
         private async Task LoadModels()
         {
