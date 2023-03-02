@@ -28,9 +28,9 @@
         <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Text="{Binding BaseUrl}"/>
         <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" Text="{Binding FolderPath}"/>
         <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.ColumnSpan="3" HorizontalAlignment="Center">
-            <Button Content="Сохранить" Margin="5" MinWidth="100" Click="SaveButton_Click"/>
-            <Button Content="Сбросить" Margin="5" MinWidth="100" Click="DefaultButton_Click"/>
-            <Button Content="Выход" Margin="5" MinWidth="100" Click="ButtonClose_Click"/>
+            <Button Content="Сохранить" Margin="5" MinWidth="100" Command="{Binding SaveCommand}"/>
+            <Button Content="Сбросить" Margin="5" MinWidth="100" Command="{Binding ReturnToDefaultCommand}"/>
+            <Button Content="Выход" Margin="5" MinWidth="100" Command="{Binding CloseWindowCommand}"/>
         </StackPanel>
 
     </Grid>

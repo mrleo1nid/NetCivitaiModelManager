@@ -34,7 +34,15 @@
             </ItemsControl.ItemTemplate>
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Скачать" Command="{Binding DownoloadModelCommand}" ></MenuItem>
+                    <MenuItem ItemsSource="{Binding  SelectedModel.ModelVersions}" Header="Скачать">
+                        <MenuItem.ItemContainerStyle>
+                            <Style TargetType="{x:Type MenuItem}">
+                                <Setter Property= "Command" Value= "{Binding DataContext.DownoloadModelCommand, RelativeSource   ={RelativeSource AncestorType={x:Type MenuItem}}}"/>
+                                <Setter Property="Header" Value="{Binding Name}"/>
+                                <Setter Property="CommandParameter" Value="{Binding}" />
+                            </Style>
+                        </MenuItem.ItemContainerStyle>
+                    </MenuItem>
                     <MenuItem Header="Открыть в браузере" Command="{Binding OpenBrowserCommand}"></MenuItem>
                 </ContextMenu>
             </ListBox.ContextMenu>

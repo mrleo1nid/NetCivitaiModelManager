@@ -1,4 +1,5 @@
-﻿using NetCivitaiModelManager.Models;
+﻿using CivitaiApi.CivitaiDataContracts;
+using NetCivitaiModelManager.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,5 +26,6 @@ namespace NetCivitaiModelManager.Extensions
             }
             else return new ImageUrlAndPath() { Error = "Изображение не найдено." };
         }
+
     }
 }

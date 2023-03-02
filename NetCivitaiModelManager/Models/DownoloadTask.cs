@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using Downloader;
 using NetCivitaiModelManager.Controls.Downoload;
-using NetCivitaiModelManager.Extensions;
+using CivitaiApi.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

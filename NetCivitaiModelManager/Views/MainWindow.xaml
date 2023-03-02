@@ -54,7 +54,7 @@
             <TabItem>
                 <TabItem.Template>
                     <ControlTemplate>
-                        <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="OpenSettingsButton_Click">
+                        <Button VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{Binding OpenConfigWindowCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="/Icons/icon-settings.png" Width="16" Height="16" Margin="5"/>
                                 <Label Content="Настройки"/>

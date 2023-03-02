@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using NetCivitaiModelManager.ViewModels;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace NetCivitaiModelManager.Controls.ExternalModels
@@ -12,7 +13,8 @@ namespace NetCivitaiModelManager.Controls.ExternalModels
         public ExternalModelsControl()
         {
             InitializeComponent();
-            DataContext = Ioc.Default.GetRequiredService<ExternalModelsControlVM>();
+            var vm = Ioc.Default.GetRequiredService<ExternalModelsControlVM>();
+            DataContext = vm;
         }
     }
 }

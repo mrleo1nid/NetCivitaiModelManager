@@ -5,11 +5,15 @@ using System.Security.Policy;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using CivitaiApi.Extensions;
 
 namespace CivitaiApi.CivitaiDataContracts
 {
     public class File
     {
+        [JsonIgnore]
+        public string DisplayName { get { return $"{Name} ({SizeKB.CalcMemoryMensurableUnitKb()})"; } }
+
         [JsonPropertyName("name")]
         public string Name { get; set; }
 

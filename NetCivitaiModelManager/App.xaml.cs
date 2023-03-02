@@ -53,6 +53,7 @@ namespace NetCivitaiModelManager
                     .AddSingleton<BlobCasheService>()
                     .AddSingleton<ModelLoadService>()
                     .AddSingleton<FileDownoloadService>()
+                    .AddSingleton<OpenWindowService>()
                     //ViewModels
                     .AddTransient<MainVM>()
                     .AddTransient<ConfigVM>()

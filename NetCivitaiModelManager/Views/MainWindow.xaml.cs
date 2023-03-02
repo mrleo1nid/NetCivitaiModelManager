@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using NetCivitaiModelManager.Services;
 using NetCivitaiModelManager.ViewModels;
 using NetCivitaiModelManager.Views;
 using System.Windows;
@@ -13,16 +14,9 @@ namespace NetCivitaiModelManager
         public MainWindow()
         {
             InitializeComponent();
+            var openwind = Ioc.Default.GetRequiredService<OpenWindowService>();
+            openwind.MainWindow = this;
             DataContext = Ioc.Default.GetRequiredService<MainVM>();
-        }
-
-        private void OpenSettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            ConfigWindow configWindow = new ConfigWindow();
-            configWindow.Owner = this;
-            configWindow.Top = this.Top + this.Height/4;
-            configWindow.Left = this.Left + this.Width / 4;
-            configWindow.Show();
         }
     }
 }

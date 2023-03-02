@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NetCivitaiModelManager.Extensions
+namespace CivitaiApi.Extensions
 {
     public static class DownoloadExtensions
     {
@@ -29,6 +29,23 @@ namespace NetCivitaiModelManager.Extensions
 
             result = result.Replace("/", ".");
             return result;
+        }
+        public static string CalcMemoryMensurableUnitKb(this double kb)
+        {
+                double bytes = kb * 1024; // · 1024 Bytes = 1 Kilobyte 
+                double mb = kb / 1024; // · 1024 Kilobytes = 1 Megabyte 
+                double gb = mb / 1024; // · 1024 Megabytes = 1 Gigabyte 
+                double tb = gb / 1024; // · 1024 Gigabytes = 1 Terabyte 
+
+                string result =
+                    tb > 1 ? $"{tb:0.##}TB" :
+                    gb > 1 ? $"{gb:0.##}GB" :
+                    mb > 1 ? $"{mb:0.##}MB" :
+                    kb > 1 ? $"{kb:0.##}KB" :
+                    $"{bytes:0.##}B";
+
+                result = result.Replace("/", ".");
+                return result;
         }
     }
 }

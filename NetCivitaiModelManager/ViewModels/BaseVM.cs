@@ -5,6 +5,7 @@ using NetCivitaiModelManager.Extensions;
 using NetCivitaiModelManager.Models;
 using NetCivitaiModelManager.Services;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace NetCivitaiModelManager.ViewModels
 {
@@ -49,6 +50,8 @@ namespace NetCivitaiModelManager.ViewModels
             ,DownoloadType.Image.GetEnumDescription()
             ,DownoloadType.Model.GetEnumDescription()
             ,DownoloadType.Custom.GetEnumDescription() };
+        [ObservableProperty]
+        private List<string> prioritiModelList = new List<string>() { " ", " ", " " };
         public BaseVM()
         {
             ConfigService = Ioc.Default.GetRequiredService<ConfigService>();

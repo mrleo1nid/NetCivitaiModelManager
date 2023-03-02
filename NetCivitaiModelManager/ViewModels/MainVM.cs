@@ -9,11 +9,20 @@ namespace NetCivitaiModelManager.ViewModels
         public FileDownoloadService FileDownoloadService { get; private set; }
         public HashService HashService { get; private set; }
         public ModelLoadService ModelLoadService { get; private set; }
-        public MainVM(FileDownoloadService fileDownoloadService, HashService hashService, ModelLoadService modelLoad) 
+
+        private OpenWindowService _openWindowService;
+        public MainVM(FileDownoloadService fileDownoloadService, HashService hashService, ModelLoadService modelLoad, OpenWindowService openWindowService) 
         {
             FileDownoloadService = fileDownoloadService;
             HashService = hashService;
             ModelLoadService = modelLoad;
+            _openWindowService = openWindowService;
+        }
+
+        [RelayCommand]
+        public void OpenConfigWindow()
+        {
+            _openWindowService.OpenConfigWindow();
         }
     }
 }

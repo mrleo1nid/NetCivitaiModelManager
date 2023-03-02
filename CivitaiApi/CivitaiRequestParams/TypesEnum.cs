@@ -8,11 +8,11 @@ namespace CivitaiApi.CivitaiRequestParams
     {
         [Description("Checkpoint")]
         Checkpoint,
-        [Description("Textual Inversion")]
+        [Description("TextualInversion")]
         TextualInversion,
         [Description("Hypernetwork")]
         Hypernetwork,
-        [Description("Aesthetic Gradient")]
+        [Description("AestheticGradient")]
         AestheticGradient,
         [Description("LORA")]
         LORA,

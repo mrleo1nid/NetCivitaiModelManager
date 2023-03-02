@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using NetCivitaiModelManager.Extensions;
 
 namespace NetCivitaiModelManager.Services
 {
@@ -40,7 +41,7 @@ namespace NetCivitaiModelManager.Services
         private List<LocalModel> GetModelsAsync(string path, TypesEnum types)
         {
             var models = new List<LocalModel>();
-            var folder = GetFolderByType(path,types);
+            var folder = types.GetFolderByType(path);
             if(!Directory.Exists(folder)) return models;
 
             var files = Directory.GetFiles(folder).Where(x=> fileFormats.Contains(Path.GetExtension(x)));
@@ -71,34 +72,6 @@ namespace NetCivitaiModelManager.Services
             if(File.Exists(imagepath)) return imagepath;
             else return Path.Combine(Environment.CurrentDirectory, "Icons\\card-no-preview.png");
         }
-        private string GetFolderByType(string basepath,TypesEnum typesEnum)
-        {
-            var result = string.Empty;
-            switch (typesEnum)
-            {
-                case TypesEnum.LORA:
-                    result = "models\\Lora";
-                    break;
-                case TypesEnum.TextualInversion:
-                    result = "embeddings";
-                    break;
-                case TypesEnum.Hypernetwork:
-                    result = "models\\hypernetworks";
-                    break;
-                case TypesEnum.Checkpoint:
-                    result = "models\\Stable-diffusion";
-                    break;
-                case TypesEnum.AestheticGradient:
-                    result = "extensions\\stable-diffusion-webui-aesthetic-gradients\\aesthetic_embeddings";
-                    break;
-                case TypesEnum.Controlnet:
-                    result = "extensions\\sd-webui-controlnet\\models";
-                    break;
-                case TypesEnum.Poses:
-                    result = "poses";
-                    break;
-            }
-            return Path.Combine(basepath,result);
-        }
+        
     }
 }

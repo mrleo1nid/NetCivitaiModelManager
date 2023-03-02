@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using NetCivitaiModelManager.Services;
 using NetCivitaiModelManager.ViewModels;
+using System;
+using System.ComponentModel;
 using System.Windows;
 
 namespace NetCivitaiModelManager.Views
@@ -10,34 +13,24 @@ namespace NetCivitaiModelManager.Views
     public partial class ConfigWindow : Window
     {
         private ConfigVM vm;
+        private OpenWindowService service;
         public ConfigWindow()
         {
             InitializeComponent();
+            service = Ioc.Default.GetRequiredService<OpenWindowService>();
+            service.ConfigWindow = this;
+            this.Owner = service.MainWindow;
+            this.Top = Owner.Top + Owner.Height / 4;
+            this.Left = Owner.Left + Owner.Width / 4;
             vm = Ioc.Default.GetRequiredService<ConfigVM>();
             DataContext =vm;
+            this.Closing += SelectFileWindow_Closing;
         }
 
-        private void ButtonClose_Click(object sender, RoutedEventArgs e)
+        private void SelectFileWindow_Closing(object? sender, CancelEventArgs e)
         {
-            var res = MessageBox.Show("Вы уверены что хотите выйти?", "Внимание", MessageBoxButton.YesNo);
-            if (res == MessageBoxResult.Yes)
-            {
-                var parent = this.Owner as Window;
-                parent.Focus();
-                Close();
-            }
-              
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            vm.SaveConfig();
-            Close();
-        }
-
-        private void DefaultButton_Click(object sender, RoutedEventArgs e)
-        {
-            vm.DefaultConfig();
+            service.ConfigWindow = null;
+            this.Owner.Focus();
         }
     }
 }

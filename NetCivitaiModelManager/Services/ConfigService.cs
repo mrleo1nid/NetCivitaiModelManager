@@ -9,7 +9,7 @@ namespace NetCivitaiModelManager.Services
     {
 
         public Config Config { get; set; }
-        public DownloadConfiguration DownloadConfiguration { get;set;} = new DownloadConfiguration();
+        public DownloadConfiguration DownloadConfiguration { get;set;} = new DownloadConfiguration() { ParallelDownload =true };
 
         private string _filename;
 

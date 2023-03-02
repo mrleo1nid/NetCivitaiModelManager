@@ -12,12 +12,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using NetCivitaiModelManager.Extensions;
 using System.Diagnostics;
+using NetCivitaiModelManager.Views;
 
 namespace NetCivitaiModelManager.ViewModels
 {
     public partial class ExternalModelsControlVM : BaseVM
     {
         private readonly CivitaiService _service;
+        private readonly OpenWindowService _openWindowService;
+        private readonly FileDownoloadService _fileDownoloadService;
         [ObservableProperty]
         private List<Model> allModels = new List<Model>();
         [ObservableProperty]
@@ -30,25 +33,73 @@ namespace NetCivitaiModelManager.ViewModels
         private string? selectedSort;
         [ObservableProperty]
         private Model? selectedModel;
+        [ObservableProperty]
+        private ModelVersion? selectedVersion;
+        [ObservableProperty]
+        private File? selectedFile;
         private List<TypeToSelect> currentfilter = new List<TypeToSelect>();
-        public ExternalModelsControlVM(CivitaiService service)
+        public ExternalModelsControlVM(CivitaiService service, OpenWindowService openWindowService, FileDownoloadService fileDownoloadService)
         {
             _service = service;
             Page = 1;
             MaxPages = 999;
             SelectedPeriod = Periods.FirstOrDefault();
             SelectedSort = Sort.FirstOrDefault();
-
+            _openWindowService = openWindowService;
+            _fileDownoloadService = fileDownoloadService;
             Task.Factory.StartNew(LoadModels);
         }
+
         [RelayCommand]
-        private async Task DownoloadModel()
+        public void DownoloadModel(ModelVersion version)
         {
             if (SelectedModel != null)
             {
-
+                if(version!=null)
+                {
+                    SelectedVersion = version;
+                    if(SelectedVersion.Files.Count==1)
+                    {
+                        SelectedFile = SelectedVersion.Files.First();
+                        LoadFile();
+                    }
+                    else if(SelectedVersion.Files.Count > 1)
+                    {
+                        _openWindowService.OpenSelectFileWindow(this);
+                    }
+                }
             }
         }
+        [RelayCommand]
+        public void LoadFile()
+        {
+            if (SelectedFile != null)
+            {
+                var modeltypeenum = selectedModel.Type.ToEnum<TypesEnum>();
+                var folder = modeltypeenum.GetFolderByType(ConfigService.Config.WebUiFolderPath);
+                var fullpath = System.IO.Path.Combine(folder, SelectedFile.Name);
+                var shortname = System.IO.Path.GetFileNameWithoutExtension(fullpath);
+                var imageurl = SelectedModel.DisplayImage;
+                var imagepath = System.IO.Path.Combine(folder, shortname) + ".preview.png";
+                _fileDownoloadService.AddAndStart(SelectedFile.DownloadUrl, fullpath, DownoloadType.Model,
+                                       () => {
+                                           _fileDownoloadService.AddAndStart(imageurl, imagepath);
+                                       });
+                SelectedModel = null; 
+                SelectedVersion = null;
+                _openWindowService.CloseWindow(_openWindowService.SelectFileWindow);
+            }
+            else
+            {
+                MessageBox.Show("Файл не выбран");
+            }
+        }
+        [RelayCommand]
+        public void CloseSelectFileWindow()
+        {
+            _openWindowService.CloseWindow(_openWindowService.SelectFileWindow);
+        }
+
         [RelayCommand]
         private async Task OpenBrowser()
         {
