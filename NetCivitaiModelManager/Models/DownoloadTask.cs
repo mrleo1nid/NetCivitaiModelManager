@@ -49,10 +49,10 @@ namespace NetCivitaiModelManager.Models
         [ObservableProperty]
         private DownoloadType type;
         public DownloadService DownloadService { get;  set; }
-        private Action<DownoloadTask>? _completeAction;
+        private Action? _completeAction;
         public bool StopByUser { get; private set; }
         public bool StopToRemove { get; set; }
-        public DownoloadTask(string url, string path, int number, DownloadService service, DownoloadType type, Action<DownoloadTask>? completeaction = null)
+        public DownoloadTask(string url, string path, int number, DownloadService service, DownoloadType type, Action? completeaction = null)
         {
             Id = Guid.NewGuid();
             _completeAction = completeaction;
@@ -110,11 +110,13 @@ namespace NetCivitaiModelManager.Models
             State = DownoloadStates.Completed;
             ClearFields();
             Time = "Готово";
-            _completeAction?.Invoke(this);
+            _completeAction?.Invoke();
         }
         public void ClearFields() 
         {
-            Time = null; 
+            if (state == DownoloadStates.Completed)
+                Time = "Готово";
+            else time = null;
             Speed = null;
             TotalBytesToReceive = null;
             BytesReceived = null;

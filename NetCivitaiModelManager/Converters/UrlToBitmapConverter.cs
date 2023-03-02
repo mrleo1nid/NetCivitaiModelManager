@@ -21,7 +21,11 @@ namespace NetCivitaiModelManager.Converters
         {
             if (value is string str && !string.IsNullOrEmpty(str))
             {
-                return new BitmapImage(new Uri(str));
+                try
+                {
+                    return new BitmapImage(new Uri(str));
+                }catch { return null; }
+               
             }
             return null;
         }

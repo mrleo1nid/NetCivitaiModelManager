@@ -2,6 +2,7 @@
 using CivitaiApi.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using NetCivitaiModelManager.Extensions;
 using NetCivitaiModelManager.Models;
 using NetCivitaiModelManager.Services;
 using Refit;
@@ -22,23 +23,28 @@ namespace NetCivitaiModelManager.ViewModels
     {
         private CivitaiService _service;
         private LocalModelsService _localModelsService;
+        private FileDownoloadService _filedownoloadService;
         public  HashService HashService { get; }
         public ModelLoadService ModelLoadService { get; }
         [ObservableProperty]
         private List<LocalModel> alllocalModels = new List<LocalModel>();
         [ObservableProperty]
         private List<LocalModel> filteredModels = new List<LocalModel>();
-       
+        [ObservableProperty]
+        private LocalModel? selectedModel;
+
         private List<TypesEnum> currentfilter = new List<TypesEnum>();
         public LocalModelsControlVM(CivitaiService civitaiService, LocalModelsService localModelsService,
-            HashService hashservvice, ModelLoadService modelLoadService)
+            HashService hashservvice, ModelLoadService modelLoadService, FileDownoloadService filedownoloadService)
         {
             _service = civitaiService;
             _localModelsService = localModelsService;
             HashService = hashservvice;
             ModelLoadService = modelLoadService;
+            _filedownoloadService = filedownoloadService;
             HashService.NotifyHashComplete += HashService_NotifyHashComplete;
             Task.Factory.StartNew(LoadModels);
+         
         }
 
         private void HashService_NotifyHashComplete(LocalFile file)
@@ -53,7 +59,27 @@ namespace NetCivitaiModelManager.ViewModels
                 ModelLoadService.Start();
             }
         }
-
+        
+        [RelayCommand]
+        private async Task UpdateImage()
+        {
+           if(SelectedModel != null)
+            {
+                var urlandpath = SelectedModel.CreateImagePath();
+                if(!string.IsNullOrEmpty(urlandpath.Error)) 
+                {
+                    MessageBox.Show(urlandpath.Error, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+                else
+                {
+                    _filedownoloadService.AddAndStart(urlandpath.Url, urlandpath.Path, DownoloadType.Image, 
+                        () => {
+                            SelectedModel.DisplayImage = urlandpath.Path;
+                        });
+                }
+            }
+        }
         [RelayCommand]
         private async Task LoadModels()
         {

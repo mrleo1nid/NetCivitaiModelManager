@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         <local:ModelsFilter Grid.Row="0" DataContext="{Binding}"/>
         <ListBox MinHeight="200" Margin="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"
-                 ItemsSource="{Binding AllModels}" Background="AliceBlue">
+                 ItemsSource="{Binding AllModels}" Background="AliceBlue" SelectedItem="{Binding SelectedModel}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="4"/>

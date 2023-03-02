@@ -8,8 +8,10 @@ namespace NetCivitaiModelManager.Models
 {
     public partial class LocalModel : ObservableObject
     {
-        public string? DisplayName { get; set; }
-        public string? DisplayImage { get; set; }
+        [ObservableProperty]
+        private string? displayName;
+        [ObservableProperty]
+        private string? displayImage;
         public LocalFile? LocalFile { get; set; }
         public ModelVersion? ExternalModel { get; set; }
         public string? TypeDisplay { get { return Type.GetEnumDescription(); ; } }

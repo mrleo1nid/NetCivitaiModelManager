@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
         <local:ModelFilter Grid.Row="0" DataContext="{Binding}"/>
         <ListBox MinHeight="200" Margin="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1"
-                 ItemsSource="{Binding FilteredModels}" Background="AliceBlue">
+                 ItemsSource="{Binding FilteredModels}" Background="AliceBlue" SelectedItem="{Binding SelectedModel}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="4"/>
@@ -33,6 +33,11 @@
                     <local:LocalModelTile DataContext="{Binding}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Обновить изображение" Command="{Binding UpdateImageCommand}" IsEnabled="{Binding SelectedModel.ModelFound}"></MenuItem>
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
     </Grid>
 </UserControl>

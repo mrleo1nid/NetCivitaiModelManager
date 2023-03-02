@@ -36,19 +36,22 @@ namespace NetCivitaiModelManager.Services
             _blobcash = blobCasheService;
         }
 
-        public void AddAndStart(string url, string path, DownoloadType type = DownoloadType.Custom, Action<DownoloadTask>? completeaction = null)
+        public DownoloadTask? AddAndStart(string url, string path, DownoloadType type = DownoloadType.Custom, Action? completeaction = null)
         {
             var number = Downoloads.Count+1;
             var service = CreateDownloadService(_configService.DownloadConfiguration);
-            if(Downoloads.Where(x=>x.Equal(url, path)).Any()) { return; }
+            if(Downoloads.Where(x=>x.Equal(url, path)).Any()) { return null; }
             else
             {
-                Downoloads.Add(new DownoloadTask(url, path, number, service, type, completeaction).Start());
+                var task = new DownoloadTask(url, path, number, service, type, completeaction);
+                Downoloads.Add(task);
                 SaveDownoloadsToCash();
+                task.Start();
+                return task;
             }
                
         }
-        public async Task<DownoloadTask?> Add(string url, string path, DownoloadType type = DownoloadType.Custom, Action<DownoloadTask>? completeaction = null)
+        public async Task<DownoloadTask?> Add(string url, string path, DownoloadType type = DownoloadType.Custom, Action? completeaction = null)
         {
             var number = Downoloads.Count + 1;
             var service = CreateDownloadService(_configService.DownloadConfiguration);

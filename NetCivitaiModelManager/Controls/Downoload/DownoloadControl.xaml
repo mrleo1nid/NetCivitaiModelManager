@@ -144,6 +144,14 @@
                     </GridView.Columns>
                 </GridView>
             </ListView.View>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Старт" Command="{Binding StartSelectedCommand}"></MenuItem>
+                    <MenuItem Header="Пауза" Command="{Binding PauseSelectedCommand}"></MenuItem>
+                    <MenuItem Header="Стоп" Command="{Binding StopSelectedCommand}"></MenuItem>
+                    <MenuItem Header="Удалить" Command="{Binding RemoveSelectedCommand}"></MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
     </Grid>
 </UserControl>

@@ -27,7 +27,8 @@ namespace NetCivitaiModelManager.ViewModels
         private string? selectedPeriod;
         [ObservableProperty]
         private string? selectedSort;
-
+        [ObservableProperty]
+        private Model? selectedModel;
         private List<TypeToSelect> currentfilter = new List<TypeToSelect>();
         public ExternalModelsControlVM(CivitaiService service)
         {
@@ -39,7 +40,14 @@ namespace NetCivitaiModelManager.ViewModels
 
             Task.Factory.StartNew(LoadModels);
         }
+        [RelayCommand]
+        private async Task DownoloadModel()
+        {
+            if (SelectedModel != null)
+            {
 
+            }
+        }
         [RelayCommand]
         private async Task LoadModels()
         {
