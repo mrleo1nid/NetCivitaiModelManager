@@ -11,7 +11,6 @@ namespace NetCivitaiModelManager.ViewModels
 {
     public partial class BaseVM : ObservableObject
     {
-        public const string BaseSelect = "Все";
         public ConfigService ConfigService { get; private set; }
         [ObservableProperty]
         private List<TypeToSelect> types = new List<TypeToSelect>() {
@@ -38,7 +37,7 @@ namespace NetCivitaiModelManager.ViewModels
             ,SortEnum.MostDiscussed.GetEnumDescription()};
         [ObservableProperty]
         private List<string> states = new List<string>() {
-             BaseSelect
+             BaseSelectEnum.All.GetEnumDescription()
             ,DownoloadStates.Downoloading.GetEnumDescription()
             ,DownoloadStates.Created.GetEnumDescription()
             ,DownoloadStates.Stopped.GetEnumDescription()
@@ -46,10 +45,15 @@ namespace NetCivitaiModelManager.ViewModels
             ,DownoloadStates.Error.GetEnumDescription()};
         [ObservableProperty]
         private List<string> downoloadTypes = new List<string>() {
-             BaseSelect
+             BaseSelectEnum.All.GetEnumDescription()
             ,DownoloadType.Image.GetEnumDescription()
             ,DownoloadType.Model.GetEnumDescription()
             ,DownoloadType.Custom.GetEnumDescription() };
+        [ObservableProperty]
+        private List<string> yesOrNotAndAll = new List<string>() {
+              BaseSelectEnum.All.GetEnumDescription()
+            , BaseSelectEnum.Yes.GetEnumDescription()
+            , BaseSelectEnum.No.GetEnumDescription()};
         [ObservableProperty]
         private string? searchString;
         [ObservableProperty]

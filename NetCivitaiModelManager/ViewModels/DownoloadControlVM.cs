@@ -27,10 +27,9 @@ namespace NetCivitaiModelManager.ViewModels
         {
             FileDownoloadService = fileDownoloadService;
             FileDownoloadService.Downoloads.CollectionChanged += Downoloads_CollectionChanged;
-            SelectedDownoloadType = BaseSelect;
-            SelectedState = BaseSelect;
+            SelectedDownoloadType = BaseSelectEnum.All.GetEnumDescription();
+            SelectedState = BaseSelectEnum.All.GetEnumDescription();
             Task.Factory.StartNew(LoadFromCash);
-            //Test();
         }
         public void DownoloadsSelectionChanged(object sender, RoutedEventArgs e)
         {
@@ -120,19 +119,10 @@ namespace NetCivitaiModelManager.ViewModels
         private void FilterDownoloads()
         {
             FilteredDownoload = FileDownoloadService.Downoloads.ToList();
-            if (!string.IsNullOrEmpty(SelectedDownoloadType) && SelectedDownoloadType != BaseSelect)
+            if (!string.IsNullOrEmpty(SelectedDownoloadType) && SelectedDownoloadType != BaseSelectEnum.All.GetEnumDescription())
                 FilteredDownoload = FilteredDownoload.Where(x => x.Type == SelectedDownoloadType.ToEnum<DownoloadType>()).ToList();
-                    if (!string.IsNullOrEmpty(SelectedState) && SelectedState != BaseSelect)
+                    if (!string.IsNullOrEmpty(SelectedState) && SelectedState != BaseSelectEnum.All.GetEnumDescription())
                 FilteredDownoload = FilteredDownoload.Where(x => x.State == SelectedState.ToEnum<DownoloadStates>()).ToList();
-        }
-        public void Test()
-        {
-           FileDownoloadService
-                .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_1.safetensors");
-             FileDownoloadService
-               .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_2.safetensors");
-             FileDownoloadService
-               .AddAndStart("https://civitai.com/api/download/models/4048?type=Pruned%20Model&format=SafeTensor", "D:\\backup\\protogenX34Photorealism_3.safetensors");
         }
     }
 }

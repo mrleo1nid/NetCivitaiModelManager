@@ -24,7 +24,12 @@ namespace NetCivitaiModelManager.Converters
             {
                 try
                 {
-                    return new BitmapImage(new Uri(str), new System.Net.Cache.RequestCachePolicy(RequestCacheLevel.CacheIfAvailable));
+                    var bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.UriSource = new Uri(str, UriKind.RelativeOrAbsolute);
+                    bi.CacheOption = BitmapCacheOption.OnLoad;
+                    bi.EndInit();
+                    return bi;
                 }catch { return null; }
                
             }

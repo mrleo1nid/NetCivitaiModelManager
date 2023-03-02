@@ -13,6 +13,8 @@ namespace NetCivitaiModelManager.Models
         Model,
         [Description("Изображение")]
         Image,
+        [Description("Архив поз")]
+        PoseArch,
         [Description("Другое")]
         Custom
     }

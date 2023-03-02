@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using NetCivitaiModelManager.Extensions;
+using System.IO.Compression;
 
 namespace NetCivitaiModelManager.Services
 {
@@ -33,7 +34,7 @@ namespace NetCivitaiModelManager.Services
             models.AddRange(GetModelsAsync(folder, TypesEnum.Hypernetwork));
             models.AddRange(GetModelsAsync(folder, TypesEnum.TextualInversion));
             models.AddRange(GetModelsAsync(folder, TypesEnum.Controlnet));
-            models.AddRange(GetModelsAsync(folder, TypesEnum.Poses));
+            models.AddRange(GetPoses(folder));
             return models;
         }
 
@@ -64,7 +65,41 @@ namespace NetCivitaiModelManager.Services
             }
             return models;
         }
-       
+        public void ExtractPosesArchive(string filepath, string directoryty)
+        {
+            try
+            {
+                ZipFile.ExtractToDirectory(filepath, directoryty);
+            }
+            catch(Exception ex) { _logger.LogError(ex.Message); }
+        }
+        private List<LocalModel> GetPoses(string path)
+        {
+            var types = TypesEnum.Poses;
+            var models = new List<LocalModel>();
+            var folder = types.GetFolderByType(path);
+            if (!Directory.Exists(folder)) return models;
+            var posesformat = new string[] { ".zip", ".7z", ".rar"};
+            var files = Directory.GetFiles(folder).Where(x => posesformat.Contains(Path.GetExtension(x)));
+
+            foreach (var file in files)
+            {
+                var localfile = new LocalFile();
+                localfile.FullName = file;
+                localfile.Name = Path.GetFileNameWithoutExtension(file);
+                localfile.Extension = Path.GetExtension(file);
+                localfile.ImagePath = GetImage(file, localfile.Name);
+                var localmodel = new LocalModel()
+                {
+                    LocalFile = localfile,
+                    DisplayImage = localfile.ImagePath,
+                    DisplayName = localfile.Name,
+                    Type = types
+                };
+                models.Add(localmodel);
+            }
+            return models;
+        }
         private string GetImage(string filepath, string filename)
         {
             var folder = Path.GetDirectoryName(filepath);

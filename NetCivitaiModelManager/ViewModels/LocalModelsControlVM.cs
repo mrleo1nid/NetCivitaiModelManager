@@ -35,7 +35,10 @@ namespace NetCivitaiModelManager.ViewModels
         private List<LocalModel> filteredModels = new List<LocalModel>();
         [ObservableProperty]
         private LocalModel? selectedModel;
-
+        [ObservableProperty]
+        private string? cashСompute;
+        [ObservableProperty]
+        private string? modelFound;
         private List<TypesEnum> currentfilter = new List<TypesEnum>();
         public LocalModelsControlVM(CivitaiService civitaiService, LocalModelsService localModelsService,
             HashService hashservvice, ModelLoadService modelLoadService, FileDownoloadService filedownoloadService)
@@ -45,6 +48,8 @@ namespace NetCivitaiModelManager.ViewModels
             HashService = hashservvice;
             ModelLoadService = modelLoadService;
             _filedownoloadService = filedownoloadService;
+            CashСompute = BaseSelectEnum.All.GetEnumDescription();
+            ModelFound = BaseSelectEnum.All.GetEnumDescription();
             HashService.NotifyHashComplete += HashService_NotifyHashComplete;
             Task.Factory.StartNew(LoadModels);
         }
@@ -156,6 +161,20 @@ namespace NetCivitaiModelManager.ViewModels
                 }
                 FilteredModels = res;
             }
+            if(CashСompute.ToEnum<BaseSelectEnum>()!=BaseSelectEnum.All)
+            {
+                bool chek = false;
+                if(CashСompute.ToEnum<BaseSelectEnum>() == BaseSelectEnum.Yes) chek = true;
+                if (CashСompute.ToEnum<BaseSelectEnum>() == BaseSelectEnum.No) chek = false;
+                FilteredModels = FilteredModels.Where(x=>x.LocalFile.HashRedy==chek).ToList();
+            }
+            if (ModelFound.ToEnum<BaseSelectEnum>() != BaseSelectEnum.All)
+            {
+                bool chek = false;
+                if (ModelFound.ToEnum<BaseSelectEnum>() == BaseSelectEnum.Yes) chek = true;
+                if (ModelFound.ToEnum<BaseSelectEnum>() == BaseSelectEnum.No) chek = false;
+                FilteredModels = FilteredModels.Where(x => x.ModelFound== chek).ToList();
+            }
         }
         public void FilterSelectionChanged(object sender, RoutedEventArgs e)
         {
@@ -178,6 +197,10 @@ namespace NetCivitaiModelManager.ViewModels
                 RefreshList();
             }
             
+        }
+        public void SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            RefreshList();
         }
     }
 }

@@ -14,6 +14,7 @@ using NetCivitaiModelManager.Extensions;
 using System.Diagnostics;
 using NetCivitaiModelManager.Views;
 using System.Threading;
+using System.IO;
 
 namespace NetCivitaiModelManager.ViewModels
 {
@@ -22,6 +23,7 @@ namespace NetCivitaiModelManager.ViewModels
         private readonly CivitaiService _service;
         private readonly OpenWindowService _openWindowService;
         private readonly FileDownoloadService _fileDownoloadService;
+        private readonly LocalModelsService _localmodelsService;
         [ObservableProperty]
         private List<Model> allModels = new List<Model>();
         [ObservableProperty]
@@ -37,11 +39,12 @@ namespace NetCivitaiModelManager.ViewModels
         [ObservableProperty]
         private ModelVersion? selectedVersion;
         [ObservableProperty]
-        private File? selectedFile;
+        private CivitaiApi.CivitaiDataContracts.File? selectedFile;
         private List<TypeToSelect> currentfilter = new List<TypeToSelect>();
-        public ExternalModelsControlVM(CivitaiService service, OpenWindowService openWindowService, FileDownoloadService fileDownoloadService)
+        public ExternalModelsControlVM(CivitaiService service, OpenWindowService openWindowService, FileDownoloadService fileDownoloadService, LocalModelsService localModelsService)
         {
             _service = service;
+            _localmodelsService = localModelsService;
             Page = 1;
             MaxPages = 999;
             SelectedPeriod = Periods.FirstOrDefault();
@@ -90,9 +93,14 @@ namespace NetCivitaiModelManager.ViewModels
                 var shortname = System.IO.Path.GetFileNameWithoutExtension(fullpath);
                 var imageurl = SelectedModel.DisplayImage;
                 var imagepath = System.IO.Path.Combine(folder, shortname) + ".preview.png";
-                _fileDownoloadService.AddAndStart(SelectedFile.DownloadUrl, fullpath, DownoloadType.Model,
+                var downoloadtype = modeltypeenum == TypesEnum.Poses ? DownoloadType.PoseArch : DownoloadType.Model;
+                _fileDownoloadService.AddAndStart(SelectedFile.DownloadUrl, fullpath, downoloadtype,
                                        () => {
                                            _fileDownoloadService.AddAndStart(imageurl, imagepath, DownoloadType.Image);
+                                           if(modeltypeenum == TypesEnum.Poses) 
+                                           {
+                                               _localmodelsService.ExtractPosesArchive(fullpath, folder);
+                                           }
                                        });
                 SelectedModel = null; 
                 SelectedVersion = null;
