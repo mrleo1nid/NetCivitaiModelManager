@@ -3,14 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls.Downoload" xmlns:converters="clr-namespace:NetCivitaiModelManager.Converters"
+             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls.Downoload" xmlns:converters="clr-namespace:NetCivitaiModelManager.Converters" xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Background>
         <SolidColorBrush Color="AliceBlue"/>
     </UserControl.Background>
     <UserControl.Resources>
-        <converters:DownoloadStateToStringConverter  x:Key="DownoloadStateToStringConverter"/>
+        <converters:EnumToStringConverter  x:Key="EnumToStringConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -19,7 +19,12 @@
         </Grid.RowDefinitions>
         <local:DownoloadPanel DataContext="{Binding}" Grid.Row="0"/>
         <ListView HorizontalContentAlignment="Stretch" Grid.Row="1"
-                 ItemsSource="{Binding FilteredDownoload}" Background="AliceBlue" SelectionMode="Single">
+                 ItemsSource="{Binding FilteredDownoload}" Background="AliceBlue" SelectionMode="Extended">
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="SelectionChanged">
+                    <b:CallMethodAction TargetObject="{Binding}" MethodName="DownoloadsSelectionChanged"/>
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
@@ -46,7 +51,17 @@
                         <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding State, Converter={StaticResource DownoloadStateToStringConverter}}"></TextBlock>
+                                    <TextBlock Text="{Binding Type, Converter={StaticResource EnumToStringConverter}}"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Тип"></TextBlock>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding State, Converter={StaticResource EnumToStringConverter}}"></TextBlock>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                             <GridViewColumn.Header>

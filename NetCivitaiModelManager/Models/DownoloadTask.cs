@@ -2,6 +2,7 @@
 using Downloader;
 using NetCivitaiModelManager.Controls.Downoload;
 using NetCivitaiModelManager.Extensions;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -30,12 +31,16 @@ namespace NetCivitaiModelManager.Models
         [ObservableProperty]
         private string textProgress;
         [ObservableProperty]
+        [JsonIgnore]
         private string? speed;
         [ObservableProperty]
+        [JsonIgnore]
         private string? bytesReceived;
         [ObservableProperty]
+        [JsonIgnore]
         private string? totalBytesToReceive;
         [ObservableProperty]
+        [JsonIgnore]
         private string? time;
         [ObservableProperty]
         private string url;
@@ -45,6 +50,8 @@ namespace NetCivitaiModelManager.Models
         private DownoloadType type;
         public DownloadService DownloadService { get;  set; }
         private Action<DownoloadTask>? _completeAction;
+        public bool StopByUser { get; private set; }
+        public bool StopToRemove { get; set; }
         public DownoloadTask(string url, string path, int number, DownloadService service, DownoloadType type, Action<DownoloadTask>? completeaction = null)
         {
             Id = Guid.NewGuid();
@@ -57,21 +64,26 @@ namespace NetCivitaiModelManager.Models
             State = DownoloadStates.Created;
             DownloadService = service;
             this.Type = type;
+            StopByUser = false;
+            StopToRemove = false;
         }
         
         public DownoloadTask Start()
         {
             DownloadService.DownloadFileTaskAsync(Url, FilePath);
+            StopByUser = false;
             return this;
         }
         public void StartFromPack(DownloadPackage pack)
         {
             DownloadService.DownloadFileTaskAsync(pack);
+            StopByUser = false;
         }
         public void Cancel()
         {
             DownloadService.CancelAsync();
-            State = DownoloadStates.Cancel;
+            State = DownoloadStates.Stopped;
+            StopByUser = true;
         }
         public void Pause()
         {
@@ -82,6 +94,7 @@ namespace NetCivitaiModelManager.Models
         {
             DownloadService.Resume();
             State = DownoloadStates.Downoloading;
+            StopByUser = false;
         }
         public string GetIdenty()
         { 

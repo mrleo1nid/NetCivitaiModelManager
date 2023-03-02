@@ -3,13 +3,61 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls"
+             xmlns:local="clr-namespace:NetCivitaiModelManager.Controls" xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="800">
     <UserControl.Background>
         <SolidColorBrush Color="AliceBlue"/>
     </UserControl.Background>
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+       
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <TextBlock Text="Статус:" Margin="0,5" VerticalAlignment="Center"/>
+            <ComboBox  MinWidth="80" ItemsSource="{Binding States}" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedIndex="0" SelectedItem="{Binding SelectedState}">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="SelectionChanged">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="SelectionChanged"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </ComboBox>
+            <TextBlock Text="Тип:" Margin="0,5" VerticalAlignment="Center"/>
+            <ComboBox  MinWidth="80" ItemsSource="{Binding DownoloadTypes}" VerticalAlignment="Center" HorizontalAlignment="Center" SelectedIndex="0" SelectedItem="{Binding SelectedDownoloadType}">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="SelectionChanged">
+                        <b:CallMethodAction TargetObject="{Binding}" MethodName="SelectionChanged"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Margin="2" Command="{Binding StartSelectedCommand}">
+                <StackPanel Margin="2" >
+                    <Image Source="/Icons/icon-play.png" Width="14" Height="14"  VerticalAlignment="Center"/>
+                    <TextBlock Text="Старт" Margin="1" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Margin="2" Command="{Binding PauseSelectedCommand}">
+                <StackPanel Margin="2" >
+                    <Image Source="/Icons/icon-pause.png" Width="14" Height="14"  VerticalAlignment="Center"/>
+                    <TextBlock Text="Пауза" Margin="1" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Margin="2" Command="{Binding StopSelectedCommand}">
+                <StackPanel Margin="2" >
+                    <Image Source="/Icons/icon-stop.png" Width="14" Height="14"  VerticalAlignment="Center"/>
+                    <TextBlock Text="Стоп" Margin="1" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Margin="2" Command="{Binding RemoveSelectedCommand}">
+                <StackPanel>
+                    <Image Source="/Icons/icon-remove.png" Width="14" Height="14"  VerticalAlignment="Center"/>
+                    <TextBlock Text="Удалить" Margin="1" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

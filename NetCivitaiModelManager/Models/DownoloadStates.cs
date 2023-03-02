@@ -15,8 +15,8 @@ namespace NetCivitaiModelManager.Models
         Completed,
         [Description("Загрузка")]
         Downoloading,
-        [Description("Отменен")]
-        Cancel,
+        [Description("Остановлен")]
+        Stopped,
         [Description("Пауза")]
         Paused,
         [Description("Ошибка")]

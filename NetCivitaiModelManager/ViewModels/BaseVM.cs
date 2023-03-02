@@ -40,7 +40,7 @@ namespace NetCivitaiModelManager.ViewModels
              BaseSelect
             ,DownoloadStates.Downoloading.GetEnumDescription()
             ,DownoloadStates.Created.GetEnumDescription()
-            ,DownoloadStates.Cancel.GetEnumDescription()
+            ,DownoloadStates.Stopped.GetEnumDescription()
             ,DownoloadStates.Completed.GetEnumDescription()
             ,DownoloadStates.Error.GetEnumDescription()};
         [ObservableProperty]

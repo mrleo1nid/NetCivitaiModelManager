@@ -6,9 +6,9 @@ using System.Windows.Data;
 
 namespace NetCivitaiModelManager.Converters
 {
-    public class DownoloadStateToStringConverter : IValueConverter
+    public class EnumToStringConverter : IValueConverter
     {
-        public DownoloadStateToStringConverter()
+        public EnumToStringConverter()
         {
             
         }

@@ -16,8 +16,12 @@
     <None Remove="Icons\icon-external.png" />
     <None Remove="Icons\icon-instaled.png" />
     <None Remove="Icons\icon-notfound.png" />
+    <None Remove="Icons\icon-pause.png" />
+    <None Remove="Icons\icon-play.png" />
     <None Remove="Icons\icon-refresh.png" />
+    <None Remove="Icons\icon-remove.png" />
     <None Remove="Icons\icon-settings.png" />
+    <None Remove="Icons\icon-stop.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,10 +41,22 @@
     <Content Include="Icons\icon-notfound.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Icons\icon-pause.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\icon-play.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icons\icon-refresh.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Icons\icon-remove.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icons\icon-settings.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Icons\icon-stop.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
