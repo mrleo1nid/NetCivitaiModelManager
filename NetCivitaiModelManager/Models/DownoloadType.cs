@@ -16,6 +16,16 @@ namespace NetCivitaiModelManager.Models
         [Description("Архив поз")]
         PoseArch,
         [Description("Другое")]
-        Custom
+        Custom,
+        [Description("Модель LORA")]
+        Lora,
+        [Description("Текстовая инверсия")]
+        TextualInversion,
+        [Description("VAE")]
+        Vae,
+        [Description("Эстетический градиент")]
+        AestheticGradient,
+        [Description("Гиперсеть")]
+        Hypenetwork
     }
 }

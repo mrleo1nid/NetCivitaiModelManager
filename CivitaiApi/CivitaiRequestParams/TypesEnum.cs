@@ -19,6 +19,8 @@ namespace CivitaiApi.CivitaiRequestParams
         [Description("Controlnet")]
         Controlnet,
         [Description("Poses")]
-        Poses
+        Poses,
+        [Description("VAE")]
+        Vae
     }
 }

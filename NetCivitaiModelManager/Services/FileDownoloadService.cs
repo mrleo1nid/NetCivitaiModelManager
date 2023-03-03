@@ -119,6 +119,7 @@ namespace NetCivitaiModelManager.Services
         private DownoloadTask GetTaskByService(DownloadService service)
         {
             return Downoloads.Where(x=>x.DownloadService == service).FirstOrDefault();
+
         }
         private void DownloadService_DownloadFileCompleted(object? sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
@@ -154,6 +155,7 @@ namespace NetCivitaiModelManager.Services
             }
             else { _logger.LogDebug(identifier + e.ToString()); }
             UpdateInfo();
+
         }
 
         private void DownloadService_DownloadProgressChanged(object? sender, DownloadProgressChangedEventArgs e)

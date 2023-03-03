@@ -17,6 +17,7 @@ namespace NetCivitaiModelManager.Services
         {
            _filename = filename;
            LoadConfig();
+            DownloadConfiguration.MaximumBytesPerSecond = 8388608;
         }
         public  void LoadConfig()
         {
