@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CivitaiApiWrapper.Enums;
+using CivitaiApiWrapper.Extension;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -17,7 +19,7 @@ namespace CivitaiApiWrapper.DataContracts
         public string Description { get; set; }
 
         [JsonPropertyName("type")]
-        public string Type { get; set; }
+        public string TypeStr { get; set; }
 
         [JsonPropertyName("poi")]
         public bool Poi { get; set; }
@@ -48,5 +50,9 @@ namespace CivitaiApiWrapper.DataContracts
 
         [JsonPropertyName("modelVersions")]
         public List<ModelVersion> ModelVersions { get; set; }
+
+
+        [JsonIgnore]
+        public Types Type => TypeStr.ToEnum<Types>();
     }
 }
