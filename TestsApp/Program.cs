@@ -1,10 +1,9 @@
-﻿using CivitaiApiWrapper.DataContracts;
+﻿using Akavache;
 using CivitaiApiWrapper.DataContracts.Requsts;
 using CivitaiApiWrapper.Enums;
 using CivitaiApiWrapper.Services;
 using Refit;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace TestsApp 
 {
@@ -20,18 +19,28 @@ namespace TestsApp
             catch (Exception ex) { Console.WriteLine("Api test error :" + ex.ToString());}
             Console.WriteLine("Complete.");
             Console.ReadKey();
+            BlobCache.Shutdown().Wait();
         }
         private static void TestApi()
         {
             var service = RestService.For<ICivitaiService>("https://civitai.com");
+            var cashedandpoly = new PoliCivitaiService(service, null);
             var request = new BaseQueryParameters() { Limit = 10, Page = 1 };
-            var modelsrequest = new ModelsRequstParameters() { Limit = 6, Page = 1, Types = new List<Types>() { Types.Checkpoint, Types.TextualInversion } };
+            var modelsrequest = new ModelsRequstParameters() { Limit = 6, Page = 1, Types = new List<Types>() { Types.Checkpoint, Types.TextualInversion }, Favorites=true };
+            Console.WriteLine("Service.");
             TestCreators(service, request);
             TestTags(service, request);
             TestGetModelById(service, 5285);
             TestModelVersionById(service, 5285);
             TestModelVersionByHash(service, "471F486B92700C8DA88DD7CD8F1A9B41691F728A9BFC83A91A041F0FB56BD6C4");
             TestGetModels(service, modelsrequest);
+            Console.WriteLine("Cashed and poly.");
+            TestCreators(cashedandpoly, request);
+            TestTags(cashedandpoly, request);
+            TestGetModelById(cashedandpoly, 5285);
+            TestModelVersionById(cashedandpoly, 5285);
+            TestModelVersionByHash(cashedandpoly, "471F486B92700C8DA88DD7CD8F1A9B41691F728A9BFC83A91A041F0FB56BD6C4");
+            TestGetModels(cashedandpoly, modelsrequest);
         }
         private static void TestCreators(ICivitaiService service, BaseQueryParameters request)
         {

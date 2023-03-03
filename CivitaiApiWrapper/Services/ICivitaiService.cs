@@ -1,10 +1,7 @@
 ﻿using CivitaiApiWrapper.DataContracts;
 using CivitaiApiWrapper.DataContracts.Requsts;
 using Refit;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CivitaiApiWrapper.Services
@@ -12,21 +9,28 @@ namespace CivitaiApiWrapper.Services
     public interface ICivitaiService
     {
         [Get("/api/v1/creators")]
-        Task<BaseMetadataResponce<Creator>> GetCreators(BaseQueryParameters query);
+        Task<BaseMetadataResponce<Creator>> GetCreators(BaseQueryParameters query,
+            CancellationToken cancellationToken = default(CancellationToken));
 
         [Get("/api/v1/models")]
-        [QueryUriFormat(UriFormat.Unescaped)]
-        Task<BaseMetadataResponce<Model>> GetModels(ModelsRequstParameters query);
+        Task<BaseMetadataResponce<Model>> GetModels(ModelsRequstParameters query,
+            CancellationToken cancellationToken = default(CancellationToken));
         
         [Get("/api/v1/models/{id}")]
-        Task<Model> GetModel(int id);
+        Task<Model> GetModel(int id,
+            CancellationToken cancellationToken = default(CancellationToken));
         
         [Get("/api/v1/model-versions/{id}")]
-        Task<ModelVersion> GetModelVersion(int id);
+        Task<ModelVersion> GetModelVersion(int id,
+            CancellationToken cancellationToken = default(CancellationToken));
+
         
         [Get("/api/v1/model-versions/by-hash/{hash}")]
-        Task<ModelVersion> GetModelVersion(string hash);
+        Task<ModelVersion> GetModelVersion(string hash,
+            CancellationToken cancellationToken = default(CancellationToken));
+
         [Get("/api/v1/tags")]
-        Task<BaseMetadataResponce<Tag>> GetTags(BaseQueryParameters query);
+        Task<BaseMetadataResponce<Tag>> GetTags(BaseQueryParameters query,
+            CancellationToken cancellationToken = default(CancellationToken));
     }
 }

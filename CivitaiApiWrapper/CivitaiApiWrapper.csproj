@@ -6,6 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="akavache.mobile" Version="9.1.7" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Polly" Version="7.2.3" />
     <PackageReference Include="Refit" Version="6.3.2" />
   </ItemGroup>
 

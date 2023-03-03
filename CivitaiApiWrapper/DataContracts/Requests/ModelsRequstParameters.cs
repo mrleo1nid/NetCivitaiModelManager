@@ -18,19 +18,19 @@ namespace CivitaiApiWrapper.DataContracts.Requsts
 
         [JsonPropertyName("types")]
         [QueryAttribute(CollectionFormat.Multi)]
-        public List<string> TypesStr => Types.ToStringList();
+        public List<string>? TypesStr => Types.ToStringList();
         [JsonPropertyName("sort")]
-        public string SortStr => Sort.GetEnumDescription();
+        public string? SortStr => Sort.GetEnumDescription();
         [JsonPropertyName("period")]
-        public string PeriodStr => Period.GetEnumDescription();
+        public string? PeriodStr => Period.GetEnumDescription();
         [JsonPropertyName("rating")]
         public int? Rating { get; set; }
         [JsonPropertyName("favorites")]
-        public bool Favorites { get; set; }
+        public bool? Favorites { get; set; }
         [JsonPropertyName("hidden")]
-        public bool Hidden { get; set; }
+        public bool? Hidden { get; set; }
         [JsonPropertyName("primaryFileOnly")]
-        public bool PrimaryFileOnly { get; set; }
+        public bool? PrimaryFileOnly { get; set; }
 
         [JsonIgnore]
         public List<Types> Types { get; set; }
