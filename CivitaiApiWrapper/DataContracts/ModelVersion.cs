@@ -42,6 +42,9 @@ namespace CivitaiApiWrapper.DataContracts
 
         [JsonPropertyName("downloadUrl")]
         public string DownloadUrl { get; set; }
+
+        [JsonPropertyName("model")]
+        public ModelSmall? Model { get; set; }
     }
 
 }

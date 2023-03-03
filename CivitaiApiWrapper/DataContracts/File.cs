@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CivitaiApiWrapper.Enums;
+using CivitaiApiWrapper.Extension;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -17,7 +19,7 @@ namespace CivitaiApiWrapper.DataContracts
         public double SizeKB { get; set; }
 
         [JsonPropertyName("type")]
-        public string Type { get; set; }
+        public string TypeStr { get; set; }
 
         [JsonPropertyName("format")]
         public string Format { get; set; }
@@ -42,5 +44,8 @@ namespace CivitaiApiWrapper.DataContracts
 
         [JsonPropertyName("primary")]
         public bool Primary { get; set; }
+
+        [JsonIgnore]
+        public Types Type => TypeStr.ToEnum<Types>();
     }
 }

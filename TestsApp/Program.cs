@@ -1,5 +1,6 @@
 ﻿using CivitaiApiWrapper.DataContracts;
 using CivitaiApiWrapper.DataContracts.Requsts;
+using CivitaiApiWrapper.Enums;
 using CivitaiApiWrapper.Services;
 using Refit;
 using System.Text.Json;
@@ -24,7 +25,7 @@ namespace TestsApp
         {
             var service = RestService.For<ICivitaiService>("https://civitai.com");
             var request = new BaseQueryParameters() { Limit = 10, Page = 1 };
-            var modelsrequest = new ModelsRequstParameters() { Limit = 10, Page = 1, Types = new List<string>() { "Checkpoint", "TextualInversion", "LORA" } };
+            var modelsrequest = new ModelsRequstParameters() { Limit = 6, Page = 1, Types = new List<Types>() { Types.Checkpoint, Types.TextualInversion } };
             TestCreators(service, request);
             TestTags(service, request);
             TestGetModelById(service, 5285);
