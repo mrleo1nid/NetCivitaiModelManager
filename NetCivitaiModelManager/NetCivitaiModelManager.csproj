@@ -38,4 +38,8 @@
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetCivitaiModelManagerCore\NetCivitaiModelManagerCore.csproj" />
+  </ItemGroup>
 </Project>
