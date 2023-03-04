@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCivitaiModelManager", "NetCivitaiModelManager\NetCivitaiModelManager.csproj", "{950F263D-6A82-46B4-9B86-DDC7D2546171}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CivitaiApiWrapper", "CivitaiApiWrapper\CivitaiApiWrapper.csproj", "{4660C1EA-5274-44AC-8D9B-C6534080926C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CivitaiApiWrapper", "CivitaiApiWrapper\CivitaiApiWrapper.csproj", "{4660C1EA-5274-44AC-8D9B-C6534080926C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsApp", "TestsApp\TestsApp.csproj", "{520533A7-1E0A-4FB6-A39B-390AE01BC351}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestsApp", "TestsApp\TestsApp.csproj", "{520533A7-1E0A-4FB6-A39B-390AE01BC351}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCivitaiModelManagerCore", "NetCivitaiModelManagerCore\NetCivitaiModelManagerCore.csproj", "{E8A382FE-937B-4C8B-A556-644F6600FA52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCivitaiModelManagerCore", "NetCivitaiModelManagerCore\NetCivitaiModelManagerCore.csproj", "{E8A382FE-937B-4C8B-A556-644F6600FA52}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCivitaiModelManager", "NetCivitaiModelManager\NetCivitaiModelManager.csproj", "{75AA8C9C-85A2-4086-BF8C-4E75D68EE4BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{950F263D-6A82-46B4-9B86-DDC7D2546171}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{950F263D-6A82-46B4-9B86-DDC7D2546171}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{950F263D-6A82-46B4-9B86-DDC7D2546171}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{950F263D-6A82-46B4-9B86-DDC7D2546171}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4660C1EA-5274-44AC-8D9B-C6534080926C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4660C1EA-5274-44AC-8D9B-C6534080926C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4660C1EA-5274-44AC-8D9B-C6534080926C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{E8A382FE-937B-4C8B-A556-644F6600FA52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8A382FE-937B-4C8B-A556-644F6600FA52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8A382FE-937B-4C8B-A556-644F6600FA52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75AA8C9C-85A2-4086-BF8C-4E75D68EE4BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75AA8C9C-85A2-4086-BF8C-4E75D68EE4BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75AA8C9C-85A2-4086-BF8C-4E75D68EE4BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75AA8C9C-85A2-4086-BF8C-4E75D68EE4BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
