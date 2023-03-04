@@ -8,20 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
-    <None Remove="Assets\Icon.ico" />
-    <None Remove="Assets\icons\card-no-preview.png" />
-    <None Remove="Assets\icons\icon-downoload.png" />
-    <None Remove="Assets\icons\icon-external.png" />
-    <None Remove="Assets\icons\icon-instaled.png" />
-    <None Remove="Assets\icons\icon-notfound.png" />
-    <None Remove="Assets\icons\icon-pause.png" />
-    <None Remove="Assets\icons\icon-play.png" />
-    <None Remove="Assets\icons\icon-refresh.png" />
-    <None Remove="Assets\icons\icon-remove.png" />
-    <None Remove="Assets\icons\icon-settings.png" />
-    <None Remove="Assets\icons\icon-stop.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,14 +24,6 @@
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview4" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />
-    <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\NetCivitaiModelManagerCore\NetCivitaiModelManagerCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
+    <PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
   </ItemGroup>
 </Project>
