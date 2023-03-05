@@ -1,4 +1,6 @@
 using Avalonia.Controls;
+using NetCivitaiModelManager.ViewModels;
+using ReactiveUI;
 
 namespace NetCivitaiModelManager.Views
 {

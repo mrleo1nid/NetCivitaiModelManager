@@ -18,6 +18,7 @@ namespace NetCivitaiModelManager
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToTrace()
-                .UseReactiveUI();
+                .BuildIoC();
+                //.UseReactiveUI();
     }
 }
