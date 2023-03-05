@@ -49,8 +49,8 @@ namespace NetCivitaiModelManager
 
         private static void RegisterViews(ContainerBuilder builder)
         {
-            builder.RegisterType<MainWindow>();
             builder.RegisterType<MainWindowViewModel>();
+            builder.RegisterType<CustomVM>();
         }
     }
 }

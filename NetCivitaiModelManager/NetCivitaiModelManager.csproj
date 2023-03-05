@@ -29,4 +29,8 @@
     <PackageReference Include="Splat.Autofac" Version="14.6.8" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetCivitaiModelManagerCore\NetCivitaiModelManagerCore.csproj" />
+  </ItemGroup>
 </Project>
