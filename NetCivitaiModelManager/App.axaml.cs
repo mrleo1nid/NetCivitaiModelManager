@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using NetCivitaiModelManager.ViewModels;
 using NetCivitaiModelManager.Views;
+using Splat;
 
 namespace NetCivitaiModelManager
 {
@@ -19,7 +20,7 @@ namespace NetCivitaiModelManager
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext =  Locator.Current.GetService<MainWindowViewModel>(),
                 };
             }
 

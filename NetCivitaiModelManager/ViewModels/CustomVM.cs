@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Splat;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace NetCivitaiModelManager.ViewModels
 {
     public class CustomVM
     {
-        public CustomVM(MainWindowViewModel mainWindowViewModel) 
+       
+        public CustomVM() 
         { 
 
         }
