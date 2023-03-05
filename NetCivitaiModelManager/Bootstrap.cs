@@ -2,6 +2,7 @@
 using Avalonia;
 using Avalonia.ReactiveUI;
 using Avalonia.Threading;
+using CivitaiApiWrapper.Services;
 using NetCivitaiModelManager.ViewModels;
 using NetCivitaiModelManager.Views;
 using ReactiveUI;
@@ -20,37 +21,19 @@ namespace NetCivitaiModelManager
     {
         public static AppBuilder BuildIoC(this AppBuilder appBuilder)
         {
-            /*
-			 * Создаем контейнер Autofac.
-			 * Регистрируем сервисы и представления
-			 */
-            var builder = new ContainerBuilder();
-            RegisterServices(builder);
-            RegisterViews(builder);
-
-            PlatformRegistrationManager.SetRegistrationNamespaces(RegistrationNamespace.Avalonia);
-            RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
-            Locator.CurrentMutable.RegisterConstant(new AvaloniaActivationForViewFetcher(), typeof(IActivationForViewFetcher));
-            Locator.CurrentMutable.RegisterConstant(new AutoDataTemplateBindingHook(), typeof(IPropertyBindingHook));
-            // Регистрируем Autofac контейнер в Splat
-            var autofacResolver = builder.UseAutofacDependencyResolver();
-            builder.RegisterInstance(autofacResolver);
-            // Вызываем InitializeReactiveUI(), чтобы переопределить дефолтный Service Locator
-            autofacResolver.InitializeReactiveUI();
-            var lifetimeScope = builder.Build();
-            autofacResolver.SetLifetimeScope(lifetimeScope);
+            RegisterServices();
+            RegisterViews();
             return appBuilder;
         }
 
-        private static void RegisterServices(ContainerBuilder builder)
+        private static void RegisterServices()
         {
-
+            
         }
 
-        private static void RegisterViews(ContainerBuilder builder)
+        private static void RegisterViews()
         {
-            builder.RegisterType<MainWindowViewModel>();
-            builder.RegisterType<CustomVM>();
+           
         }
     }
 }

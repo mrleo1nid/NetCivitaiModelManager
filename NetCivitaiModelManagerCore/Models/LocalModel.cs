@@ -4,7 +4,8 @@ using System.Text;
 
 namespace NetCivitaiModelManagerCore.Models
 {
-    internal class LocalModel
+    public class LocalModel
     {
+        public LocalFile LocalFile { get; set; }
     }
 }

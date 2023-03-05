@@ -20,7 +20,6 @@ namespace NetCivitaiModelManagerCore.Services
         public LocalModelsService()
         {
             _models = new SourceList<LocalModel>();
-           
         }
     }
 }
