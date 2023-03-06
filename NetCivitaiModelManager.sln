@@ -5,10 +5,6 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CivitaiApiWrapper", "CivitaiApiWrapper\CivitaiApiWrapper.csproj", "{4660C1EA-5274-44AC-8D9B-C6534080926C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestsApp", "TestsApp\TestsApp.csproj", "{520533A7-1E0A-4FB6-A39B-390AE01BC351}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCivitaiModelManager", "NetCivitaiModelManager\NetCivitaiModelManager.csproj", "{675A6492-4777-4870-94F0-EFE8EAD239B5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,14 +15,6 @@ Global
 		{4660C1EA-5274-44AC-8D9B-C6534080926C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4660C1EA-5274-44AC-8D9B-C6534080926C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4660C1EA-5274-44AC-8D9B-C6534080926C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{520533A7-1E0A-4FB6-A39B-390AE01BC351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{520533A7-1E0A-4FB6-A39B-390AE01BC351}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{520533A7-1E0A-4FB6-A39B-390AE01BC351}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{520533A7-1E0A-4FB6-A39B-390AE01BC351}.Release|Any CPU.Build.0 = Release|Any CPU
-		{675A6492-4777-4870-94F0-EFE8EAD239B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{675A6492-4777-4870-94F0-EFE8EAD239B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{675A6492-4777-4870-94F0-EFE8EAD239B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{675A6492-4777-4870-94F0-EFE8EAD239B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
