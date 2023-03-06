@@ -1,21 +1,25 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 xmlns:ctrls="using:NetCivitaiModelManager.Controls"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="NetCivitaiModelManager.Views.Controls.SettingsView">
+<UserControl
+    x:Class="NetCivitaiModelManager.Views.Controls.SettingsView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:NetCivitaiModelManager.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
-	<ctrls:OptionsDisplayItem Header="Theme"
-									Icon="DarkTheme"
-									Description="Change the current App Theme.">
+    <ctrls:OptionsDisplayItem
+        Description="Изменить тему приложения."
+        Header="Тема"
+        Icon="DarkTheme">
 
-		<ctrls:OptionsDisplayItem.ActionButton>
-			<ComboBox SelectedItem="{Binding CurrentAppTheme}"
-					  Items="{Binding AppThemes}"
-					  MinWidth="150"/>
-		</ctrls:OptionsDisplayItem.ActionButton>
-
-	</ctrls:OptionsDisplayItem>
+        <ctrls:OptionsDisplayItem.ActionButton>
+            <ComboBox
+                MinWidth="150"
+                Items="{Binding AppThemes}"
+                SelectedItem="{Binding CurrentAppTheme}" />
+        </ctrls:OptionsDisplayItem.ActionButton>
+    </ctrls:OptionsDisplayItem>
 
 </UserControl>

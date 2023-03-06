@@ -15,23 +15,9 @@ namespace NetCivitaiModelManager.ViewModels
         public ViewModelBase()
         {
             ConfigService = Locator.Current.GetService<ConfigService>();
-            if(ConfigService.Config.CurrentTheme == FluentAvaloniaTheme.LightModeString) { CurrentAppTheme = ThemeVariant.Light; }
-            else if (ConfigService.Config.CurrentTheme == FluentAvaloniaTheme.DarkModeString) { CurrentAppTheme = ThemeVariant.Dark;}
-            else { CurrentAppTheme = Application.Current.ActualThemeVariant; }
-            
-            this.WhenAnyValue(vm => vm.CurrentAppTheme).Subscribe(t => UpdateTheme(t));
-
-
+            CurrentAppTheme = Application.Current.ActualThemeVariant; 
         }
-        private void UpdateTheme(ThemeVariant variant)
-        {
-            if(Application.Current.ActualThemeVariant != variant)
-            {
-                Application.Current.RequestedThemeVariant = variant;
-                ConfigService.Config.CurrentTheme = variant.ToString();
-                ConfigService.SaveConfig();
-            }
-        }
+       
         public ThemeVariant[] AppThemes { get; } =
          new[] { ThemeVariant.Light, ThemeVariant.Dark/*, FluentAvaloniaTheme.HighContrastTheme*/ };
 

@@ -1,28 +1,38 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:NetCivitaiModelManager.ViewModels"
-		xmlns:controls="using:NetCivitaiModelManager.Views.Controls"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-		xmlns:ui="using:FluentAvalonia.UI.Controls"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="NetCivitaiModelManager.Views.MainWindow"
-		xmlns:material="using:Material.Icons.Avalonia"
-        Icon="/Assets/Icon.ico"
-        Title="Главное окно"  
-		TransparencyLevelHint="AcrylicBlur" >
+<Window
+    x:Class="NetCivitaiModelManager.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:NetCivitaiModelManager.Views.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:material="using:Material.Icons.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:vm="using:NetCivitaiModelManager.ViewModels"
+    Title="Главное окно"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Icon="/Assets/Icon.ico"
+    TransparencyLevelHint="AcrylicBlur"
+    mc:Ignorable="d">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
+        <vm:MainWindowViewModel />
     </Design.DataContext>
 
-	<ui:NavigationView x:Name="nvBase" PaneDisplayMode="Left" >
-		<ui:NavigationView.MenuItems>
-			<ui:NavigationViewItem Content="Модели на компьютере" Tag="LocalModelsViewModel" IconSource="Home"/>
-			<ui:NavigationViewItem Content="Модели в интернете" Tag="ExternalModelViewModel" IconSource="CloudDownload"/>
-			<ui:NavigationViewItem Content="Загрузка" Tag="DownoloadsViewModel" IconSource="Download"/>
-		</ui:NavigationView.MenuItems>
-	</ui:NavigationView>
+    <ui:NavigationView x:Name="nvBase" PaneDisplayMode="Left">
+        <ui:NavigationView.MenuItems>
+            <ui:NavigationViewItem
+                Content="Модели на компьютере"
+                IconSource="Home"
+                Tag="LocalModelsViewModel" />
+            <ui:NavigationViewItem
+                Content="Модели в интернете"
+                IconSource="CloudDownload"
+                Tag="ExternalModelViewModel" />
+            <ui:NavigationViewItem
+                Content="Загрузка"
+                IconSource="Download"
+                Tag="DownoloadsViewModel" />
+        </ui:NavigationView.MenuItems>
+    </ui:NavigationView>
 </Window>

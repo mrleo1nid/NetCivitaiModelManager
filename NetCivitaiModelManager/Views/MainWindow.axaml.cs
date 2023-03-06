@@ -26,8 +26,11 @@ namespace NetCivitaiModelManager.Views
             nv.SelectionChanged += Nv_SelectionChanged; ;
             nv.SelectedItem = nv.MenuItems.Cast<NavigationViewItem>().FirstOrDefault();
             TitleBar.TitleBarHitTestType = TitleBarHitTestType.Complex;
-
             Application.Current.ActualThemeVariantChanged += ApplicationActualThemeVariantChanged;
+
+            var configService = Locator.Current.GetService<ConfigService>();
+            if (configService.Config.CurrentTheme == FluentAvaloniaTheme.LightModeString) { Application.Current.RequestedThemeVariant = ThemeVariant.Light; }
+            else if (configService.Config.CurrentTheme == FluentAvaloniaTheme.DarkModeString) { Application.Current.RequestedThemeVariant = ThemeVariant.Dark; }
         }
 
         private void Nv_SelectionChanged(object? sender, NavigationViewSelectionChangedEventArgs e)
