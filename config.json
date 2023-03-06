@@ -1,0 +1,8 @@
+{
+  "CivitaiBaseUrl": "https://civitai.com/",
+  "WebUiFolderPath": "D:\\stable-diffusion-webui",
+  "ApiKey": "",
+  "CashFolder": "cash",
+  "CashFileName": "blobcash",
+  "CurrentTheme": "Light"
+}

@@ -7,6 +7,7 @@ using FluentAvalonia.Styling;
 using FluentAvalonia.UI.Controls;
 using FluentAvalonia.UI.Media;
 using FluentAvalonia.UI.Windowing;
+using NetCivitaiModelManager.Services;
 using NetCivitaiModelManager.ViewModels;
 using NetCivitaiModelManager.Views.Controls;
 using Splat;
@@ -21,7 +22,6 @@ namespace NetCivitaiModelManager.Views
         public MainWindow()
         {
             InitializeComponent();
-
             var nv = this.FindControl<NavigationView>("nvBase");
             nv.SelectionChanged += Nv_SelectionChanged; ;
             nv.SelectedItem = nv.MenuItems.Cast<NavigationViewItem>().FirstOrDefault();

@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
     <None Remove="Assets\Icon.ico" />
@@ -36,6 +35,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\FluentAvalonia\src\FluentAvalonia\FluentAvalonia.csproj" />
+    <ProjectReference Include="..\CivitaiApiWrapper\CivitaiApiWrapper.csproj" />
   </ItemGroup>
 
   <ItemGroup>

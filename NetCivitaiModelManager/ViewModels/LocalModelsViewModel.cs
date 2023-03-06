@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NetCivitaiModelManager.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,10 @@ namespace NetCivitaiModelManager.ViewModels
 {
     public class LocalModelsViewModel : ViewModelBase
     {
+        
+        public LocalModelsViewModel(LocalModelsService localModelsService) 
+        {
+           
+        }
     }
 }
