@@ -11,6 +11,7 @@
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Assets\Icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,12 +19,37 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.0.0-preview4" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview4" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview4" />
+    <PackageReference Include="Avalonia" Version="11.0.0-preview5" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview5" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview5" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview4" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview4" />
-    <PackageReference Include="XamlNameReferenceGenerator" Version="1.5.1" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview5" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-preview5" />
+    <PackageReference Include="Material.Icons.Avalonia" Version="2.0.0-preview2" />
+    <PackageReference Include="ReactiveUI.Fody" Version="18.4.25" />
+    <PackageReference Include="Splat.DependencyInjection.SourceGenerator" Version="1.1.93">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="XamlNameReferenceGenerator" Version="1.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\FluentAvalonia\src\FluentAvalonia\FluentAvalonia.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Controls\DownoloadsView.axaml.cs">
+      <DependentUpon>DownoloadsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Controls\ExternalModelView.axaml.cs">
+      <DependentUpon>ExternalModelView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Controls\LocalModelsView.axaml.cs">
+      <DependentUpon>LocalModelsView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Controls\SettingsView.axaml.cs">
+      <DependentUpon>SettingsView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

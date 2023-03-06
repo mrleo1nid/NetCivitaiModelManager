@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CivitaiApiWrapper", "Civita
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCivitaiModelManager", "NetCivitaiModelManager\NetCivitaiModelManager.csproj", "{7DA40AE5-A53B-4500-A603-D2D109C2DBBB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentAvalonia", "..\FluentAvalonia\src\FluentAvalonia\FluentAvalonia.csproj", "{FC493722-3079-46A1-AAFB-259AECCDBE32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7DA40AE5-A53B-4500-A603-D2D109C2DBBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DA40AE5-A53B-4500-A603-D2D109C2DBBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7DA40AE5-A53B-4500-A603-D2D109C2DBBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC493722-3079-46A1-AAFB-259AECCDBE32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC493722-3079-46A1-AAFB-259AECCDBE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC493722-3079-46A1-AAFB-259AECCDBE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC493722-3079-46A1-AAFB-259AECCDBE32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

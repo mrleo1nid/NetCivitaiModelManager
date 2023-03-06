@@ -1,12 +1,16 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:NetCivitaiModelManager.ViewModels"
+		xmlns:controls="using:NetCivitaiModelManager.Views.Controls"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:ui="using:FluentAvalonia.UI.Controls"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="NetCivitaiModelManager.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="NetCivitaiModelManager">
+		xmlns:material="using:Material.Icons.Avalonia"
+        Icon="/Assets/Icon.ico"
+        Title="Главное окно"  
+		TransparencyLevelHint="AcrylicBlur" >
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -14,6 +18,11 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+	<ui:NavigationView x:Name="nvBase" PaneDisplayMode="Left" >
+		<ui:NavigationView.MenuItems>
+			<ui:NavigationViewItem Content="Модели на компьютере" Tag="LocalModelsViewModel" IconSource="Home"/>
+			<ui:NavigationViewItem Content="Модели в интернете" Tag="ExternalModelViewModel" IconSource="CloudDownload"/>
+			<ui:NavigationViewItem Content="Загрузка" Tag="DownoloadsViewModel" IconSource="Download"/>
+		</ui:NavigationView.MenuItems>
+	</ui:NavigationView>
 </Window>
