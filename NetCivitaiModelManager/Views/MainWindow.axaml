@@ -1,22 +1,50 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:NetCivitaiModelManager.ViewModels"
+		xmlns:controls="using:NetCivitaiModelManager.Views.Controls"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="NetCivitaiModelManager.Views.MainWindow"
-		TransparencyLevelHint="Blur"
-		ExtendClientAreaToDecorationsHint="True"
-        Background="Transparent"
         Icon="/Assets/Icon.ico"
-        Title="Главное окно">
+        Title="Главное окно" 
+		TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+		ExtendClientAreaToDecorationsHint="True">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
-
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+	<NavigationView x:Name="nv"   Header="Главное окно" OpenPaneLength="300">
+		<NavigationView.PanelMaterial>
+		<ExperimentalAcrylicMaterial BackgroundSource="Digger"
+							 TintColor="{DynamicResource SystemAltMediumLowColor}"
+							 TintOpacity="0.2"
+							 MaterialOpacity="0.4"/>
+		</NavigationView.PanelMaterial>
+		<NavigationViewItem  Header="Модели на компьютере" SelectOnClose="True"
+							Icon="avares://NetCivitaiModelManager/Assets/icons/icon-instaled.png">
+			<NavigationViewItem.Content>
+				<controls:LocalModelsView/>
+			</NavigationViewItem.Content>
+		</NavigationViewItem>
+		<NavigationViewItem  Header="Модели в интернете"
+							Icon="avares://NetCivitaiModelManager/Assets/icons/icon-external.png">
+			<NavigationViewItem.Content>
+				<controls:ExternalModelsView/>
+			</NavigationViewItem.Content>
+		</NavigationViewItem>
+		<NavigationViewItem  Header="Загрузки"
+							Icon="avares://NetCivitaiModelManager/Assets/icons/icon-downoload.png">
+			<NavigationViewItem.Content>
+				<controls:DownoloadsView/>
+			</NavigationViewItem.Content>
+		</NavigationViewItem>
+		<NavigationViewItem  Header="Настройки" VerticalAlignment="Bottom"
+							Icon="">
+			<NavigationViewItem.Content>
+				<controls:SettingsView/>
+			</NavigationViewItem.Content>
+		</NavigationViewItem>
+	</NavigationView>
 </Window>

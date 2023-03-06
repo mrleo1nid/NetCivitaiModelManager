@@ -1,10 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using NetCivitaiModelManager.ViewModels;
-using NetCivitaiModelManager.Views;
+using AvaloniaApplication1.ViewModels;
+using AvaloniaApplication1.Views;
 
-namespace NetCivitaiModelManager
+namespace AvaloniaApplication1
 {
     public partial class App : Application
     {

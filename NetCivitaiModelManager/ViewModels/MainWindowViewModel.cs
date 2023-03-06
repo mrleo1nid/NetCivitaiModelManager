@@ -1,14 +1,19 @@
-﻿using Splat;
+﻿using Aura.UI.Data;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 namespace NetCivitaiModelManager.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public MainWindowViewModel() { }
-        [DependencyInjectionConstructor]
-        public MainWindowViewModel(CustomVM customVM) 
+      
+        public MainWindowViewModel() 
         {
-
+         
         }
+
         public string Greeting => "Welcome to Avalonia!";
     }
 }

@@ -24,9 +24,7 @@ namespace NetCivitaiModelManager
         }
         public static void RegisterVM() 
         {
-            SplatRegistrations.RegisterLazySingleton<CustomVM>();
-            SplatRegistrations.RegisterLazySingleton<MainWindowViewModel>();
-           
+            SplatRegistrations.RegisterLazySingleton<MainWindowViewModel>(); 
         }
     }
 }
