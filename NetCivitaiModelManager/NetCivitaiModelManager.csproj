@@ -50,16 +50,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Controls\DownoloadsView.axaml.cs">
+    <Compile Update="Views\DownoloadsView.axaml.cs">
       <DependentUpon>DownoloadsView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Controls\ExternalModelView.axaml.cs">
+    <Compile Update="Views\ExternalModelView.axaml.cs">
       <DependentUpon>ExternalModelView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Controls\LocalModelsView.axaml.cs">
+    <Compile Update="Views\LocalModelsView.axaml.cs">
       <DependentUpon>LocalModelsView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Controls\SettingsView.axaml.cs">
+    <Compile Update="Views\SettingsView.axaml.cs">
       <DependentUpon>SettingsView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>

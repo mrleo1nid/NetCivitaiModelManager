@@ -9,7 +9,7 @@ using FluentAvalonia.UI.Media;
 using FluentAvalonia.UI.Windowing;
 using NetCivitaiModelManager.Services;
 using NetCivitaiModelManager.ViewModels;
-using NetCivitaiModelManager.Views.Controls;
+using NetCivitaiModelManager.Views;
 using Splat;
 using System;
 using System.Linq;

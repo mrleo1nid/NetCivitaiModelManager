@@ -1,5 +1,5 @@
 <UserControl
-    x:Class="NetCivitaiModelManager.Views.Controls.ModelCardView"
+    x:Class="NetCivitaiModelManager.Views.ModelCardView"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:asyncImageLoader="clr-namespace:AsyncImageLoader;assembly=AsyncImageLoader.Avalonia"
@@ -11,8 +11,7 @@
     mc:Ignorable="d">
     <StackPanel MinWidth="260" MinHeight="260">
         <StackPanel.Background>
-            <ImageBrush ext:CustomAsyncImageLoader.Source="{Binding ImagePath}"
-						Stretch="Fill"/>
+            <ImageBrush ext:CustomAsyncImageLoader.Source="{Binding ImagePath}" Stretch="Fill" />
         </StackPanel.Background>
         <TextBlock Text="{Binding Name}" />
     </StackPanel>

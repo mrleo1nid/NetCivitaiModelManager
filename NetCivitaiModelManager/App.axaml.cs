@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using NetCivitaiModelManager.ViewModels;
 using NetCivitaiModelManager.Views;
+using Splat;
 
 namespace NetCivitaiModelManager
 {
@@ -17,10 +18,8 @@ namespace NetCivitaiModelManager
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = new MainWindowViewModel(),
-                };
+                desktop.MainWindow = Locator.Current.GetService<MainWindow>();
+                desktop.MainWindow.DataContext = Locator.Current.GetService<MainWindowViewModel>();
             }
 
             base.OnFrameworkInitializationCompleted();

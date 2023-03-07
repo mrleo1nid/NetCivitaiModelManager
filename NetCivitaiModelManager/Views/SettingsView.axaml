@@ -1,0 +1,79 @@
+<UserControl
+    x:Class="NetCivitaiModelManager.Views.SettingsView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:NetCivitaiModelManager.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <StackPanel Orientation="Vertical">
+
+        <Label HorizontalAlignment="Center" Content="Визуальные настройки" />
+
+        <ctrls:OptionsDisplayItem
+            Description="Изменить тему приложения."
+            Header="Тема"
+            Icon="DarkTheme">
+            <ctrls:OptionsDisplayItem.ActionButton>
+                <ComboBox
+                    MinWidth="150"
+                    Items="{Binding AppThemes}"
+                    SelectedItem="{Binding CurrentAppTheme}" />
+            </ctrls:OptionsDisplayItem.ActionButton>
+        </ctrls:OptionsDisplayItem>
+
+        <Label HorizontalAlignment="Center" Content="Пути" />
+
+        <ctrls:OptionsDisplayItem
+            Description="Путь к папке web ui."
+            Header="Основной путь"
+            Icon="Path">
+            <ctrls:OptionsDisplayItem.ActionButton>
+				<StackPanel Orientation="Horizontal">
+					<TextBox MinWidth="400" Text="{Binding WebUiFolderPath}" />
+					<Button Content="Обзор" Command="{Binding OpenFolderWebUiPath}"/>
+				</StackPanel>
+			</ctrls:OptionsDisplayItem.ActionButton>
+        </ctrls:OptionsDisplayItem>
+        <ctrls:OptionsDisplayItem
+            Description="Путь к папке с кэшем."
+            Header="Путь кэша"
+            Icon="CASH">
+            <ctrls:OptionsDisplayItem.ActionButton>
+				<StackPanel Orientation="Horizontal">
+					<TextBox MinWidth="400" Text="{Binding CashPath}" />
+					<Button Content="Обзор" Command="{Binding OpenCashFolderPath}"/>
+				</StackPanel>
+            </ctrls:OptionsDisplayItem.ActionButton>
+        </ctrls:OptionsDisplayItem>
+        <ctrls:OptionsDisplayItem
+            Description="Имя файла кэша."
+            Header="Имя кэша"
+            Icon="CASH">
+            <ctrls:OptionsDisplayItem.ActionButton>
+                <TextBox MinWidth="400" Text="{Binding CashFileName}" />
+            </ctrls:OptionsDisplayItem.ActionButton>
+        </ctrls:OptionsDisplayItem>
+
+        <Label HorizontalAlignment="Center" Content="Сайт" />
+
+        <ctrls:OptionsDisplayItem
+            Description="Базовый URL сайта."
+            Header="Базовый URL"
+            Icon="URL">
+            <ctrls:OptionsDisplayItem.ActionButton>
+                <TextBox MinWidth="400" Text="{Binding BaseUrl}" />
+            </ctrls:OptionsDisplayItem.ActionButton>
+        </ctrls:OptionsDisplayItem>
+        <ctrls:OptionsDisplayItem
+            Description="API KEY полученный на сайте."
+            Header="API KEY"
+            Icon="API KEY">
+            <ctrls:OptionsDisplayItem.ActionButton>
+                <TextBox MinWidth="400" Text="{Binding ApiKey}" />
+            </ctrls:OptionsDisplayItem.ActionButton>
+        </ctrls:OptionsDisplayItem>
+    </StackPanel>
+</UserControl>

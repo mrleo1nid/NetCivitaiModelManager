@@ -2,6 +2,7 @@
 using FluentAvalonia.Styling;
 using NetCivitaiModelManager.Services;
 using NetCivitaiModelManager.ViewModels;
+using NetCivitaiModelManager.Views;
 using Splat;
 
 namespace NetCivitaiModelManager
@@ -23,10 +24,12 @@ namespace NetCivitaiModelManager
         public static void RegisterVM()
         {
             SplatRegistrations.RegisterLazySingleton<MainWindowViewModel>();
+       
             SplatRegistrations.RegisterLazySingleton<DownoloadsViewModel>();
             SplatRegistrations.RegisterLazySingleton<LocalModelsViewModel>();
             SplatRegistrations.RegisterLazySingleton<ExternalModelViewModel>();
             SplatRegistrations.RegisterLazySingleton<SettingsViewModel>();
+            SplatRegistrations.RegisterLazySingleton<MainWindow>();
         }
     }
 }
