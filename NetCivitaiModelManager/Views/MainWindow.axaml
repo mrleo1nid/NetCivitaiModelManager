@@ -9,6 +9,8 @@
     xmlns:ui="using:FluentAvalonia.UI.Controls"
     xmlns:vm="using:NetCivitaiModelManager.ViewModels"
     Title="Главное окно"
+    Width="1250"
+    Height="800"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Icon="/Assets/Icon.ico"

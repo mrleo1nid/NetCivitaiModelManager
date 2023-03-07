@@ -25,16 +25,19 @@ namespace NetCivitaiModelManager.Services
 
 
         public bool IsEnabled { get; set; }
-        public IObservable<IChangeSet<LocalModel>> Connect() => _localModels.Connect().Publish();
+        public IObservable<IChangeSet<LocalModel>> Connect() => _localModels.Connect();
 
         public LocalModelsService(ConfigService configService)
         {
             _configService = configService;
-            _localModels = new SourceList<LocalModel>();
+            _localModels = new SourceList<LocalModel>(); 
+            Start();  
+        }
+        public void Start()
+        {
             IsEnabled = true;
             Task.Factory.StartNew(() => Work());
         }
-
         public async Task Work()
         {
             while (IsEnabled)
@@ -45,7 +48,7 @@ namespace NetCivitaiModelManager.Services
                     foreach (var type in _loadedTypes) { LoadFromFolderByType(type); }
                     _iterationComplete = true;
                 }
-                await Task.Delay(150000);
+                await Task.Delay(5000);
             }
         }
        
@@ -53,6 +56,7 @@ namespace NetCivitaiModelManager.Services
         {
             var folder = type.GetFolderByType(_configService.Config.WebUiFolderPath);
             var files = Directory.GetFiles(folder).Where(x=> fileFormats.Contains(Path.GetExtension(x)));
+            RemoveNotExists(files, type);
             foreach (var file in files)
             {
                 if (_localModels.Items.Where(x => x.LocalFilePath == file).Any()) continue;
@@ -69,7 +73,20 @@ namespace NetCivitaiModelManager.Services
         }
         private string GetImagePath(string folder, string filename)
         {
-            return Path.Combine(folder, filename) + ".preview.png";
+            var path = Path.Combine(folder, filename) + ".preview.png";
+            if (File.Exists(path)) return path;
+            else return  Path.Combine(Environment.CurrentDirectory,"Assets\\card-no-preview.png");
+        }
+        private void RemoveNotExists(IEnumerable<string> files, Types type)
+        {
+            if(files.Any())
+            {
+                var notexisted = _localModels.Items.Where(x => x.Type==type && !files.Contains(x.LocalFilePath));
+                foreach (var file in notexisted)
+                {
+                    _localModels.Remove(file);
+                }
+            }
         }
     }
 }
