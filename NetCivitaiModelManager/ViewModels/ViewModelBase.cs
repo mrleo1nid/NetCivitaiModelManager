@@ -15,13 +15,10 @@ namespace NetCivitaiModelManager.ViewModels
         public ViewModelBase()
         {
             ConfigService = Locator.Current.GetService<ConfigService>();
-            CurrentAppTheme = Application.Current.ActualThemeVariant; 
+           
         }
        
-        public ThemeVariant[] AppThemes { get; } =
-         new[] { ThemeVariant.Light, ThemeVariant.Dark/*, FluentAvaloniaTheme.HighContrastTheme*/ };
-
-        [Reactive] public ThemeVariant CurrentAppTheme { get; set; }
+      
     }
   
 }

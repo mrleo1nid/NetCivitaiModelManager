@@ -16,7 +16,7 @@ namespace NetCivitaiModelManager.ViewModels
 {
     public class LocalModelsViewModel : ViewModelBase
     {
-        private TestBackgroundService service;
+
         private readonly ReadOnlyObservableCollection<ModelCardViewModel> _models;
         public ReadOnlyObservableCollection<ModelCardViewModel> SearchResults => _models;
         public LocalModelsViewModel(LocalModelsService localModelsService) 
