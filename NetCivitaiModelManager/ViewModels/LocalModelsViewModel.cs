@@ -17,18 +17,29 @@ namespace NetCivitaiModelManager.ViewModels
     public class LocalModelsViewModel : ViewModelBase
     {
 
+        public SearchFiltersViewModel SearchFiltersViewModel { get; set; }
         private readonly ReadOnlyObservableCollection<ModelCardViewModel> _models;
         public ReadOnlyObservableCollection<ModelCardViewModel> SearchResults => _models;
         public LocalModelsViewModel(LocalModelsService localModelsService) 
         {
+            SearchFiltersViewModel = new SearchFiltersViewModel();
+            var filterPredicate = this.WhenAnyValue(x => x.SearchFiltersViewModel.SearchTerm)
+                          .Throttle(TimeSpan.FromMilliseconds(250), RxApp.TaskpoolScheduler)
+                          .DistinctUntilChanged()
+                          .Select(TermFilter);
             localModelsService.Connect()
             .ObserveOn(RxApp.MainThreadScheduler)
+            .Filter(filterPredicate)
+            .Sort(SortExpressionComparer<LocalModel>.Descending(model => model.Name))
             .Transform(x => new ModelCardViewModel(x))
             .Bind(out _models)
             .DisposeMany()
             .Subscribe();
         }
+        Func<LocalModel, bool> TermFilter(string text) => term =>
+        {
+            return string.IsNullOrEmpty(text) || term.Name.ToLower().Contains(text.ToLower());
+        };
 
-       
     }
 }
