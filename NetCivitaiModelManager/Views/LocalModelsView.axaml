@@ -9,12 +9,12 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid RowDefinitions="30,Auto">
+    <Grid RowDefinitions="70*,500*">
         <local:SearchFiltersView
             Grid.Row="0"
             Margin="5"
             DataContext="{Binding SearchFiltersViewModel}" />
-        <ListBox
+        <ListBox 
             Grid.Row="1"
             Margin="0,20"
             Background="Transparent"

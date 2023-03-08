@@ -26,5 +26,7 @@ namespace NetCivitaiModelManager.Models
         public string CashFileName { get; set; } = "blobcash";
         [JsonPropertyName("CurrentTheme")]
         public string CurrentTheme { get; set; } = FluentAvaloniaTheme.LightModeString;
+        [JsonPropertyName("ExternalModelInPage")]
+        public int ExternalModelInPage { get; set; } = 24;
     }
 }
