@@ -31,8 +31,8 @@
             Header="Основной путь"
             Icon="Path">
             <ctrls:OptionsDisplayItem.ActionButton>
-				<StackPanel Orientation="Horizontal">
-					<TextBox MinWidth="400" Text="{Binding WebUiFolderPath}" />
+				<StackPanel  MinWidth="400" Orientation="Horizontal">
+					<TextBox MinWidth="335" Text="{Binding WebUiFolderPath}" />
 					<Button Content="Обзор" Command="{Binding OpenFolderWebUiPath}"/>
 				</StackPanel>
 			</ctrls:OptionsDisplayItem.ActionButton>
@@ -42,8 +42,8 @@
             Header="Путь кэша"
             Icon="CASH">
             <ctrls:OptionsDisplayItem.ActionButton>
-				<StackPanel Orientation="Horizontal">
-					<TextBox MinWidth="400" Text="{Binding CashPath}" />
+				<StackPanel MinWidth="400" Orientation="Horizontal">
+					<TextBox MinWidth="335"  Text="{Binding CashPath}" />
 					<Button Content="Обзор" Command="{Binding OpenCashFolderPath}"/>
 				</StackPanel>
             </ctrls:OptionsDisplayItem.ActionButton>
