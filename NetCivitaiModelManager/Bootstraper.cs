@@ -1,8 +1,10 @@
 ﻿using Avalonia;
+using CivitaiApiWrapper.Services;
 using FluentAvalonia.Styling;
 using NetCivitaiModelManager.Services;
 using NetCivitaiModelManager.ViewModels;
 using NetCivitaiModelManager.Views;
+using Refit;
 using Splat;
 
 namespace NetCivitaiModelManager
@@ -20,6 +22,8 @@ namespace NetCivitaiModelManager
         {
             SplatRegistrations.RegisterLazySingleton<ConfigService>();
             SplatRegistrations.RegisterLazySingleton<LocalModelsService>();
+            SplatRegistrations.RegisterLazySingleton<ExternalModelsService>();
+            SplatRegistrations.RegisterLazySingleton<PoliCivitaiService>();
         }
         public static void RegisterVM()
         {

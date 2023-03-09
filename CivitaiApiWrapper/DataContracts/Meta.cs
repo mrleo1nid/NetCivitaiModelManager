@@ -11,7 +11,7 @@ namespace CivitaiApiWrapper.DataContracts
         public string Size { get; set; }
 
         [JsonPropertyName("seed")]
-        public object Seed { get; set; }
+        public object? Seed { get; set; }
 
         [JsonPropertyName("Model")]
         public string Model { get; set; }
@@ -26,7 +26,7 @@ namespace CivitaiApiWrapper.DataContracts
         public string Sampler { get; set; }
 
         [JsonPropertyName("cfgScale")]
-        public double CfgScale { get; set; }
+        public double? CfgScale { get; set; }
 
         [JsonPropertyName("resources")]
         public List<Resource> Resources { get; set; }

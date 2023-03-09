@@ -15,7 +15,7 @@ namespace NetCivitaiModelManager.ViewModels
 	{
 		[Reactive] public string SearchTerm { get; set; }
 		[Reactive] public List<Types> TypesList { get; set; }
-        [Reactive] public List<Period> PeriodList { get; set; }
+        [Reactive] public List<Period> PeriodList { get; set; } 
         [Reactive] public List<Sort> SortList { get; set; }
         [Reactive] public Sort SelectedSort { get; set; }
         [Reactive] public Period SelectedPeriod { get; set; }
@@ -29,6 +29,8 @@ namespace NetCivitaiModelManager.ViewModels
             TypesList = GetTypes().ToList();
             SearchTerm = string.Empty;
 			SelectedTypes = GetTypes();
+            PeriodList = new List<Period> { Period.AllTime, Period.Year, Period.Month, Period.Week, Period.Day };
+            SortList = new List<Sort> { Sort.HighestRated, Sort.MostDownloaded, Sort.Newest, Sort.MostLiked, Sort.MostDiscussed  };
         }
 		private ObservableCollection<Types> GetTypes()
 		{

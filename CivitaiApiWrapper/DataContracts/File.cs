@@ -16,7 +16,7 @@ namespace CivitaiApiWrapper.DataContracts
         public int Id { get; set; }
 
         [JsonPropertyName("sizeKB")]
-        public double SizeKB { get; set; }
+        public double? SizeKB { get; set; }
 
         [JsonPropertyName("type")]
         public string TypeStr { get; set; }

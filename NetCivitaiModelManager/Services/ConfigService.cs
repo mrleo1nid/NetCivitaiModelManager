@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NetCivitaiModelManager.Services
 {
-    public class ConfigService
+    public class ConfigService 
     {
         public Config Config { get; set; }
 

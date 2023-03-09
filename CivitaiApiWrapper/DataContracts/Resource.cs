@@ -14,7 +14,7 @@ namespace CivitaiApiWrapper.DataContracts
         public string Type { get; set; }
 
         [JsonPropertyName("weight")]
-        public double Weight { get; set; }
+        public double? Weight { get; set; }
 
         [JsonPropertyName("hash")]
         public string Hash { get; set; }

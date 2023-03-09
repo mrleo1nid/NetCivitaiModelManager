@@ -12,6 +12,6 @@ namespace CivitaiApiWrapper.DataContracts.Requsts
         [AliasAs("page")]
         public int? Page { get; set; }
         [AliasAs("query")]
-        public int? Query { get; set; }
+        public string? Query { get; set; }
     }
 }

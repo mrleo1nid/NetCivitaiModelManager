@@ -10,16 +10,48 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid RowDefinitions="Auto, Auto">
-        <AutoCompleteBox
-            Name="SearchBox"
-            Grid.Row="0"
-            MaxWidth="500"
-            Margin="1"
-            wnd:AppWindow.AllowInteractionInTitleBar="True"
-            Classes="SampleApp"
-            Items="{Binding Items}"
-            Text="{Binding SearchTerm}"
-            Watermark="Search" />
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <AutoCompleteBox
+                Name="SearchBox"
+                MinWidth="400"
+                MaxWidth="500"
+                Margin="3"
+                VerticalAlignment="Center"
+                wnd:AppWindow.AllowInteractionInTitleBar="True"
+                Classes="SampleApp"
+                Items="{Binding Items}"
+                Text="{Binding SearchTerm}"
+                Watermark="Search" />
+            <StackPanel
+                Margin="2"
+                IsVisible="{Binding VisibleSort}"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Text="Сортировка" />
+                <ComboBox
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Items="{Binding SortList}"
+                    SelectedItem="{Binding SelectedSort}" />
+            </StackPanel>
+            <StackPanel
+                Margin="2"
+                IsVisible="{Binding VisiblePeriod}"
+                Orientation="Horizontal">
+                <TextBlock
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Text="Период" />
+                <ComboBox
+                    Margin="5"
+                    VerticalAlignment="Center"
+                    Items="{Binding PeriodList}"
+                    SelectedItem="{Binding SelectedPeriod}" />
+            </StackPanel>
+        </StackPanel>
 
         <ListBox
             Grid.Row="1"

@@ -19,11 +19,10 @@ namespace CivitaiApiWrapper.Services
         private readonly ICivitaiService _service;
         private readonly int _retryCount;
         private readonly ILogger<PoliCivitaiService> _logger;
-        public PoliCivitaiService(ICivitaiService service,ILogger<PoliCivitaiService> logger, int retrycount =3)
+        public PoliCivitaiService(ICivitaiService service)
         {
             _service = service;
-            _retryCount = retrycount; 
-            _logger = logger;
+            _retryCount = 3; 
         }
 
         public async Task<BaseMetadataResponce<Creator>> GetCreators(BaseQueryParameters query,
@@ -75,7 +74,6 @@ namespace CivitaiApiWrapper.Services
             catch (Exception e)
             {
                 exception = e;
-                _logger.LogError(e.Message, e);
             }
             //TODO: Обработать исключения или передать их дальше            
             return result;

@@ -9,7 +9,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid MinWidth="260" MinHeight="260">
+    <Grid Width="260" Height="260">
         <Grid.Background>
             <ImageBrush ext:CustomAsyncImageLoader.Source="{Binding ImagePath}" Stretch="Fill" />
         </Grid.Background>
