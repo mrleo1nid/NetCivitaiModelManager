@@ -1,4 +1,6 @@
-﻿using NetCivitaiModelManager.Models;
+﻿using CivitaiApiWrapper.DataContracts;
+using NetCivitaiModelManager.Models;
+using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,10 +13,11 @@ namespace NetCivitaiModelManager.ViewModels
 {
     public class ModelCardViewModel : ViewModelBase
     {
-        public LocalModel LocalModel { get; set; }
-        public string Name => LocalModel.Name;
-        public string? ImagePath => LocalModel.LocalImagePath;
+       [Reactive] public LocalModel? LocalModel { get; set; }
+       [Reactive] public Model? ExternalModel { get; set; }
+        public string Name => LocalModel != null ? LocalModel.Name : ExternalModel?.Name;
+        public string? ImagePath => LocalModel != null ? LocalModel.LocalImagePath : ExternalModel?.ModelVersions.FirstOrDefault().Images.FirstOrDefault().Url;
         public ModelCardViewModel(LocalModel localModel) { LocalModel = localModel; }
-
+        public ModelCardViewModel(Model extmodel) { ExternalModel = extmodel; }
     } 
 }

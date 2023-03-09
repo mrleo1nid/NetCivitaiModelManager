@@ -14,11 +14,19 @@ namespace NetCivitaiModelManager.ViewModels
 	public class SearchFiltersViewModel : ViewModelBase
 	{
 		[Reactive] public string SearchTerm { get; set; }
-		[Reactive] public List<Types> TypesList { get; set; } 
+		[Reactive] public List<Types> TypesList { get; set; }
+        [Reactive] public List<Period> PeriodList { get; set; }
+        [Reactive] public List<Sort> SortList { get; set; }
+        [Reactive] public Sort SelectedSort { get; set; }
+        [Reactive] public Period SelectedPeriod { get; set; }
+        [Reactive] public bool VisiblePeriod { get; set; }
+        [Reactive] public bool VisibleSort { get; set; }
         [Reactive] public ObservableCollection<Types> SelectedTypes { get; set; }
-        public SearchFiltersViewModel()
+        public SearchFiltersViewModel(bool isExternal)
 		{
-			TypesList = GetTypes().ToList();
+			if(isExternal) { VisiblePeriod =  true; VisibleSort = true; }
+            else  { VisiblePeriod = false; VisibleSort = false; }
+            TypesList = GetTypes().ToList();
             SearchTerm = string.Empty;
 			SelectedTypes = GetTypes();
         }

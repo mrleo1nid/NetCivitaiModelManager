@@ -27,7 +27,7 @@ namespace NetCivitaiModelManager.ViewModels
         public ReadOnlyObservableCollection<ModelCardViewModel> SearchResults => _models;
         public LocalModelsViewModel(LocalModelsService localModelsService) 
         {
-            SearchFiltersViewModel = new SearchFiltersViewModel();
+            SearchFiltersViewModel = new SearchFiltersViewModel(false);
 
             var filterPredicate = this.WhenAnyValue(x => x.SearchFiltersViewModel.SearchTerm)
                           .Throttle(TimeSpan.FromMilliseconds(250), RxApp.TaskpoolScheduler)

@@ -9,10 +9,20 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <StackPanel MinWidth="260" MinHeight="260">
-        <StackPanel.Background>
+    <Grid MinWidth="260" MinHeight="260">
+        <Grid.Background>
             <ImageBrush ext:CustomAsyncImageLoader.Source="{Binding ImagePath}" Stretch="Fill" />
-        </StackPanel.Background>
-        <TextBlock Text="{Binding Name}" />
-    </StackPanel>
+        </Grid.Background>
+        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+            <TextBlock
+                HorizontalAlignment="Center"
+                FontSize="16"
+				Foreground="Black"
+                Text="{Binding Name}" />
+            <StackPanel.Background>
+                <SolidColorBrush Opacity="0.6" Color="LightGray" />
+            </StackPanel.Background>
+        </StackPanel>
+    </Grid>
+
 </UserControl>
