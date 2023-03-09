@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Polly;
 using System.Collections;
 using Splat;
-using Microsoft.Extensions.Logging;
 
 namespace CivitaiApiWrapper.Services
 {
@@ -18,11 +17,12 @@ namespace CivitaiApiWrapper.Services
     {
         private readonly ICivitaiService _service;
         private readonly int _retryCount;
-        private readonly ILogger<PoliCivitaiService> _logger;
-        public PoliCivitaiService(ICivitaiService service)
+        private readonly ILogger _logger;
+        public PoliCivitaiService(ICivitaiService service, ILogger logger, int retrycount = 3)
         {
             _service = service;
-            _retryCount = 3; 
+            _logger = logger;
+            _retryCount = retrycount; 
         }
 
         public async Task<BaseMetadataResponce<Creator>> GetCreators(BaseQueryParameters query,

@@ -34,7 +34,7 @@ namespace CivitaiApiWrapper.DataContracts
         public string VirusScanResult { get; set; }
 
         [JsonPropertyName("scannedAt")]
-        public DateTime ScannedAt { get; set; }
+        public DateTime? ScannedAt { get; set; }
 
         [JsonPropertyName("hashes")]
         public Hashes Hashes { get; set; }

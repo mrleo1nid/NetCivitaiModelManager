@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
     <PackageReference Include="Polly" Version="7.2.3" />
     <PackageReference Include="Refit" Version="6.3.2" />
+    <PackageReference Include="Splat.NLog" Version="14.6.8" />
   </ItemGroup>
 
 </Project>

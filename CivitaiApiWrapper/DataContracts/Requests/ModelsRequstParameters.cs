@@ -6,37 +6,37 @@ using System.Text;
 using System.Text.Json.Serialization;
 using CivitaiApiWrapper.Extension;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace CivitaiApiWrapper.DataContracts.Requsts
 {
     public class ModelsRequstParameters : BaseQueryParameters
     {
-        [JsonPropertyName("tag")]
+        [AliasAs("tag")]
         public string? Tag { get; set;}
-        [JsonPropertyName("username")]
+        [AliasAs("username")]
         public string? Username { get; set; }
-
-        [JsonPropertyName("types")]
+        [AliasAs("types")]
         [QueryAttribute(CollectionFormat.Multi)]
         public List<string>? TypesStr => Types.ToStringList();
-        [JsonPropertyName("sort")]
+        [AliasAs("sort")]
         public string? SortStr => Sort.GetEnumDescription();
-        [JsonPropertyName("period")]
+        [AliasAs("period")]
         public string? PeriodStr => Period.GetEnumDescription();
-        [JsonPropertyName("rating")]
+        [AliasAs("rating")]
         public int? Rating { get; set; }
-        [JsonPropertyName("favorites")]
+        [AliasAs("favorites")]
         public bool? Favorites { get; set; }
-        [JsonPropertyName("hidden")]
+        [AliasAs("hidden")]
         public bool? Hidden { get; set; }
-        [JsonPropertyName("primaryFileOnly")]
+        [AliasAs("primaryFileOnly")]
         public bool? PrimaryFileOnly { get; set; }
 
-        [JsonIgnore]
+        [IgnoreDataMember]
         public List<Types> Types { get; set; }
-        [JsonIgnore]
+        [IgnoreDataMember]
         public Period Period { get; set; }
-        [JsonIgnore]
+        [IgnoreDataMember]
         public Sort Sort { get; set; }
     }
 }
