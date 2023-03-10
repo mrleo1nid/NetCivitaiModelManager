@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:NetCivitaiModelManager.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:progRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -18,14 +19,30 @@
             Grid.Row="1"
             Margin="3"
             Background="Transparent"
+            IsVisible="{Binding !InProgress}"
             Items="{Binding SearchResults}"
-            SelectedItem="{Binding SelectedModel}" >
+            SelectedItem="{Binding SelectedModel}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
+        <progRing:ProgressRing
+            Grid.Row="1"
+            Width="80"
+            Height="80"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Foreground="Green"
+            IsActive="True"
+            IsVisible="{Binding InProgress}" />
+        <TextBlock
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            IsVisible="{Binding NotFound}"
+            Text="Items not found" />
         <local:PageSelectView
             Grid.Row="2"
             HorizontalAlignment="Center"

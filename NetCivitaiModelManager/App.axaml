@@ -1,14 +1,16 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:NetCivitaiModelManager"
-			 xmlns:sty="using:FluentAvalonia.Styling"
-             x:Class="NetCivitaiModelManager.App">
+<Application
+    x:Class="NetCivitaiModelManager.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NetCivitaiModelManager"
+    xmlns:sty="using:FluentAvalonia.Styling">
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
     <Application.Styles>
-		<sty:FluentAvaloniaTheme PreferUserAccentColor="True" PreferSystemTheme="True" />
-		<StyleInclude Source="avares://Material.Icons.Avalonia/App.xaml"></StyleInclude>
-		<StyleInclude Source="/Styles/OptionsDisplayItemStyles.axaml" />
+        <sty:FluentAvaloniaTheme PreferSystemTheme="True" PreferUserAccentColor="True" />
+        <StyleInclude Source="avares://Material.Icons.Avalonia/App.xaml" />
+        <StyleInclude Source="/Styles/OptionsDisplayItemStyles.axaml" />
+        <StyleInclude Source="avares://AvaloniaProgressRing/Styles/ProgressRing.xaml" />
     </Application.Styles>
 </Application>

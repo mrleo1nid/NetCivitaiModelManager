@@ -5,6 +5,7 @@ using CivitaiApiWrapper.Services;
 using DynamicData;
 using NetCivitaiModelManager.Models;
 using NLog;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Refit;
 using Splat;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace NetCivitaiModelManager.Services
 {
-    public class ExternalModelsService
+    public class ExternalModelsService : ReactiveObject
     {
         private IFullLogger _logger;
         private readonly ConfigService _configService;
@@ -26,7 +27,7 @@ namespace NetCivitaiModelManager.Services
         private PoliCivitaiService _poliCivitaiService;
         [Reactive] public int TotalPages { get; set; }
         [Reactive]public int TotalItems { get; set; }
-
+        [Reactive] public bool InProgress { get; set; }
         public ExternalModelsService(ConfigService configService, ILogManager logManager)
         {
             _logger = logManager.GetLogger<ExternalModelsService>();
@@ -35,17 +36,23 @@ namespace NetCivitaiModelManager.Services
             CreateServices();
             TotalItems = 0;
             TotalPages = 999;
+            InProgress = false;
         }
 
         public async Task AddRequest(ModelsRequstParameters modelsRequstParameters)
         {
-            var responce = await _poliCivitaiService.GetModels(modelsRequstParameters);
-            if(responce != null)
+            if(!InProgress)
             {
-                _externalModels.Clear();
-                _externalModels.AddRange(responce.Items);
-                TotalPages= responce.Metadata.TotalPages;
-                TotalItems = responce.Metadata.TotalItems;
+                InProgress = true;
+                var responce = await _poliCivitaiService.GetModels(modelsRequstParameters);
+                if (responce != null)
+                {
+                    _externalModels.Clear();
+                    _externalModels.AddRange(responce.Items);
+                    TotalPages = responce.Metadata.TotalPages;
+                    TotalItems = responce.Metadata.TotalItems;
+                }
+                InProgress = false;
             }
         }
 

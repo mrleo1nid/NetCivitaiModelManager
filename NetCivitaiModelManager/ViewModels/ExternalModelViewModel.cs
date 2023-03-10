@@ -30,6 +30,8 @@ namespace NetCivitaiModelManager.ViewModels
         public PageSelectViewModel PageSelectViewModel { get; set; }
         public int TotalPages => _externalModelsService.TotalPages;
         public int TotalItems => _externalModelsService.TotalItems;
+        [Reactive] public bool InProgress { get; set; }
+        [Reactive] public bool NotFound { get; set; }
         public ExternalModelViewModel(ExternalModelsService externalModelsService) 
         {
             PageSelectViewModel = new PageSelectViewModel();
@@ -37,15 +39,16 @@ namespace NetCivitaiModelManager.ViewModels
             _externalModelsService = externalModelsService;
 
             this.WhenAnyValue(vm => vm.PageSelectViewModel.CurrentPage)
-                .Throttle(TimeSpan.FromMilliseconds(250)).Subscribe(async x => await Refresh());
+                .Throttle(TimeSpan.FromMilliseconds(250)).DistinctUntilChanged().Subscribe(async x => await Refresh());
             this.WhenAnyValue(vm => vm.SearchFiltersViewModel.SelectedSort, vm => vm.SearchFiltersViewModel.SelectedPeriod, vm => vm.SearchFiltersViewModel.SearchTerm)
-                .Throttle(TimeSpan.FromSeconds(1)).Subscribe(async x => { PageSelectViewModel.ResetPage(); await Refresh(); });
+                .Throttle(TimeSpan.FromSeconds(1)).DistinctUntilChanged().Subscribe(async x => { PageSelectViewModel.ResetPage(); await Refresh(); });
             this.SearchFiltersViewModel.SelectedTypes
-                .ToObservableChangeSet()
+                .ToObservableChangeSet().DistinctUntilChanged()
                 .Subscribe(async x => {
                     PageSelectViewModel.ResetPage(); await Refresh();
                 });
-
+            this.WhenAnyValue(vm => vm._externalModelsService.InProgress)
+                .Subscribe(x => { InProgress = _externalModelsService.InProgress; if (InProgress == false && _models.Count == 0) NotFound = true; else NotFound = false; });
             _externalModelsService.Connect()
               .ObserveOn(RxApp.MainThreadScheduler)
               .Transform(x => new ModelCardViewModel(x))
@@ -58,7 +61,6 @@ namespace NetCivitaiModelManager.ViewModels
         {
            await _externalModelsService.AddRequest(CreateRequest());
            PageSelectViewModel.TotalPages = _externalModelsService.TotalPages;
-           SelectedModel = SearchResults.FirstOrDefault();
         }
         private ModelsRequstParameters CreateRequest()
         {
