@@ -25,6 +25,7 @@ namespace NetCivitaiModelManager.ViewModels
 
         private readonly ReadOnlyObservableCollection<ModelCardViewModel> _models;
         public ReadOnlyObservableCollection<ModelCardViewModel> SearchResults => _models;
+        [Reactive] public ModelCardViewModel SelectedModel { get;  set; }
         public SearchFiltersViewModel SearchFiltersViewModel { get; set; }
         public PageSelectViewModel PageSelectViewModel { get; set; }
         public int TotalPages => _externalModelsService.TotalPages;
@@ -57,6 +58,7 @@ namespace NetCivitaiModelManager.ViewModels
         {
            await _externalModelsService.AddRequest(CreateRequest());
            PageSelectViewModel.TotalPages = _externalModelsService.TotalPages;
+           SelectedModel = SearchResults.FirstOrDefault();
         }
         private ModelsRequstParameters CreateRequest()
         {

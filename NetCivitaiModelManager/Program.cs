@@ -19,6 +19,7 @@ namespace NetCivitaiModelManager
                 .UsePlatformDetect()
                 .LogToTrace()
                 .UseReactiveUI()
-                .CreateIoc();
+                .CreateIoc()
+                .SetupExceptionHandling();
     }
 }

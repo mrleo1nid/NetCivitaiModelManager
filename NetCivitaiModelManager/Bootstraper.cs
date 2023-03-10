@@ -1,11 +1,15 @@
 ﻿using Avalonia;
 using CivitaiApiWrapper.Services;
 using FluentAvalonia.Styling;
+using NetCivitaiModelManager.Extensions;
 using NetCivitaiModelManager.Services;
 using NetCivitaiModelManager.ViewModels;
 using NetCivitaiModelManager.Views;
+using NLog;
+using ReactiveUI;
 using Refit;
 using Splat;
+using Splat.NLog;
 
 namespace NetCivitaiModelManager
 {
@@ -13,6 +17,7 @@ namespace NetCivitaiModelManager
     {
         public static AppBuilder CreateIoc(this AppBuilder appBuilder)
         {
+            Locator.CurrentMutable.UseNLogWithWrappingFullLogger();
             SplatRegistrations.SetupIOC();
             RegisterServices();
             RegisterVM();
@@ -34,6 +39,12 @@ namespace NetCivitaiModelManager
             SplatRegistrations.RegisterLazySingleton<ExternalModelViewModel>();
             SplatRegistrations.RegisterLazySingleton<SettingsViewModel>();
             SplatRegistrations.RegisterLazySingleton<MainWindow>();
+        }
+        public static AppBuilder SetupExceptionHandling(this AppBuilder appBuilder)
+        {
+            // Подключим наш Observer-обработчик исключений
+            RxApp.DefaultExceptionHandler = new ApcExceptionHandler(Locator.Current.GetService<ILogManager>().GetLogger<ApcExceptionHandler>());
+            return appBuilder;
         }
     }
 }

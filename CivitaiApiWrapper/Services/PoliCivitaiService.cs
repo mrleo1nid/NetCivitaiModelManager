@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Polly;
 using System.Collections;
+using NLog;
 using Splat;
 
 namespace CivitaiApiWrapper.Services
@@ -17,8 +18,8 @@ namespace CivitaiApiWrapper.Services
     {
         private readonly ICivitaiService _service;
         private readonly int _retryCount;
-        private readonly ILogger _logger;
-        public PoliCivitaiService(ICivitaiService service, ILogger logger, int retrycount = 3)
+        private readonly IFullLogger _logger;
+        public PoliCivitaiService(ICivitaiService service, IFullLogger logger, int retrycount = 3)
         {
             _service = service;
             _logger = logger;
@@ -74,6 +75,7 @@ namespace CivitaiApiWrapper.Services
             catch (Exception e)
             {
                 exception = e;
+                _logger.Error(exception);
             }
             //TODO: Обработать исключения или передать их дальше            
             return result;

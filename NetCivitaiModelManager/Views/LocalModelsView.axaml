@@ -19,7 +19,7 @@
 			Margin="3"
             Background="Transparent"
             Items="{Binding SearchResults}"
-            SelectedItem="{Binding SelectedAlbum}">
+            SelectedItem="{Binding SelectedModel}">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
