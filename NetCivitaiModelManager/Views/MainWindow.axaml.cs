@@ -1,3 +1,4 @@
+using Akavache.Sqlite3;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -13,6 +14,7 @@ using NetCivitaiModelManager.Views;
 using Splat;
 using System;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Runtime.InteropServices;
 
 namespace NetCivitaiModelManager.Views
@@ -27,12 +29,16 @@ namespace NetCivitaiModelManager.Views
             nv.SelectedItem = nv.MenuItems.Cast<NavigationViewItem>().FirstOrDefault();
             TitleBar.TitleBarHitTestType = TitleBarHitTestType.Complex;
             Application.Current.ActualThemeVariantChanged += ApplicationActualThemeVariantChanged;
-
             var configService = Locator.Current.GetService<ConfigService>();
             if (configService.Config.CurrentTheme == FluentAvaloniaTheme.LightModeString) { Application.Current.RequestedThemeVariant = ThemeVariant.Light; }
             else if (configService.Config.CurrentTheme == FluentAvaloniaTheme.DarkModeString) { Application.Current.RequestedThemeVariant = ThemeVariant.Dark; }
         }
-
+        protected override async void OnClosing(WindowClosingEventArgs e)
+        {
+            var blob = Locator.Current.GetService<SQLiteEncryptedBlobCache>();
+            await blob.Shutdown;
+            base.OnClosing(e);
+        }
         private void Nv_SelectionChanged(object? sender, NavigationViewSelectionChangedEventArgs e)
         {
             if (e.IsSettingsSelected)
@@ -64,7 +70,7 @@ namespace NetCivitaiModelManager.Views
                 }
             }
         }
-
+        
         protected override void OnOpened(EventArgs e)
         {
             base.OnOpened(e);

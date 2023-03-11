@@ -21,7 +21,6 @@ namespace NetCivitaiModelManager
                 desktop.MainWindow = Locator.Current.GetService<MainWindow>();
                 desktop.MainWindow.DataContext = Locator.Current.GetService<MainWindowViewModel>();
             }
-
             base.OnFrameworkInitializationCompleted();
         }
     }
