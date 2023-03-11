@@ -1,4 +1,5 @@
-﻿using Avalonia;
+﻿using Akavache.Sqlite3;
+using Avalonia;
 using CivitaiApiWrapper.Services;
 using FluentAvalonia.Styling;
 using NetCivitaiModelManager.Extensions;
@@ -10,6 +11,9 @@ using ReactiveUI;
 using Refit;
 using Splat;
 using Splat.NLog;
+using System.IO;
+using System;
+using Akavache;
 
 namespace NetCivitaiModelManager
 {
@@ -25,7 +29,10 @@ namespace NetCivitaiModelManager
         }
         public static void RegisterServices()
         {
+            
             SplatRegistrations.RegisterLazySingleton<ConfigService>();
+            var blob = CreateBlob(Locator.Current.GetService<ConfigService>());
+            SplatRegistrations.RegisterConstant(blob);
             SplatRegistrations.RegisterLazySingleton<LocalModelsService>();
             SplatRegistrations.RegisterLazySingleton<ExternalModelsService>();
             SplatRegistrations.RegisterLazySingleton<PoliCivitaiService>();
@@ -33,7 +40,6 @@ namespace NetCivitaiModelManager
         public static void RegisterVM()
         {
             SplatRegistrations.RegisterLazySingleton<MainWindowViewModel>();
-       
             SplatRegistrations.RegisterLazySingleton<DownoloadsViewModel>();
             SplatRegistrations.RegisterLazySingleton<LocalModelsViewModel>();
             SplatRegistrations.RegisterLazySingleton<ExternalModelViewModel>();
@@ -45,6 +51,16 @@ namespace NetCivitaiModelManager
             // Подключим наш Observer-обработчик исключений
             RxApp.DefaultExceptionHandler = new ApcExceptionHandler(Locator.Current.GetService<ILogManager>().GetLogger<ApcExceptionHandler>());
             return appBuilder;
+        }
+        private static SQLiteEncryptedBlobCache CreateBlob(ConfigService configsevice)
+        {
+            string path = string.Empty;
+            if (Uri.IsWellFormedUriString(configsevice.Config.CashPath, UriKind.Absolute))
+                path = configsevice.Config.CashPath;
+            else
+                path = Path.Combine(Environment.CurrentDirectory, configsevice.Config.CashPath);
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            return new SQLiteEncryptedBlobCache(Path.Combine(path, configsevice.Config.CashFileName));
         }
     }
 }
