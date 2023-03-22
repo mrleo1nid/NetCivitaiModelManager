@@ -25,6 +25,7 @@ namespace NetCivitaiModelManager
             SplatRegistrations.SetupIOC();
             RegisterServices();
             RegisterVM();
+            RegisterView();
             return appBuilder;
         }
         public static void RegisterServices()
@@ -46,6 +47,9 @@ namespace NetCivitaiModelManager
             SplatRegistrations.RegisterLazySingleton<LocalModelsViewModel>();
             SplatRegistrations.RegisterLazySingleton<ExternalModelViewModel>();
             SplatRegistrations.RegisterLazySingleton<SettingsViewModel>();
+        }
+        public static void RegisterView()
+        {
             SplatRegistrations.RegisterLazySingleton<MainWindow>();
         }
         public static AppBuilder SetupExceptionHandling(this AppBuilder appBuilder)

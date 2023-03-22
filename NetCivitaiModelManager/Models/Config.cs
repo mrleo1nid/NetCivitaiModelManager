@@ -30,5 +30,7 @@ namespace NetCivitaiModelManager.Models
         [Reactive] public string CurrentTheme { get; set; } = FluentAvaloniaTheme.LightModeString;
         [JsonPropertyName("ExternalModelInPage")]
         [Reactive] public int ExternalModelInPage { get; set; } = 24;
+        [JsonPropertyName("DownoloadBufferFolder")]
+        [Reactive] public string DownoloadBufferFolder { get; set; } = "downoloads";
     }
 }

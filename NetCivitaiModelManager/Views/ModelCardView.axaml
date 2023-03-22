@@ -13,11 +13,21 @@
         <Grid.Background>
             <ImageBrush ext:CustomAsyncImageLoader.Source="{Binding ImagePath}" Stretch="Fill" />
         </Grid.Background>
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock
+                HorizontalAlignment="Left"
+                FontSize="12"
+                Foreground="White"
+                Text="{Binding Type}" />
+            <StackPanel.Background>
+                <SolidColorBrush Opacity="0.6" Color="Blue" />
+            </StackPanel.Background>
+        </StackPanel>
         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
             <TextBlock
                 HorizontalAlignment="Center"
                 FontSize="16"
-				Foreground="Black"
+                Foreground="Black"
                 Text="{Binding Name}" />
             <StackPanel.Background>
                 <SolidColorBrush Opacity="0.6" Color="LightGray" />
