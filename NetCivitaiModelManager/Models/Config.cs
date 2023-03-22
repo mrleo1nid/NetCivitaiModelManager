@@ -1,5 +1,7 @@
 ﻿using Avalonia.Logging;
 using FluentAvalonia.Styling;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,24 +11,24 @@ using System.Threading.Tasks;
 
 namespace NetCivitaiModelManager.Models
 {
-    public class Config
+    public class Config : ReactiveObject
     {
         [JsonPropertyName("CivitaiBaseUrl")]
-        public string CivitaiBaseUrl { get; set; } = "https://civitai.com/";
+        [Reactive] public string CivitaiBaseUrl { get; set; } = "https://civitai.com/";
 
         [JsonPropertyName("WebUiFolderPath")]
-        public string WebUiFolderPath { get; set; } = "D:\\stable-diffusion-webui";
+        [Reactive] public string WebUiFolderPath { get; set; } = "D:\\stable-diffusion-webui";
 
         [JsonPropertyName("ApiKey")]
-        public string ApiKey { get; set; } = "";
+        [Reactive] public string ApiKey { get; set; } = "";
 
         [JsonPropertyName("CashFolder")]
-        public string CashPath { get; set; } = "cash";
+        [Reactive] public string CashPath { get; set; } = "cash";
         [JsonPropertyName("CashFileName")]
-        public string CashFileName { get; set; } = "blobcash";
+        [Reactive] public string CashFileName { get; set; } = "blobcash";
         [JsonPropertyName("CurrentTheme")]
-        public string CurrentTheme { get; set; } = FluentAvaloniaTheme.LightModeString;
+        [Reactive] public string CurrentTheme { get; set; } = FluentAvaloniaTheme.LightModeString;
         [JsonPropertyName("ExternalModelInPage")]
-        public int ExternalModelInPage { get; set; } = 24;
+        [Reactive] public int ExternalModelInPage { get; set; } = 24;
     }
 }

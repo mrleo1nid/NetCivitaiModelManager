@@ -29,10 +29,12 @@ namespace NetCivitaiModelManager
         }
         public static void RegisterServices()
         {
-            
             SplatRegistrations.RegisterLazySingleton<ConfigService>();
             var blob = CreateBlob(Locator.Current.GetService<ConfigService>());
             SplatRegistrations.RegisterConstant(blob);
+            SplatRegistrations.RegisterLazySingleton<BlobCashService>();
+            SplatRegistrations.RegisterLazySingleton<DownoloadsService>();
+            SplatRegistrations.RegisterLazySingleton<HashService>();
             SplatRegistrations.RegisterLazySingleton<LocalModelsService>();
             SplatRegistrations.RegisterLazySingleton<ExternalModelsService>();
             SplatRegistrations.RegisterLazySingleton<PoliCivitaiService>();

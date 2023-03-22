@@ -1,4 +1,6 @@
 ﻿using NetCivitaiModelManager.Models;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace NetCivitaiModelManager.Services
 {
-    public class ConfigService 
+    public class ConfigService : ReactiveObject
     {
-        public Config Config { get; set; }
+       [Reactive] public Config Config { get; set; }
 
         private string _filename;
         public ConfigService(string filename)
